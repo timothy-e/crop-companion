@@ -6,7 +6,7 @@ import com.example.cs446_group8.ui.BaseActivity;
 
 public class SettingsActivity extends BaseActivity implements SettingsContract {
 
-    SettingsContract.Presenter mPresenter;
+    private SettingsContract.Presenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

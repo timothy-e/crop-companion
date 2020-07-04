@@ -6,7 +6,7 @@ import com.example.cs446_group8.ui.BaseActivity;
 
 public class HomeActivity extends BaseActivity implements HomeContract {
 
-    HomeContract.Presenter mPresenter;
+    private HomeContract.Presenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
