@@ -1,0 +1,2 @@
+rootProject.name='cs446-group8'
+include ':app'
