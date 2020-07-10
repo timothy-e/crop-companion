@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">cs446-group8</string>
+    <string name="month_label">Month</string>
+    <string name="head_count_label">People</string>
+    <string name="beds_required_label">Beds Required</string>
+    <string name="jan">Jan</string>
+    <string name="feb">Feb</string>
+    <string name="mar">Mar</string>
+    <string name="apr">Apr</string>
+    <string name="may">May</string>
+    <string name="june">June</string>
+    <string name="july">July</string>
+    <string name="aug">Aug</string>
+    <string name="sept">Sept</string>
+    <string name="oct">Oct</string>
+    <string name="nov">Nov</string>
+    <string name="dec">Dec</string>
+    <string name="default_head_count">10</string>
+    <string name="no_data">-</string>
+    <string name="next_button">Next</string>
 </resources>
