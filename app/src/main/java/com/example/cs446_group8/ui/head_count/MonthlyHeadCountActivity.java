@@ -2,18 +2,17 @@ package com.example.cs446_group8.ui.head_count;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.cs446_group8.R;
 import com.example.cs446_group8.ui.BaseActivity;
-
-import org.w3c.dom.Text;
 
 public class MonthlyHeadCountActivity extends BaseActivity implements MonthlyHeadCountContract {
 
@@ -37,7 +36,7 @@ public class MonthlyHeadCountActivity extends BaseActivity implements MonthlyHea
             String monthName = months[i];
 
             monthTextViews[i] = createMonthTextView(this, monthName);
-            headCountEditTexts[i] = createHeadcountInput(this);
+            headCountEditTexts[i] = createHeadcountInput(this, i);
             bedsRequiredTextViews[i] = createBedCountTextView(this);
 
             LinearLayout monthContainer = new LinearLayout(this);
@@ -48,6 +47,9 @@ public class MonthlyHeadCountActivity extends BaseActivity implements MonthlyHea
 
             monthsContainer.addView(monthContainer);
         }
+
+        // calculate beds required
+        mPresenter.changedHeadCount(0, getHeadCount(0));
     }
 
     private TextView createMonthTextView(Context context, String monthName) {
@@ -63,7 +65,7 @@ public class MonthlyHeadCountActivity extends BaseActivity implements MonthlyHea
         return textView;
     }
 
-    private EditText createHeadcountInput(Context context) {
+    private EditText createHeadcountInput(Context context, final int monthNum) {
         EditText editText = new EditText(context);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
@@ -75,13 +77,24 @@ public class MonthlyHeadCountActivity extends BaseActivity implements MonthlyHea
         editText.setInputType(InputType.TYPE_CLASS_NUMBER);
         editText.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         editText.setHint("10");
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mPresenter.changedHeadCount(monthNum, getHeadCount(monthNum));
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
 
         return editText;
     }
 
     private TextView createBedCountTextView(Context context) {
         TextView textView = new TextView(context);
-        textView.setText("-");
         textView.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -104,5 +117,33 @@ public class MonthlyHeadCountActivity extends BaseActivity implements MonthlyHea
         mPresenter.pause();
     }
 
+    @Override
+    public void setFollowingHeadCountHints(int currentMonth, int headCount) {
+        for (int i = currentMonth + 1; i < 12; i++) {
+            if (TextUtils.isEmpty(headCountEditTexts[i].getText())) {
+                headCountEditTexts[i].setHint(String.valueOf(headCount));
 
+                // now that the hint is changed, we need to recalculate the number of beds required
+                mPresenter.changedHeadCount(i, headCount);
+            } else {
+                // don't set anything that's already had it's hint changed
+                break;
+            }
+        }
+    }
+
+    @Override
+    public void setBedCount(int month, int bedCount) {
+        bedsRequiredTextViews[month].setText(String.valueOf(bedCount));
+    }
+
+    private int getHeadCount(int month) {
+        if (TextUtils.isEmpty(headCountEditTexts[month].getText())) {
+            // if unset, use the hint (default val)
+            return Integer.parseInt(headCountEditTexts[month].getHint().toString());
+        } else {
+            // if set, use that value
+            return Integer.parseInt(headCountEditTexts[month].getText().toString());
+        }
+    }
 }
