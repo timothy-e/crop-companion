@@ -1,4 +1,4 @@
-package com.example.cs446_group8.ui.head_count;
+package com.example.cs446_group8.ui.projects.project_details.add_crop.head_count;
 
 import com.example.cs446_group8.ui.BaseContract;
 
@@ -28,6 +28,8 @@ public interface MonthlyHeadCountContract extends BaseContract {
          * @param headCount the newly set value
          */
         void changedHeadCount(int month, int headCount);
+
+        void nextButtonClicked(String crop);
     }
 
 }

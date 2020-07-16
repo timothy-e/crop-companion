@@ -1,6 +1,7 @@
-package com.example.cs446_group8.ui.head_count;
+package com.example.cs446_group8.ui.projects.project_details.add_crop.head_count;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
@@ -8,11 +9,14 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.cs446_group8.GlobalConstants;
 import com.example.cs446_group8.R;
 import com.example.cs446_group8.ui.BaseActivity;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MonthlyHeadCountActivity extends BaseActivity implements MonthlyHeadCountContract {
 
@@ -21,12 +25,33 @@ public class MonthlyHeadCountActivity extends BaseActivity implements MonthlyHea
     private EditText[] headCountEditTexts = new EditText[12];
     private TextView[] bedsRequiredTextViews = new TextView[12];
 
+    private String crop;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_monthly_head_count_layout);
         mPresenter = new MonthlyHeadCountPresenter(this, this);
+
+        Intent intent = getIntent();
+        crop = intent.getStringExtra(GlobalConstants.CROP_KEY);
+
+        ImageView backButton = findViewById(R.id.back_button);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
+        FloatingActionButton nextButton = findViewById(R.id.floatingActionButton);
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPresenter.nextButtonClicked(crop);
+            }
+        });
 
         LinearLayout monthsContainer = findViewById(R.id.months_container);
 

@@ -16,8 +16,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.settings.SettingsActivity" />
-        <activity android:name=".ui.head_count.MonthlyHeadCountActivity" />
+        <activity android:name=".ui.projects.project_details.add_crop.head_count.MonthlyHeadCountActivity" />
+        <activity
+            android:name=".ui.projects.project_details.ProjectDetailsActivity"
+            android:launchMode="singleTop"/>
+        <activity android:name=".ui.projects.project_details.add_crop.AddCropActivity" />
+        <activity android:name=".ui.projects.project_details.add_crop.crop_summary.CropSummaryActivity" />
     </application>
 
 </manifest>

@@ -1,6 +1,25 @@
 <resources>
     <string name="app_name">cs446-group8</string>
     <string name="month_label">Month</string>
-    <string name="head_count_label">People</string>
+    <string name="head_count_label"># of People</string>
     <string name="beds_required_label">Beds Required</string>
+    <string name="my_crops_label">My Crops</string>
+    <string name="add_crop_label">Add New Crop</string>
+    <string name="crop_search_hint">Crop</string>
+    <string name="add_people_label">People</string>
+    <string name="projects_nav_label">Projects</string>
+    <string name="climate_nav_label">Climate</string>
+    <string name="trends_nav_label">Trends</string>
+    <string name="analytics_nav_label">Analytics</string>
+    <string name="settings_nav_label">Settings</string>
+    <string name="crop_summary_label">Summary</string>
+    <string name="crop_summary_crop_name">Crop: %1$s</string>
+    <string name="crop_summary_people_fed"># People Feeding: %1$s</string>
+    <string name="crop_summary_beds_needed"># Beds Needed: %1$s</string>
+    <string name="crop_summary_seeds_needed"># Seeds Needed: %1$s</string>
+    <string name="crop_summary_start_date">Start Date: %1$s</string>
+    <string name="crop_summary_growth_time">Estimated Growth Time: %1$s</string>
+    <string name="crop_summary_harvest_date">Estimated Harvesting Date: %1$s</string>
+
+
 </resources>

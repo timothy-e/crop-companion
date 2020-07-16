@@ -1,12 +1,15 @@
 package com.example.cs446_group8.ui.home;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.view.MenuItem;
 
-import com.example.cs446_group8.ui.head_count.MonthlyHeadCountActivity;
 import com.example.cs446_group8.R;
 import com.example.cs446_group8.ui.BaseActivity;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 public class HomeActivity extends BaseActivity implements HomeContract {
 
@@ -19,11 +22,15 @@ public class HomeActivity extends BaseActivity implements HomeContract {
         setContentView(R.layout.activity_home_layout);
         mPresenter = new HomePresenter(this, this);
 
-    }
+        BottomNavigationView bottomNavigation = findViewById(R.id.bottom_navigation);
+        bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                return mPresenter.navigationTabClicked(item.getItemId());
+            }
+        });
+        bottomNavigation.setSelectedItemId(R.id.page_1);
 
-    public void jumpToHeadCount(View vew) {
-        Intent intent = new Intent(this, MonthlyHeadCountActivity.class);
-        startActivity(intent);
     }
 
     @Override
@@ -39,4 +46,10 @@ public class HomeActivity extends BaseActivity implements HomeContract {
     }
 
 
+    @Override
+    public void openFragment(Fragment fragment) {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.container, fragment);
+        ft.commit();
+    }
 }

@@ -5,13 +5,13 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 
 public class BasePresenter {
-    protected Context mContext;
+    protected Context context;
 
     protected void subscribe(@NonNull Context context) {
-        this.mContext = context;
+        this.context = context;
     }
 
     public boolean isSubscribed() {
-        return mContext != null;
+        return context != null;
     }
 }
