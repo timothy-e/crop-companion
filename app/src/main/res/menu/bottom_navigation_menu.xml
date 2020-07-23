@@ -9,20 +9,5 @@
         android:id="@+id/page_2"
         android:enabled="true"
         android:icon="@drawable/ic_launcher_foreground"
-        android:title="@string/climate_nav_label" />
-    <item
-        android:id="@+id/page_3"
-        android:enabled="true"
-        android:icon="@drawable/ic_launcher_foreground"
-        android:title="@string/trends_nav_label" />
-    <item
-        android:id="@+id/page_4"
-        android:enabled="true"
-        android:icon="@drawable/ic_launcher_foreground"
-        android:title="@string/analytics_nav_label" />
-    <item
-        android:id="@+id/page_5"
-        android:enabled="true"
-        android:icon="@drawable/ic_launcher_foreground"
         android:title="@string/settings_nav_label" />
 </menu>
