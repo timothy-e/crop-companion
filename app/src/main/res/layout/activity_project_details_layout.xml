@@ -15,7 +15,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
         tools:context=".ui.projects.project_details.ProjectDetailsActivity">
 
         <TextView
@@ -117,17 +116,6 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"/>
-
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_navigation"
-            android:background="@android:color/white"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:itemBackground="@android:color/white"
-            app:itemTextColor="@android:color/black"
-            app:labelVisibilityMode="labeled"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:menu="@menu/bottom_navigation_menu" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
