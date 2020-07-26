@@ -107,7 +107,7 @@
             <LinearLayout
                 android:id="@+id/calories_section"
                 android:layout_width="match_parent"
-                android:layout_height="306dp"
+                android:layout_height="358dp"
                 android:layout_marginTop="20dp"
                 android:orientation="vertical"
                 app:layout_constraintTop_toBottomOf="@+id/name_field">
@@ -131,6 +131,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
                     android:text="@string/calories_leafy_greens_label"
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
@@ -147,6 +148,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
                     android:text="@string/calories_colourful_veg_label"
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
@@ -163,6 +165,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
                     android:text="@string/calories_starches_label"
                     android:textAlignment="center"
                     android:textColor="@android:color/black"

@@ -25,7 +25,7 @@
     <string name="calories_per_day_per_person_label">Calories per day per person</string>
     <string name="calories_leafy_greens_label">Calories from leafy greens(%)</string>
     <string name="calories_colourful_veg_label">Calories from colourful vegetables (%)</string>
-    <string name="calories_starches_label">Calories from starches</string>
+    <string name="calories_starches_label">Calories from starches (%)</string>
     <string name="schedule_optimize_label">Schedule Optimization</string>
     <string name="equal_square_feet">Equal Square Feet</string>
     <string name="equal_calories">Equal Calories</string>
