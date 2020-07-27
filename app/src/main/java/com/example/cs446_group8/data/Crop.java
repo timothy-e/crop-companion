@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import lombok.AllArgsConstructor;
@@ -14,7 +15,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Entity(tableName = "crops")
+@Entity(tableName = "crops",
+        indices = {
+                @Index(value = "name", unique = true),
+                @Index(value = "planting_order", unique = true)
+        })
 @Getter
 @Setter
 @AllArgsConstructor(onConstructor = @__({@Ignore}))
@@ -26,7 +31,7 @@ public final class Crop {
     @PrimaryKey
     private int id;
 
-    @ColumnInfo(name = "name", index = true)
+    @ColumnInfo(name = "name")
     @NonNull
     private String name;
 
