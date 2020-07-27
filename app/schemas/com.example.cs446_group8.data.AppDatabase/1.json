@@ -1,0 +1,85 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "6e236235a3f085f5f3b71e94de3a6b6b",
+    "entities": [
+      {
+        "tableName": "crops",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `calories_per_100_gram` REAL NOT NULL, `type` INTEGER NOT NULL, `days` INTEGER NOT NULL, `consumption_per_person_per_year` REAL NOT NULL, `yield_per_100_sqft` REAL NOT NULL, `planting_order` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "caloriesPer100Gram",
+            "columnName": "calories_per_100_gram",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "days",
+            "columnName": "days",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "consumptionPerPersonPerYear",
+            "columnName": "consumption_per_person_per_year",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "yieldPer100Sqft",
+            "columnName": "yield_per_100_sqft",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "plantingOrder",
+            "columnName": "planting_order",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_crops_name",
+            "unique": false,
+            "columnNames": [
+              "name"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_crops_name` ON `${TABLE_NAME}` (`name`)"
+          }
+        ],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6e236235a3f085f5f3b71e94de3a6b6b')"
+    ]
+  }
+}
