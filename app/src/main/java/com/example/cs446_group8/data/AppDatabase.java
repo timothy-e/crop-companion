@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.WeakHashMap;
+import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 @Database(entities = {Crop.class}, exportSchema = true, version = 1)
@@ -44,6 +45,12 @@ public abstract class AppDatabase extends RoomDatabase {
     }
 
     /**
+     * The execution context in which the prepopulation will be performed. If you rely on the
+     * prepopulated data to exist, schedule a {@link Runnable} on here.
+     */
+    public static final Executor IO_EXECUTOR = Executors.newSingleThreadExecutor();
+
+    /**
      * The room callback used to prepopulate the app database.
      */
     static Callback createPrepopulateCallback(Context context) {
@@ -51,7 +58,7 @@ public abstract class AppDatabase extends RoomDatabase {
             @Override
             public void onCreate(@NonNull SupportSQLiteDatabase db) {
                 super.onCreate(db);
-                Executors.newSingleThreadScheduledExecutor().execute(() -> prepopulateDatabase(getInstance(context)));
+                IO_EXECUTOR.execute(() -> prepopulateDatabase(getInstance(context)));
             }
         };
     }

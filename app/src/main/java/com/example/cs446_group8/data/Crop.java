@@ -18,7 +18,7 @@ import lombok.ToString;
 @Entity(tableName = "crops",
         indices = {
                 @Index(value = "name", unique = true),
-                @Index(value = "planting_order", unique = true)
+                @Index(value = "planting_order")
         })
 @Getter
 @Setter

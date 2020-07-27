@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "a19fafe46a5863d56096279f52b58cc2",
+    "identityHash": "11d03cd993cfa7ab621d125484f6a2d4",
     "entities": [
       {
         "tableName": "crops",
@@ -74,11 +74,11 @@
           },
           {
             "name": "index_crops_planting_order",
-            "unique": true,
+            "unique": false,
             "columnNames": [
               "planting_order"
             ],
-            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_crops_planting_order` ON `${TABLE_NAME}` (`planting_order`)"
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_crops_planting_order` ON `${TABLE_NAME}` (`planting_order`)"
           }
         ],
         "foreignKeys": []
@@ -87,7 +87,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a19fafe46a5863d56096279f52b58cc2')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '11d03cd993cfa7ab621d125484f6a2d4')"
     ]
   }
 }

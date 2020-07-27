@@ -10,6 +10,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -34,7 +37,15 @@ public class AppDatabaseTest {
 
     @Test
     public void checkPrepopulatedData() {
-        List<Crop> allCrops = cropDao.loadAll();
-        assertThat(allCrops.size(), equalTo(AppDatabase.CROPS.size()));
+        AppDatabase.IO_EXECUTOR.execute(() -> {
+            final List<Crop> cropsInDb = cropDao.loadAll();
+            final List<Crop> knownCrops = new ArrayList<>(AppDatabase.CROPS);
+
+            final Comparator<Crop> compareByPlantingOrder = Comparator.comparing(Crop::getPlantingOrder);
+            Collections.sort(cropsInDb, compareByPlantingOrder);
+            Collections.sort(knownCrops, compareByPlantingOrder);
+
+            assertThat(cropsInDb, equalTo(knownCrops));
+        });
     }
 }
