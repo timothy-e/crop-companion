@@ -26,8 +26,7 @@ public final class WorkspaceTest {
 
     @Before
     public void createWorkspace() {
-        Context context = ApplicationProvider.getApplicationContext();
-        workspace = new Workspace(context);
+        workspace = new Workspace();
     }
 
     @Test
@@ -46,8 +45,8 @@ public final class WorkspaceTest {
                 .caloriesPer100Gram(100)
                 .yieldPer100Sqft(27)
                 .build();
-        assertThat(workspace.getCaloriesPerSquareFoot(amaranth), equalTo(673.736));
-        assertThat(workspace.getCaloriesPerSquareFoot(arrowRoot), equalTo(122.58));
+        assertThat(Workspace.getCaloriesPerSquareFoot(amaranth), equalTo(673.736));
+        assertThat(Workspace.getCaloriesPerSquareFoot(arrowRoot), equalTo(122.58));
     }
 
     @Test
@@ -75,16 +74,36 @@ public final class WorkspaceTest {
                 .yieldPer100Sqft(100 / 4.54)
                 .build();
 
-        List<Crop> crops = Arrays.asList(amaranth, arrowRoot, carrot);
-        int greenSqft = workspace.getSquareFeetForType(crops, 1, CropType.Green);
-        int colorSqft = workspace.getSquareFeetForType(crops, 1, CropType.Colorful);
+        Project project = Project.builder()
+                .name("My Project")
+                .beginningOfSession(LocalDate.of(2020, 8, 1))
+                .caloriesPerDayPerPerson(2500)
+                .caloriesFromColorful(60)
+                .caloriesFromStarch(20)
+                .caloriesFromGreen(20)
+                .build();
+
+        CropPlan cropPlan = CropPlan.builder()
+                .peopleJanuary(1)
+                .build();
+
+        List<CropPlanWithCrop> cropPlanWithCrops = Arrays.asList(
+                new CropPlanWithCrop(cropPlan, amaranth),
+                new CropPlanWithCrop(cropPlan, arrowRoot),
+                new CropPlanWithCrop(cropPlan, carrot)
+        );
+
+        ProjectWithCropPlans projectWithCropPlans = new ProjectWithCropPlans(project, cropPlanWithCrops);
+
+        int greenSqft = workspace.getSquareFeetForType(projectWithCropPlans, CropType.Green);
+        int colorSqft = workspace.getSquareFeetForType(projectWithCropPlans, CropType.Colorful);
 
         assertThat(greenSqft, equalTo(150));
         assertThat(colorSqft, equalTo(150));
 
         // make sure that we're actually hitting our calorie goals
-        assertThat(greenSqft * (int) workspace.getCaloriesPerSquareFoot(amaranth), equalTo(15_000));
-        assertThat(colorSqft * (int) (workspace.getCaloriesPerSquareFoot(arrowRoot) + workspace.getCaloriesPerSquareFoot(carrot)), equalTo(45_000));
+        assertThat(greenSqft * (int) Workspace.getCaloriesPerSquareFoot(amaranth), equalTo(15_000));
+        assertThat(colorSqft * (int) (Workspace.getCaloriesPerSquareFoot(arrowRoot) + Workspace.getCaloriesPerSquareFoot(carrot)), equalTo(45_000));
     }
 
     @Test
@@ -99,7 +118,7 @@ public final class WorkspaceTest {
 
     private void testWeeklySquareFeet(List<Integer> headCounts, int initialSquareFeet) {
         int totalSquareFeet = headCounts.stream().mapToInt(Integer::intValue).sum() * initialSquareFeet / headCounts.get(0);
-        List<Integer> weekly = workspace.getWeeklySquareFeet(headCounts, initialSquareFeet);
+        List<Integer> weekly = Workspace.getWeeklySquareFeet(headCounts, initialSquareFeet);
 
         // rounded to 25 sqft, so make sure that it adds up to within 25 square feet
         assertThat(
@@ -129,7 +148,7 @@ public final class WorkspaceTest {
                 .type(CropType.Green)
                 .days(60)
                 .build();
-        List<LocalDate> dates = workspace.getPlantTimes(LocalDate.of(2020, 8, 1), amaranth);
+        List<LocalDate> dates = Workspace.getPlantTimes(LocalDate.of(2020, 8, 1), amaranth);
         assertThat(dates.size(), equalTo(52));
         for (int i = 0; i < 52; i++) {
             assertThat(dates.get(i), equalTo(LocalDate.of(2020, 8, 1).plus(7 * i - 60, ChronoUnit.DAYS)));

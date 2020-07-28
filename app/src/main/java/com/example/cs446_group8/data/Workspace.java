@@ -13,43 +13,9 @@ import java.util.Date;
 import java.util.List;
 
 public class Workspace {
-    private CropDao cropDao;
-    private AppDatabase db;
-
-    public Workspace(Context context) {
-        db = Room.inMemoryDatabaseBuilder(context, AppDatabase.class).build();
-        cropDao = db.cropDao();
-    }
-
-    public double getCaloriesPerSquareFoot(Crop crop) {
+    public static double getCaloriesPerSquareFoot(Crop crop) {
         double gramsYieldPerSqft = crop.getYieldPer100Sqft() * 454 / 100;
         return (crop.getCaloriesPer100Gram() / 100) * gramsYieldPerSqft;
-    }
-
-    public int getMonthlyCaloriesByType(int headCount, CropType cropType) {
-        int caloriesPerDayPerPerson = 2500;
-        int percentGreens = 20;
-        int percentStarch = 20;
-        int percentColorful = 60;
-        switch (cropType) {
-            case Green:
-                return caloriesPerDayPerPerson * headCount * 30 * percentGreens / 100;
-            case Starch:
-                return caloriesPerDayPerPerson * headCount * 30 * percentStarch / 100;
-            case Colorful:
-                return caloriesPerDayPerPerson * headCount * 30 * percentColorful / 100;
-        }
-        return 0;
-    }
-
-    public int getSquareFeetForType(List<Crop> crops, int headCount, CropType cropType) {
-        int calorieGoal = getMonthlyCaloriesByType(headCount, cropType);
-        double calsPerSqft = crops.stream()
-            .filter(c -> c.getType() == cropType)
-            .mapToDouble(this::getCaloriesPerSquareFoot)
-            .sum();
-
-        return (int) (calorieGoal / calsPerSqft);
     }
 
     /**
@@ -61,7 +27,7 @@ public class Workspace {
      *                          subsequent month can be determined from this and the headcounts
      * @return the number of square feet to harvest for every week of the year
      */
-    public List<Integer> getWeeklySquareFeet(List<Integer> monthlyHeadCounts, int initialSquareFeet) {
+    public static List<Integer> getWeeklySquareFeet(List<Integer> monthlyHeadCounts, int initialSquareFeet) {
         assert(monthlyHeadCounts.size() == 12);
 
         List<Integer> list = new ArrayList<>();
@@ -92,12 +58,54 @@ public class Workspace {
      * @param crop the crop that we're interested in
      * @return a list of dates corresponding to weekly plant times
      */
-    public List<LocalDate> getPlantTimes(LocalDate startDate, Crop crop) {
+    public static List<LocalDate> getPlantTimes(LocalDate startDate, Crop crop) {
         List<LocalDate> list = new ArrayList<>();
         LocalDate firstPlanting = startDate.minus(crop.getDays(), ChronoUnit.DAYS);
         for (int i = 0; i < 52; i++) {
             list.add(firstPlanting.plus(i, ChronoUnit.WEEKS));
         }
         return list;
+    }
+
+    /**
+     * Returns the number of calories we need for one month
+     * @param projectWithCropPlans
+     * @param cropType
+     * @return
+     */
+    private int getMonthlyCaloriesByType(ProjectWithCropPlans projectWithCropPlans, CropType cropType) {
+        Project project = projectWithCropPlans.getProject();
+        int caloriesPerDayPerPerson = project.getCaloriesPerDayPerPerson();
+        int firstHeadCount = projectWithCropPlans.getCropPlansWithCrops().get(0).getCropPlan().getPeopleJanuary();
+
+        switch (cropType) {
+            case Green:
+                return caloriesPerDayPerPerson * firstHeadCount * 30 * project.getCaloriesFromGreen() / 100;
+            case Starch:
+                return caloriesPerDayPerPerson * firstHeadCount * 30 * project.getCaloriesFromStarch() / 100;
+            case Colorful:
+                return caloriesPerDayPerPerson * firstHeadCount * 30 * project.getCaloriesFromColorful() / 100;
+        }
+        return 0;
+    }
+
+    /**
+     * We want an equal amount of square feet for each crop (within the same type). So this
+     * calculates how much of each type to plant.
+     * @param projectWithCropPlans
+     * @param cropType
+     * @return
+     */
+    public int getSquareFeetForType(ProjectWithCropPlans projectWithCropPlans, CropType cropType) {
+        int calorieGoal = getMonthlyCaloriesByType(projectWithCropPlans, cropType);
+        double calsPerSqft = projectWithCropPlans.getCropPlansWithCrops().stream()
+                .map(CropPlanWithCrop::getCrop)
+                .filter(c -> c.getType() == cropType)
+                .mapToDouble(Workspace::getCaloriesPerSquareFoot)
+                .sum();
+
+        if (calsPerSqft == 0)
+            return 0;
+        return (int) (calorieGoal / calsPerSqft);
     }
 }
