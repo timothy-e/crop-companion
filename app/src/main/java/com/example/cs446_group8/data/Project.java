@@ -27,7 +27,7 @@ import lombok.ToString;
 @EqualsAndHashCode
 @Builder
 public final class Project {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private int id;
 
     @ColumnInfo(name = "name")

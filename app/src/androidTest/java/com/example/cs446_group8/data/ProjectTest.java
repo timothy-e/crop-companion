@@ -62,6 +62,6 @@ public final class ProjectTest {
         assertThat(projectDao.loadAll().size(), equalTo(2));
         ProjectWithCropPlans projectWithCropPlans = projectDao.loadOneByIdWithCropPlans(1);
         assertThat(projectWithCropPlans.getProject().getId(), equalTo(1));
-        assertThat(projectWithCropPlans.getCropPlans().size(), equalTo(2));
+        assertThat(projectWithCropPlans.getCropPlansWithCrops().size(), equalTo(2));
     }
 }

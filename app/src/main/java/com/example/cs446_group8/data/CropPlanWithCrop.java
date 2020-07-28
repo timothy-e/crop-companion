@@ -19,9 +19,9 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode
-public final class ProjectWithCropPlans {
+public final class CropPlanWithCrop {
     @Embedded
-    private Project project;
-    @Relation(parentColumn = "id", entityColumn = "project_id", entity = CropPlan.class)
-    private List<CropPlanWithCrop> cropPlansWithCrops;
+    private CropPlan cropPlan;
+    @Relation(parentColumn = "crop_id", entityColumn = "id")
+    private Crop crop;
 }
