@@ -11,9 +11,18 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 
+@Entity(tableName = "head_counts",
+        primaryKeys = {"id"},
+        foreignKeys = {
+                @ForeignKey(entity = Project.class, parentColumns = "id", childColumns = "project_id", onDelete = ForeignKey.CASCADE)
+        },
+        indices = {
+                @Index(value = "project_id", unique = true),
+        })
 @Getter
 @Setter
 @AllArgsConstructor(onConstructor = @__({@Ignore}))
@@ -22,28 +31,45 @@ import lombok.ToString;
 @EqualsAndHashCode
 @Builder
 public final class HeadCounts {
+    @ColumnInfo(name = "id")
+    private int id;
+    @ColumnInfo(name = "project_id")
+    private int projectId;
+
+    @NonNull
     @ColumnInfo(name = "people_january")
-    private int peopleJanuary;
+    private Integer peopleJanuary;
+    @NonNull
     @ColumnInfo(name = "people_february")
-    private int peopleFebruary;
+    private Integer peopleFebruary;
+    @NonNull
     @ColumnInfo(name = "people_march")
-    private int peopleMarch;
+    private Integer peopleMarch;
+    @NonNull
     @ColumnInfo(name = "people_april")
-    private int peopleApril;
+    private Integer peopleApril;
+    @NonNull
     @ColumnInfo(name = "people_may")
-    private int peopleMay;
+    private Integer peopleMay;
+    @NonNull
     @ColumnInfo(name = "people_june")
-    private int peopleJune;
+    private Integer peopleJune;
+    @NonNull
     @ColumnInfo(name = "people_july")
-    private int peopleJuly;
+    private Integer peopleJuly;
+    @NonNull
     @ColumnInfo(name = "people_august")
-    private int peopleAugust;
+    private Integer peopleAugust;
+    @NonNull
     @ColumnInfo(name = "people_september")
-    private int peopleSeptember;
+    private Integer peopleSeptember;
+    @NonNull
     @ColumnInfo(name = "people_october")
-    private int peopleOctober;
+    private Integer peopleOctober;
+    @NonNull
     @ColumnInfo(name = "people_november")
-    private int peopleNovember;
+    private Integer peopleNovember;
+    @NonNull
     @ColumnInfo(name = "people_december")
-    private int peopleDecember;
+    private Integer peopleDecember;
 }

@@ -32,7 +32,7 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 @Builder
-public final class CropPlan {
+public final class ProjectCrop {
     @ColumnInfo(name = "project_id")
     private int projectId;
     @ColumnInfo(name = "crop_id")

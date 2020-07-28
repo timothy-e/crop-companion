@@ -20,7 +20,8 @@ import static org.hamcrest.Matchers.*;
 public final class ProjectTest {
     private CropDao cropDao;
     private ProjectDao projectDao;
-    private CropPlanDao cropPlanDao;
+    private HeadCountsDao headCountsDao;
+    private ProjectCropDao projectCropDao;
     private AppDatabase db;
 
     @Before
@@ -29,7 +30,8 @@ public final class ProjectTest {
         db = Room.inMemoryDatabaseBuilder(context, AppDatabase.class).build();
         cropDao = db.cropDao();
         projectDao = db.projectDao();
-        cropPlanDao = db.cropPlanDao();
+        projectCropDao = db.cropPlanDao();
+        headCountsDao = db.headCountsDao();
     }
 
     @After
@@ -60,26 +62,40 @@ public final class ProjectTest {
         projectDao.insertAll(Project.builder()
                 .id(1)
                 .name("Project 1")
-                .headCounts(HeadCounts.builder().peopleJanuary(10).build())
                 .beginningOfSession(LocalDate.now())
                 .build());
         projectDao.insertAll(Project.builder()
                 .id(2)
                 .name("Project 2")
-                .headCounts(HeadCounts.builder().peopleJanuary(12).build())
                 .beginningOfSession(LocalDate.now())
                 .build());
 
-        cropPlanDao.insertAll(
-                CropPlan.builder().projectId(1).cropId(1).build(),
-                CropPlan.builder().projectId(1).cropId(2).build()
+        headCountsDao.insert(HeadCounts.builder()
+                .projectId(1)
+                .peopleJanuary(10)
+                .peopleFebruary(11)
+                .peopleMarch(12)
+                .peopleApril(13)
+                .peopleMay(14)
+                .peopleJune(15)
+                .peopleJuly(16)
+                .peopleAugust(17)
+                .peopleSeptember(18)
+                .peopleOctober(19)
+                .peopleNovember(20)
+                .peopleDecember(21)
+                .build());
+
+        projectCropDao.insertAll(
+                ProjectCrop.builder().projectId(1).cropId(1).build(),
+                ProjectCrop.builder().projectId(1).cropId(2).build()
         );
 
         assertThat(projectDao.loadAll().size(), equalTo(2));
-        ProjectWithCropPlans projectWithCropPlans = projectDao.loadOneByIdWithCropPlans(1);
-        assertThat(projectWithCropPlans.getProject().getId(), equalTo(1));
-        assertThat(projectWithCropPlans.getProject().getHeadCounts().getPeopleJanuary(), equalTo(10));
-        assertThat(projectWithCropPlans.getCropPlansWithCrops().size(), equalTo(2));
+        ProjectWithCrops projectWithCrops = projectDao.loadOneByIdWithCropPlans(1);
+        assertThat(projectWithCrops.getProject().getId(), equalTo(1));
+        assertThat(headCountsDao.loadOneByProjectId(1).getPeopleJanuary(), equalTo(10));
+        assertThat(projectWithCrops.getProjectCrops().size(), equalTo(2));
     }
 
     @Test
@@ -87,7 +103,6 @@ public final class ProjectTest {
         projectDao.insert(Project.builder()
                 .id(1)
                 .name("Project 1")
-                .headCounts(HeadCounts.builder().peopleJanuary(10).build())
                 .beginningOfSession(LocalDate.now())
                 .caloriesPerDayPerPerson(2500)
                 .caloriesFromColorful(30)
@@ -95,23 +110,44 @@ public final class ProjectTest {
                 .caloriesFromStarch(50)
                 .build()
         );
+
+        headCountsDao.insert(HeadCounts.builder()
+                .projectId(1)
+                .peopleJanuary(10)
+                .peopleFebruary(11)
+                .peopleMarch(12)
+                .peopleApril(13)
+                .peopleMay(14)
+                .peopleJune(15)
+                .peopleJuly(16)
+                .peopleAugust(17)
+                .peopleSeptember(18)
+                .peopleOctober(19)
+                .peopleNovember(20)
+                .peopleDecember(21)
+                .build());
+
         Project project = projectDao.loadOneById(1);
+        HeadCounts headCounts = headCountsDao.loadOneByProjectId(project.getId());
+
         assertThat(project.getName(), equalTo("Project 1"));
         assertThat(project.getBeginningOfSession(), equalTo(LocalDate.now()));
         assertThat(project.getCaloriesPerDayPerPerson(), equalTo(2500));
-        assertThat(project.getHeadCounts().getPeopleJanuary(), equalTo(10));
+        assertThat(headCounts.getPeopleJanuary(), equalTo(10));
 
         project.setBeginningOfSession(LocalDate.ofYearDay(2020, 42));
         project.setName("Project 2");
-        project.getHeadCounts().setPeopleJanuary(12);
+        headCounts.setPeopleJanuary(12);
         project.setCaloriesPerDayPerPerson(2000);
         projectDao.update(project);
+        headCountsDao.update(headCounts);
 
         project = projectDao.loadOneById(1);
+        headCounts = headCountsDao.loadOneByProjectId(project.getId());
         assertThat(project.getName(), equalTo("Project 2"));
         assertThat(project.getBeginningOfSession(), equalTo(LocalDate.ofYearDay(2020, 42)));
         assertThat(project.getCaloriesPerDayPerPerson(), equalTo(2000));
-        assertThat(project.getHeadCounts().getPeopleJanuary(), equalTo(12));
+        assertThat(headCounts.getPeopleJanuary(), equalTo(12));
 
         projectDao.delete(project);
         assertThat(projectDao.loadOneById(1), equalTo(null));

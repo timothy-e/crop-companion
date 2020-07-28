@@ -20,7 +20,7 @@ public interface ProjectDao {
 
     @Transaction
     @Query("SELECT * FROM projects WHERE id = :id")
-    ProjectWithCropPlans loadOneByIdWithCropPlans(int id);
+    ProjectWithCrops loadOneByIdWithCropPlans(int id);
 
     @Update
     void update(Project project);

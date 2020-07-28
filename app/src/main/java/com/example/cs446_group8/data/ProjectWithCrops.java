@@ -1,5 +1,6 @@
 package com.example.cs446_group8.data;
 
+import androidx.annotation.NonNull;
 import androidx.room.Embedded;
 import androidx.room.Ignore;
 import androidx.room.Relation;
@@ -19,9 +20,14 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode
-public final class CropPlanWithCrop {
+public final class ProjectWithCrops {
     @Embedded
-    private CropPlan cropPlan;
-    @Relation(parentColumn = "crop_id", entityColumn = "id")
-    private Crop crop;
+    private Project project;
+
+    @NonNull
+    @Relation(parentColumn = "id", entityColumn = "project_id", entity = HeadCounts.class)
+    private HeadCounts headCounts;
+
+    @Relation(parentColumn = "id", entityColumn = "project_id", entity = ProjectCrop.class)
+    private List<ProjectCrop> projectCrops;
 }
