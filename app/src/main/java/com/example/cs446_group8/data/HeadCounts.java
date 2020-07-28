@@ -22,6 +22,8 @@ import lombok.ToString;
         },
         indices = {
                 @Index(value = "project_id", unique = true),
+                @Index(value = "id", unique = true),
+                @Index(value = {"project_id", "id"}, unique = true),
         })
 @Getter
 @Setter

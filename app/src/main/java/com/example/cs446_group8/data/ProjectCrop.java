@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Entity(tableName = "crop_plans",
+@Entity(tableName = "project_crops",
         primaryKeys = {"project_id", "crop_id"},
         foreignKeys = {
                 @ForeignKey(entity = Project.class, parentColumns = "id", childColumns = "project_id", onDelete = ForeignKey.CASCADE),
