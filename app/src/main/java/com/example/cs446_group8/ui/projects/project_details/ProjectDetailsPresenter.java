@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import com.example.cs446_group8.ui.BasePresenter;
 import com.example.cs446_group8.ui.projects.project_details.add_crop.AddCropActivity;
+import com.example.cs446_group8.ui.projects.project_settings.ProjectSettingsActivity;
 
 import androidx.annotation.NonNull;
 
@@ -30,6 +31,12 @@ public class ProjectDetailsPresenter extends BasePresenter implements ProjectDet
     @Override
     public void addButtonClicked() {
         Intent intent = new Intent(context, AddCropActivity.class);
+        mView.launchActivity(intent);
+    }
+
+    @Override
+    public void settingsButtonClicked() {
+        Intent intent = new Intent(context, ProjectSettingsActivity.class);
         mView.launchActivity(intent);
     }
 }

@@ -3,11 +3,11 @@
     <item
         android:id="@+id/page_1"
         android:enabled="true"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:icon="@drawable/ic_projects"
         android:title="@string/projects_nav_label" />
     <item
         android:id="@+id/page_2"
         android:enabled="true"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:icon="@drawable/ic_settings_gear"
         android:title="@string/settings_nav_label" />
 </menu>
