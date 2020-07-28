@@ -2,6 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.cs446_group8">
 
+    <!-- Camera permissions for pivot   -->
+    <uses-feature android:name="android.hardware.camera"
+        android:required="false" />
+    <!-- File sys write to save picture to hardware   -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -21,6 +27,7 @@
             android:name=".ui.projects.project_details.ProjectDetailsActivity"
             android:launchMode="singleTop"/>
         <activity android:name=".ui.projects.project_details.add_crop.AddCropActivity" />
+        <activity android:name=".ui.projects.project_settings.ProjectSettingsActivity" />
         <activity android:name=".ui.projects.project_details.add_crop.crop_summary.CropSummaryActivity" />
     </application>
 
