@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "11d03cd993cfa7ab621d125484f6a2d4",
+    "identityHash": "2645ea031562bcb12cb8620402eb5dca",
     "entities": [
       {
         "tableName": "crops",
@@ -58,36 +58,191 @@
           }
         ],
         "primaryKey": {
-          "columnNames": [
-            "id"
-          ],
+          "columnNames": ["id"],
           "autoGenerate": false
         },
         "indices": [
           {
             "name": "index_crops_name",
             "unique": true,
-            "columnNames": [
-              "name"
-            ],
+            "columnNames": ["name"],
             "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_crops_name` ON `${TABLE_NAME}` (`name`)"
           },
           {
             "name": "index_crops_planting_order",
             "unique": false,
-            "columnNames": [
-              "planting_order"
-            ],
+            "columnNames": ["planting_order"],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_crops_planting_order` ON `${TABLE_NAME}` (`planting_order`)"
           }
         ],
         "foreignKeys": []
+      },
+      {
+        "tableName": "projects",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": ["id"],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_projects_name",
+            "unique": true,
+            "columnNames": ["name"],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_projects_name` ON `${TABLE_NAME}` (`name`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "crop_plans",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`project_id` INTEGER NOT NULL, `crop_id` INTEGER NOT NULL, `people_january` INTEGER NOT NULL, `people_february` INTEGER NOT NULL, `people_march` INTEGER NOT NULL, `people_april` INTEGER NOT NULL, `people_may` INTEGER NOT NULL, `people_june` INTEGER NOT NULL, `people_july` INTEGER NOT NULL, `people_august` INTEGER NOT NULL, `people_september` INTEGER NOT NULL, `people_october` INTEGER NOT NULL, `people_november` INTEGER NOT NULL, `people_december` INTEGER NOT NULL, PRIMARY KEY(`project_id`, `crop_id`), FOREIGN KEY(`project_id`) REFERENCES `projects`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`crop_id`) REFERENCES `crops`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "projectId",
+            "columnName": "project_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "cropId",
+            "columnName": "crop_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "peopleJanuary",
+            "columnName": "people_january",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "peopleFebruary",
+            "columnName": "people_february",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "peopleMarch",
+            "columnName": "people_march",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "peopleApril",
+            "columnName": "people_april",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "peopleMay",
+            "columnName": "people_may",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "peopleJune",
+            "columnName": "people_june",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "peopleJuly",
+            "columnName": "people_july",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "peopleAugust",
+            "columnName": "people_august",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "peopleSeptember",
+            "columnName": "people_september",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "peopleOctober",
+            "columnName": "people_october",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "peopleNovember",
+            "columnName": "people_november",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "peopleDecember",
+            "columnName": "people_december",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": ["project_id", "crop_id"],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_crop_plans_crop_id",
+            "unique": false,
+            "columnNames": ["crop_id"],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_crop_plans_crop_id` ON `${TABLE_NAME}` (`crop_id`)"
+          },
+          {
+            "name": "index_crop_plans_project_id",
+            "unique": false,
+            "columnNames": ["project_id"],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_crop_plans_project_id` ON `${TABLE_NAME}` (`project_id`)"
+          },
+          {
+            "name": "index_crop_plans_project_id_crop_id",
+            "unique": true,
+            "columnNames": ["project_id", "crop_id"],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_crop_plans_project_id_crop_id` ON `${TABLE_NAME}` (`project_id`, `crop_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "projects",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": ["project_id"],
+            "referencedColumns": ["id"]
+          },
+          {
+            "table": "crops",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": ["crop_id"],
+            "referencedColumns": ["id"]
+          }
+        ]
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '11d03cd993cfa7ab621d125484f6a2d4')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2645ea031562bcb12cb8620402eb5dca')"
     ]
   }
 }

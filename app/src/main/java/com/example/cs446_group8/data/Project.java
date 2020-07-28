@@ -1,6 +1,5 @@
 package com.example.cs446_group8.data;
 
-import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -15,10 +14,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Entity(tableName = "crops",
+@Entity(tableName = "projects",
         indices = {
                 @Index(value = "name", unique = true),
-                @Index("planting_order")
         })
 @Getter
 @Setter
@@ -27,30 +25,10 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 @Builder
-public final class Crop {
+public final class Project {
     @PrimaryKey
     private int id;
 
     @ColumnInfo(name = "name")
-    @NonNull
-    private String name;
-
-    @ColumnInfo(name = "calories_per_100_gram")
-    private double caloriesPer100Gram;
-
-    @ColumnInfo(name = "type")
-    @NonNull
-    private CropType type;
-
-    @ColumnInfo(name = "days")
-    private int days;
-
-    @ColumnInfo(name = "consumption_per_person_per_year")
-    private double consumptionPerPersonPerYear;
-
-    @ColumnInfo(name = "yield_per_100_sqft")
-    private double yieldPer100Sqft;
-
-    @ColumnInfo(name = "planting_order")
-    private int plantingOrder;
+    private int name;
 }

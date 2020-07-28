@@ -6,12 +6,15 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
+
 import java.util.WeakHashMap;
 
-@Database(entities = {Crop.class}, exportSchema = true, version = 1)
+@Database(entities = {Crop.class, Project.class, CropPlan.class}, exportSchema = true, version = 1)
 @TypeConverters(CropType.Converter.class)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract CropDao cropDao();
+
+    public abstract ProjectDao projectDao();
 
     /**
      * A weak map is used to keep track of the app database instances.
