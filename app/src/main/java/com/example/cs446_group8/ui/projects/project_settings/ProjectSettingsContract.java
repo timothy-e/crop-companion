@@ -8,7 +8,6 @@ public interface ProjectSettingsContract extends BaseContract {
 
     interface Presenter extends BaseContract.Presenter {
         void saveButtonClicked();
-        void onRadioButtonClicked(View v);
     }
 
 }
