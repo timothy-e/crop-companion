@@ -10,6 +10,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.time.LocalDate;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
@@ -52,8 +55,8 @@ public final class ProjectTest {
                         .yieldPer100Sqft(27)
                         .build()
         );
-        projectDao.insertAll(Project.builder().id(1).name("Project 1").build());
-        projectDao.insertAll(Project.builder().id(2).name("Project 2").build());
+        projectDao.insertAll(Project.builder().id(1).name("Project 1").beginningOfSession(LocalDate.now()).build());
+        projectDao.insertAll(Project.builder().id(2).name("Project 2").beginningOfSession(LocalDate.now()).build());
         cropPlanDao.insertAll(
                 CropPlan.builder().projectId(1).cropId(1).build(),
                 CropPlan.builder().projectId(1).cropId(2).build()

@@ -7,6 +7,8 @@ import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import java.time.LocalDate;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -33,4 +35,27 @@ public final class Project {
     @ColumnInfo(name = "name")
     @NonNull
     private String name;
+
+    @ColumnInfo(name = "beginning_of_session")
+    @NonNull
+    private LocalDate beginningOfSession;
+
+    @ColumnInfo(name = "calories_per_day_per_person")
+    private int caloriesPerDayPerPerson;
+
+    /**
+     * Calories from {@link CropType#Colorful}.
+     */
+    @ColumnInfo(name = "calories_from_colorful")
+    private int caloriesFromColorful;
+    /**
+     * Calories from {@link CropType#Starch}.
+     */
+    @ColumnInfo(name = "calories_from_starch")
+    private int caloriesFromStarch;
+    /**
+     * Calories from {@link CropType#Green}.
+     */
+    @ColumnInfo(name = "calories_from_green")
+    private int caloriesFromGreen;
 }

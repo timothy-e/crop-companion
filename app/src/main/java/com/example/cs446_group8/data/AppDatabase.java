@@ -10,7 +10,7 @@ import androidx.room.TypeConverters;
 import java.util.WeakHashMap;
 
 @Database(entities = {Crop.class, Project.class, CropPlan.class}, exportSchema = true, version = 1)
-@TypeConverters(CropType.Converter.class)
+@TypeConverters({CropType.Converter.class, TemporalConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
     public abstract CropDao cropDao();
 

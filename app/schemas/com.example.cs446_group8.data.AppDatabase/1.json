@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "b349cca6c01c750a98745d950fffeacf",
+    "identityHash": "dd45bf1f97cfb6a0157a6ec7140b7733",
     "entities": [
       {
         "tableName": "crops",
@@ -85,7 +85,7 @@
       },
       {
         "tableName": "projects",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `beginning_of_session` INTEGER NOT NULL, `calories_per_day_per_person` INTEGER NOT NULL, `calories_from_colorful` INTEGER NOT NULL, `calories_from_starch` INTEGER NOT NULL, `calories_from_green` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -97,6 +97,36 @@
             "fieldPath": "name",
             "columnName": "name",
             "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "beginningOfSession",
+            "columnName": "beginning_of_session",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "caloriesPerDayPerPerson",
+            "columnName": "calories_per_day_per_person",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "caloriesFromColorful",
+            "columnName": "calories_from_colorful",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "caloriesFromStarch",
+            "columnName": "calories_from_starch",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "caloriesFromGreen",
+            "columnName": "calories_from_green",
+            "affinity": "INTEGER",
             "notNull": true
           }
         ],
@@ -270,7 +300,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b349cca6c01c750a98745d950fffeacf')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'dd45bf1f97cfb6a0157a6ec7140b7733')"
     ]
   }
 }
