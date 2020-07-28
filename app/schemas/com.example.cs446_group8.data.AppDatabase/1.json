@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "2645ea031562bcb12cb8620402eb5dca",
+    "identityHash": "46e2d0b13add3340d49b15725ebaf374",
     "entities": [
       {
         "tableName": "crops",
@@ -58,20 +58,26 @@
           }
         ],
         "primaryKey": {
-          "columnNames": ["id"],
+          "columnNames": [
+            "id"
+          ],
           "autoGenerate": false
         },
         "indices": [
           {
             "name": "index_crops_name",
             "unique": true,
-            "columnNames": ["name"],
+            "columnNames": [
+              "name"
+            ],
             "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_crops_name` ON `${TABLE_NAME}` (`name`)"
           },
           {
             "name": "index_crops_planting_order",
             "unique": false,
-            "columnNames": ["planting_order"],
+            "columnNames": [
+              "planting_order"
+            ],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_crops_planting_order` ON `${TABLE_NAME}` (`planting_order`)"
           }
         ],
@@ -79,7 +85,7 @@
       },
       {
         "tableName": "projects",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -90,19 +96,23 @@
           {
             "fieldPath": "name",
             "columnName": "name",
-            "affinity": "INTEGER",
+            "affinity": "TEXT",
             "notNull": true
           }
         ],
         "primaryKey": {
-          "columnNames": ["id"],
+          "columnNames": [
+            "id"
+          ],
           "autoGenerate": false
         },
         "indices": [
           {
             "name": "index_projects_name",
             "unique": true,
-            "columnNames": ["name"],
+            "columnNames": [
+              "name"
+            ],
             "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_projects_name` ON `${TABLE_NAME}` (`name`)"
           }
         ],
@@ -198,26 +208,36 @@
           }
         ],
         "primaryKey": {
-          "columnNames": ["project_id", "crop_id"],
+          "columnNames": [
+            "project_id",
+            "crop_id"
+          ],
           "autoGenerate": false
         },
         "indices": [
           {
             "name": "index_crop_plans_crop_id",
             "unique": false,
-            "columnNames": ["crop_id"],
+            "columnNames": [
+              "crop_id"
+            ],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_crop_plans_crop_id` ON `${TABLE_NAME}` (`crop_id`)"
           },
           {
             "name": "index_crop_plans_project_id",
             "unique": false,
-            "columnNames": ["project_id"],
+            "columnNames": [
+              "project_id"
+            ],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_crop_plans_project_id` ON `${TABLE_NAME}` (`project_id`)"
           },
           {
             "name": "index_crop_plans_project_id_crop_id",
             "unique": true,
-            "columnNames": ["project_id", "crop_id"],
+            "columnNames": [
+              "project_id",
+              "crop_id"
+            ],
             "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_crop_plans_project_id_crop_id` ON `${TABLE_NAME}` (`project_id`, `crop_id`)"
           }
         ],
@@ -226,15 +246,23 @@
             "table": "projects",
             "onDelete": "CASCADE",
             "onUpdate": "NO ACTION",
-            "columns": ["project_id"],
-            "referencedColumns": ["id"]
+            "columns": [
+              "project_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
           },
           {
             "table": "crops",
             "onDelete": "CASCADE",
             "onUpdate": "NO ACTION",
-            "columns": ["crop_id"],
-            "referencedColumns": ["id"]
+            "columns": [
+              "crop_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
           }
         ]
       }
@@ -242,7 +270,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2645ea031562bcb12cb8620402eb5dca')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '46e2d0b13add3340d49b15725ebaf374')"
     ]
   }
 }

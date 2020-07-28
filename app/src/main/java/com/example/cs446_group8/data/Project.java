@@ -1,5 +1,6 @@
 package com.example.cs446_group8.data;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -30,5 +31,6 @@ public final class Project {
     private int id;
 
     @ColumnInfo(name = "name")
-    private int name;
+    @NonNull
+    private String name;
 }

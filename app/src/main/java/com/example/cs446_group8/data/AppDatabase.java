@@ -16,6 +16,8 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public abstract ProjectDao projectDao();
 
+    public abstract CropPlanDao cropPlanDao();
+
     /**
      * A weak map is used to keep track of the app database instances.
      */
