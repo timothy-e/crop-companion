@@ -37,29 +37,4 @@ public final class CropPlan {
     private int projectId;
     @ColumnInfo(name = "crop_id")
     private int cropId;
-
-    @ColumnInfo(name = "people_january")
-    private int peopleJanuary;
-    @ColumnInfo(name = "people_february")
-    private int peopleFebruary;
-    @ColumnInfo(name = "people_march")
-    private int peopleMarch;
-    @ColumnInfo(name = "people_april")
-    private int peopleApril;
-    @ColumnInfo(name = "people_may")
-    private int peopleMay;
-    @ColumnInfo(name = "people_june")
-    private int peopleJune;
-    @ColumnInfo(name = "people_july")
-    private int peopleJuly;
-    @ColumnInfo(name = "people_august")
-    private int peopleAugust;
-    @ColumnInfo(name = "people_september")
-    private int peopleSeptember;
-    @ColumnInfo(name = "people_october")
-    private int peopleOctober;
-    @ColumnInfo(name = "people_november")
-    private int peopleNovember;
-    @ColumnInfo(name = "people_december")
-    private int peopleDecember;
 }

@@ -2,10 +2,12 @@ package com.example.cs446_group8.data;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
+import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
+import androidx.room.Relation;
 
 import java.time.LocalDate;
 
@@ -58,4 +60,7 @@ public final class Project {
      */
     @ColumnInfo(name = "calories_from_green")
     private int caloriesFromGreen;
+
+    @Embedded
+    private HeadCounts headCounts;
 }
