@@ -20,6 +20,16 @@
     <string name="crop_summary_start_date">Start Date: %1$s</string>
     <string name="crop_summary_growth_time">Estimated Growth Time: %1$s</string>
     <string name="crop_summary_harvest_date">Estimated Harvesting Date: %1$s</string>
+    <string name="project_settings_label">Project Settings</string>
+    <string name="project_name_label">Project Name</string>
+    <string name="calories_per_day_per_person_label">Calories per day per person</string>
+    <string name="calories_leafy_greens_label">Calories from leafy greens(%)</string>
+    <string name="calories_colourful_veg_label">Calories from colourful vegetables (%)</string>
+    <string name="calories_starches_label">Calories from starches (%)</string>
+    <string name="schedule_optimize_label">Schedule Optimization</string>
+    <string name="equal_square_feet">Equal Square Feet</string>
+    <string name="equal_calories">Equal Calories</string>
+    <string name="proportionate_favourites">Proportionate Favourites</string>
 
 
 </resources>
