@@ -37,24 +37,6 @@ public class ProjectSettingsActivity extends BaseActivity implements ProjectSett
                 mPresenter.saveButtonClicked();
             }
         });
-        binding.radioEqSqft.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPresenter.onRadioButtonClicked(view);
-            }
-        });
-        binding.radioEqCal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPresenter.onRadioButtonClicked(view);
-            }
-        });
-        binding.radioPropFav.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPresenter.onRadioButtonClicked(view);
-            }
-        });
     }
 
     @Override
