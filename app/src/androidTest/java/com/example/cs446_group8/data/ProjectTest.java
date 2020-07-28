@@ -55,8 +55,17 @@ public final class ProjectTest {
                         .yieldPer100Sqft(27)
                         .build()
         );
-        projectDao.insertAll(Project.builder().id(1).name("Project 1").beginningOfSession(LocalDate.now()).build());
-        projectDao.insertAll(Project.builder().id(2).name("Project 2").beginningOfSession(LocalDate.now()).build());
+        projectDao.insertAll(Project.builder()
+                .id(1)
+                .name("Project 1")
+                .beginningOfSession(LocalDate.now())
+                .build());
+        projectDao.insertAll(Project.builder()
+                .id(2)
+                .name("Project 2")
+                .beginningOfSession(LocalDate.now())
+                .build());
+
         cropPlanDao.insertAll(
                 CropPlan.builder().projectId(1).cropId(1).build(),
                 CropPlan.builder().projectId(1).cropId(2).build()
@@ -66,5 +75,36 @@ public final class ProjectTest {
         ProjectWithCropPlans projectWithCropPlans = projectDao.loadOneByIdWithCropPlans(1);
         assertThat(projectWithCropPlans.getProject().getId(), equalTo(1));
         assertThat(projectWithCropPlans.getCropPlansWithCrops().size(), equalTo(2));
+    }
+
+    @Test
+    public void updateAndDelete() {
+        projectDao.insert(Project.builder()
+                .id(1)
+                .name("Project 1")
+                .beginningOfSession(LocalDate.now())
+                .caloriesPerDayPerPerson(2500)
+                .caloriesFromColorful(30)
+                .caloriesFromGreen(20)
+                .caloriesFromStarch(50)
+                .build()
+        );
+        Project project = projectDao.loadOneById(1);
+        assertThat(project.getName(), equalTo("Project 1"));
+        assertThat(project.getBeginningOfSession(), equalTo(LocalDate.now()));
+        assertThat(project.getCaloriesPerDayPerPerson(), equalTo(2500));
+
+        project.setBeginningOfSession(LocalDate.ofYearDay(2020, 42));
+        project.setName("Project 2");
+        project.setCaloriesPerDayPerPerson(2000);
+        projectDao.update(project);
+
+        project = projectDao.loadOneById(1);
+        assertThat(project.getName(), equalTo("Project 2"));
+        assertThat(project.getBeginningOfSession(), equalTo(LocalDate.ofYearDay(2020, 42)));
+        assertThat(project.getCaloriesPerDayPerPerson(), equalTo(2000));
+
+        projectDao.delete(project);
+        assertThat(projectDao.loadOneById(1), equalTo(null));
     }
 }

@@ -8,7 +8,7 @@ import java.util.List;
 
 @Dao
 public interface CropDao {
-    @Query("SELECT * from crops")
+    @Query("SELECT * FROM crops")
     List<Crop> loadAll();
 
     @Insert
