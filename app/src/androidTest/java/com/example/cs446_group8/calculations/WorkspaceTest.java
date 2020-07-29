@@ -1,6 +1,15 @@
-package com.example.cs446_group8.data;
+package com.example.cs446_group8.calculations;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+
+import com.example.cs446_group8.calculations.Workspace;
+import com.example.cs446_group8.data.Crop;
+import com.example.cs446_group8.data.CropType;
+import com.example.cs446_group8.data.HeadCounts;
+import com.example.cs446_group8.data.Project;
+import com.example.cs446_group8.data.ProjectWithSows;
+import com.example.cs446_group8.data.Sow;
+import com.example.cs446_group8.data.SowWithCrop;
 
 import org.junit.Before;
 import org.junit.Test;

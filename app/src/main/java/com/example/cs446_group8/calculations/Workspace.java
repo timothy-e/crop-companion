@@ -1,4 +1,10 @@
-package com.example.cs446_group8.data;
+package com.example.cs446_group8.calculations;
+
+import com.example.cs446_group8.data.Crop;
+import com.example.cs446_group8.data.CropType;
+import com.example.cs446_group8.data.Project;
+import com.example.cs446_group8.data.ProjectWithSows;
+import com.example.cs446_group8.data.SowWithCrop;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
