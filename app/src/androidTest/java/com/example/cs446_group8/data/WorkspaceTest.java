@@ -1,12 +1,7 @@
 package com.example.cs446_group8.data;
 
-import android.content.Context;
-
-import androidx.room.Room;
-import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,8 +12,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.closeTo;
+import static org.hamcrest.Matchers.equalTo;
 
 @RunWith(AndroidJUnit4.class)
 public final class WorkspaceTest {
@@ -51,8 +46,6 @@ public final class WorkspaceTest {
 
     @Test
     public void testSquareFeet() {
-        // assume that cal/day = 2500
-        // and G = 20%, S=20%, C = 20%
         Crop amaranth = Crop.builder()
                 .name("Amaranth leaves")
                 .type(CropType.Green)
@@ -77,33 +70,45 @@ public final class WorkspaceTest {
         Project project = Project.builder()
                 .name("My Project")
                 .beginningOfSession(LocalDate.of(2020, 8, 1))
+                .headCounts(
+                        new HeadCounts(1, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10)
+                )
                 .caloriesPerDayPerPerson(2500)
                 .caloriesFromColorful(60)
                 .caloriesFromStarch(20)
                 .caloriesFromGreen(20)
                 .build();
 
-        CropPlan cropPlan = CropPlan.builder()
-                .peopleJanuary(1)
-                .build();
+        ProjectWithSows projectWithSows = new ProjectWithSows(project, Arrays.asList(
+                new SowWithCrop(new Sow(1, 1), amaranth),
+                new SowWithCrop(new Sow(1, 1), arrowRoot),
+                new SowWithCrop(new Sow(1, 1), carrot)
+        ));
 
-        List<CropPlanWithCrop> cropPlanWithCrops = Arrays.asList(
-                new CropPlanWithCrop(cropPlan, amaranth),
-                new CropPlanWithCrop(cropPlan, arrowRoot),
-                new CropPlanWithCrop(cropPlan, carrot)
-        );
-
-        ProjectWithCropPlans projectWithCropPlans = new ProjectWithCropPlans(project, cropPlanWithCrops);
-
-        int greenSqft = workspace.getSquareFeetForType(projectWithCropPlans, CropType.Green);
-        int colorSqft = workspace.getSquareFeetForType(projectWithCropPlans, CropType.Colorful);
+        int greenSqft = workspace.getSquareFeetForType(projectWithSows, CropType.Green);
+        int colorSqft = workspace.getSquareFeetForType(projectWithSows, CropType.Colorful);
 
         assertThat(greenSqft, equalTo(150));
         assertThat(colorSqft, equalTo(150));
 
         // make sure that we're actually hitting our calorie goals
-        assertThat(greenSqft * (int) Workspace.getCaloriesPerSquareFoot(amaranth), equalTo(15_000));
-        assertThat(colorSqft * (int) (Workspace.getCaloriesPerSquareFoot(arrowRoot) + Workspace.getCaloriesPerSquareFoot(carrot)), equalTo(45_000));
+        assertThat(greenSqft * (int) Workspace.getCaloriesPerSquareFoot(amaranth), equalTo((int) (2500 * 30 * 0.2d)));
+        assertThat(colorSqft * (int) (Workspace.getCaloriesPerSquareFoot(arrowRoot) + Workspace.getCaloriesPerSquareFoot(carrot)), equalTo((int) (2500 * 30 * 0.6)));
+
+        // change some numbers
+        project.setCaloriesFromColorful(40);
+        project.setCaloriesFromGreen(40);
+        project.setCaloriesPerDayPerPerson(5000);
+
+        greenSqft = workspace.getSquareFeetForType(projectWithSows, CropType.Green);
+        colorSqft = workspace.getSquareFeetForType(projectWithSows, CropType.Colorful);
+
+        assertThat(greenSqft, equalTo(600));
+        assertThat(colorSqft, equalTo(200));
+
+        // make sure that we're actually hitting our calorie goals
+        assertThat(greenSqft * (int) Workspace.getCaloriesPerSquareFoot(amaranth), equalTo((int) (5000 * 30 * 0.4)));
+        assertThat(colorSqft * (int) (Workspace.getCaloriesPerSquareFoot(arrowRoot) + Workspace.getCaloriesPerSquareFoot(carrot)), equalTo((int) (5000 * 30 * 0.4)));
     }
 
     @Test
