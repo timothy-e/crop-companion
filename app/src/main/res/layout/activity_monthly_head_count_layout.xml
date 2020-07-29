@@ -121,7 +121,6 @@
             android:layout_margin="16dp"
             android:clickable="true"
             android:focusable="true"
-            android:rotation="180"
-            android:src="@drawable/abc_vector_test" />
+            android:src="@drawable/ic_save" />
     </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

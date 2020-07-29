@@ -50,7 +50,8 @@ public class MonthlyHeadCountActivity extends BaseActivity implements MonthlyHea
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mPresenter.nextButtonClicked(crop);
+                saveHeadcounts();
+                //mPresenter.saveButtonClicked();
             }
         });
 
@@ -89,6 +90,11 @@ public class MonthlyHeadCountActivity extends BaseActivity implements MonthlyHea
         textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
         return textView;
+    }
+
+    //todo: get db context, dao, and update headcounts
+    private void saveHeadcounts() {
+
     }
 
     private EditText createHeadcountInput(Context context, final int monthNum) {

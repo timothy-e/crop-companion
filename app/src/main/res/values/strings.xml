@@ -22,6 +22,7 @@
     <string name="crop_summary_harvest_date">Estimated Harvesting Date: %1$s</string>
     <string name="project_settings_label">Project Settings</string>
     <string name="project_name_label">Project Name</string>
+    <string name="project_start_date_label">Start Date</string>
     <string name="calories_per_day_per_person_label">Calories per day per person</string>
     <string name="calories_leafy_greens_label">Calories from leafy greens(%)</string>
     <string name="calories_colourful_veg_label">Calories from colourful vegetables (%)</string>

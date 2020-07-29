@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 
 import androidx.databinding.DataBindingUtil;
@@ -14,6 +15,10 @@ import com.example.cs446_group8.data.Project;
 import com.example.cs446_group8.data.ProjectDao;
 import com.example.cs446_group8.databinding.ActivityProjectSettingsLayoutBinding;
 import com.example.cs446_group8.ui.BaseActivity;
+
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 
 
 public class ProjectSettingsActivity extends BaseActivity implements ProjectSettingsContract {
@@ -85,6 +90,14 @@ public class ProjectSettingsActivity extends BaseActivity implements ProjectSett
         EditText nameField = (EditText) findViewById(R.id.name_field);
         String newName = nameField.getText().toString();
         curProject.setName(newName);
+
+        DatePicker datePickerField = (DatePicker) findViewById(R.id.start_date_field);
+        int month = datePickerField.getMonth();
+        int day = datePickerField.getDayOfMonth();
+        int year = datePickerField.getYear();
+        Date newStartDate = new Date(year, month, day);
+        LocalDate ld = newStartDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        curProject.setBeginningOfSession(ld);
 
         // grab and set calories per day per person
         EditText calPerDayPerPersonField = (EditText) findViewById(R.id.calories_per_day_per_person_field);
