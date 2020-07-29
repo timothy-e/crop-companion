@@ -11,9 +11,6 @@
             name="projectName"
             type="String" />
 
-        <variable
-            name="startDate"
-            type="java.time.LocalDate" />
 
         <variable
             name="calPerDayPerPerson"
@@ -137,7 +134,6 @@
                     android:layout_height="wrap_content"
                     android:datePickerMode="spinner"
                     android:calendarViewShown="false"
-                    android:text="@{startDate}"
                     android:gravity="center"
                     android:layout_gravity="center"
                     android:inputType="text" />

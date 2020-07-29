@@ -51,7 +51,12 @@ public class ProjectSettingsActivity extends BaseActivity implements ProjectSett
         if (projectId != -1 && projectName != "New Project") {
             curProject = projectDao.loadOneById(projectId);
             binding.setProjectName(curProject.getName());
-            //binding.setStartDate(curProject.getBeginningOfSession());
+
+            //LocalDate ld = curProject.getBeginningOfSession();
+            //Date converted = Date.from(ld.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+            //DatePicker dp = (DatePicker) findViewById(R.id.start_date_field);
+            //dp.updateDate(converted.getYear(), converted.getMonth(), converted.getDay());
+
             //binding.setCalPerDayPerPerson(curProject.getCaloriesPerDayPerPerson());
             //binding.setCalLeafyGreens(curProject.getCaloriesFromGreen());
             //binding.setCalColourful(curProject.getCaloriesFromColorful());
