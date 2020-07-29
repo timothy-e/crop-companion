@@ -8,6 +8,7 @@ public interface ProjectDetailsContract extends BaseContract {
         void addButtonClicked();
         void settingsButtonClicked();
         void headcountsButtonClicked();
+        void scheduleButtonClicked();
     }
 
 }

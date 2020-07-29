@@ -2,6 +2,7 @@ package com.example.cs446_group8.data;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
+import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.Index;
@@ -58,4 +59,8 @@ public final class Project {
      */
     @ColumnInfo(name = "calories_from_green")
     private int caloriesFromGreen;
+
+    @Embedded(prefix = "people_")
+    @NonNull
+    private HeadCounts headCounts;
 }

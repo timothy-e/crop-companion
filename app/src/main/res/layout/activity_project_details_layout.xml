@@ -10,6 +10,10 @@
         <variable
             name="projectName"
             type="String" />
+
+        <variable
+            name="startDate"
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -36,10 +40,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_arrow_back"
             android:backgroundTint="@android:color/white"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            android:paddingEnd="8dp"
-            android:paddingStart="8dp"
+            android:padding="8dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             android:layout_marginStart="16dp"
@@ -64,14 +65,16 @@
             android:id="@+id/settings_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             android:backgroundTint="@android:color/white"
             android:onClick="@{()->presenter.settingsButtonClicked()}"
             android:src="@drawable/ic_settings_gear"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:padding="8dp"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.028" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/title_divider" />
 
         <View
             android:id="@+id/title_divider"
@@ -137,12 +140,45 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <View
+            android:id="@+id/crops_divider"
             style="@style/divider_dark"
             app:layout_constraintTop_toBottomOf="@id/action_container"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"/>
 
+        <ListView
+            android:id="@+id/crops_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toTopOf="@id/start_text"
+            app:layout_constraintTop_toBottomOf="@+id/crops_divider"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/start_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{@string/project_start_date(startDate)}"
+            android:layout_marginBottom="32dp"
+            android:layout_marginStart="32dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@android:color/black"
+            app:layout_constraintBottom_toTopOf="@id/planting_schedule_button"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="Start Date: June 16, 2020"/>
+
+        <Button
+            android:id="@+id/planting_schedule_button"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:text="@string/planting_schedule_label"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -13,15 +13,24 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * A {@link ProjectWithSows} is a data type which represents the first half of the inner join from
+ * {@link Project} to {@link Sow} to {@link Crop}.
+ *
+ * This data type represents the join from {@link Project} to {@link Sow}.
+ *
+ * @see SowWithCrop
+ */
 @Getter
 @Setter
 @AllArgsConstructor(onConstructor = @__({@Ignore}))
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode
-public final class CropPlanWithCrop {
+public final class ProjectWithSows {
     @Embedded
-    private CropPlan cropPlan;
-    @Relation(parentColumn = "crop_id", entityColumn = "id")
-    private Crop crop;
+    private Project project;
+
+    @Relation(parentColumn = "id", entityColumn = "project_id", entity = Sow.class)
+    private List<SowWithCrop> sows;
 }
