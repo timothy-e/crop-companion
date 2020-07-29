@@ -17,7 +17,7 @@ import lombok.ToString;
  *
  * This data type represents the join from {@link Sow} to {@link Crop}.
  *
- * @see ProjectWithSow
+ * @see ProjectWithSows
  */
 @Getter
 @Setter

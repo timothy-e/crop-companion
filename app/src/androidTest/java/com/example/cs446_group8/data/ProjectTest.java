@@ -89,7 +89,7 @@ public final class ProjectTest {
         );
 
         assertThat(projectDao.loadAll().size(), equalTo(2));
-        ProjectWithSow projectWithSows = projectDao.loadOneByIdWithSows(1);
+        ProjectWithSows projectWithSows = projectDao.loadOneByIdWithSows(1);
         assertThat(projectWithSows.getProject().getId(), equalTo(1));
         assertThat(projectWithSows.getProject().getHeadCounts().getJanuary(), equalTo(10));
         assertThat(projectWithSows.getSows().size(), equalTo(2));

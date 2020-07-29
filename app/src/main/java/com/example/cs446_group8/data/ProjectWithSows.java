@@ -14,7 +14,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * A {@link ProjectWithSow} is a data type which represents the first half of the inner join from
+ * A {@link ProjectWithSows} is a data type which represents the first half of the inner join from
  * {@link Project} to {@link Sow} to {@link Crop}.
  *
  * This data type represents the join from {@link Project} to {@link Sow}.
@@ -27,7 +27,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode
-public final class ProjectWithSow {
+public final class ProjectWithSows {
     @Embedded
     private Project project;
 

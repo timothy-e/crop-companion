@@ -26,7 +26,7 @@ public interface ProjectDao {
      */
     @Transaction
     @Query("SELECT * FROM projects WHERE id = :id")
-    ProjectWithSow loadOneByIdWithSows(int id);
+    ProjectWithSows loadOneByIdWithSows(int id);
 
     @Update
     void update(Project project);
