@@ -4,7 +4,7 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 
 @Dao
-public interface ProjectCropDao {
+public interface SowDao {
     @Insert
-    void insertAll(ProjectCrop... projectCrops);
+    void insertAll(Sow... sows);
 }

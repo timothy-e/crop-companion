@@ -8,10 +8,12 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * The head counts for each month. This is intended to be embedded in {@link Project}.
+ */
 @Getter
 @Setter
 @AllArgsConstructor(onConstructor = @__({@Ignore}))
@@ -20,40 +22,44 @@ import lombok.ToString;
 @EqualsAndHashCode
 @Builder
 public final class HeadCounts {
-    @NonNull
-    @ColumnInfo(name = "people_january")
-    private Integer peopleJanuary;
-    @NonNull
-    @ColumnInfo(name = "people_february")
-    private Integer peopleFebruary;
-    @NonNull
-    @ColumnInfo(name = "people_march")
-    private Integer peopleMarch;
-    @NonNull
-    @ColumnInfo(name = "people_april")
-    private Integer peopleApril;
-    @NonNull
-    @ColumnInfo(name = "people_may")
-    private Integer peopleMay;
-    @NonNull
-    @ColumnInfo(name = "people_june")
-    private Integer peopleJune;
-    @NonNull
-    @ColumnInfo(name = "people_july")
-    private Integer peopleJuly;
-    @NonNull
-    @ColumnInfo(name = "people_august")
-    private Integer peopleAugust;
-    @NonNull
-    @ColumnInfo(name = "people_september")
-    private Integer peopleSeptember;
-    @NonNull
-    @ColumnInfo(name = "people_october")
-    private Integer peopleOctober;
-    @NonNull
-    @ColumnInfo(name = "people_november")
-    private Integer peopleNovember;
-    @NonNull
-    @ColumnInfo(name = "people_december")
-    private Integer peopleDecember;
+
+    @ColumnInfo(name = "january")
+    private int january;
+
+    @ColumnInfo(name = "february")
+    private int february;
+
+    @ColumnInfo(name = "march")
+    private int march;
+
+    @ColumnInfo(name = "april")
+    private int april;
+
+    @ColumnInfo(name = "may")
+    private int may;
+
+    @ColumnInfo(name = "june")
+    private int june;
+
+    @ColumnInfo(name = "july")
+    private int july;
+
+    @ColumnInfo(name = "august")
+    private int august;
+
+    @ColumnInfo(name = "september")
+    private int september;
+
+    @ColumnInfo(name = "october")
+    private int october;
+
+    @ColumnInfo(name = "november")
+    private int november;
+
+    @ColumnInfo(name = "december")
+    private int december;
+
+    public static HeadCounts empty() {
+        return new HeadCounts();
+    }
 }

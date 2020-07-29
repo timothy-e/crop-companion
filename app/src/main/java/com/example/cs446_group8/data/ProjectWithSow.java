@@ -1,6 +1,5 @@
 package com.example.cs446_group8.data;
 
-import androidx.annotation.NonNull;
 import androidx.room.Embedded;
 import androidx.room.Ignore;
 import androidx.room.Relation;
@@ -14,16 +13,24 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * A {@link ProjectWithSow} is a data type which represents the first half of the inner join from
+ * {@link Project} to {@link Sow} to {@link Crop}.
+ *
+ * This data type represents the join from {@link Project} to {@link Sow}.
+ *
+ * @see SowWithCrop
+ */
 @Getter
 @Setter
 @AllArgsConstructor(onConstructor = @__({@Ignore}))
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode
-public final class ProjectWithCrops {
+public final class ProjectWithSow {
     @Embedded
     private Project project;
 
-    @Relation(parentColumn = "id", entityColumn = "project_id", entity = ProjectCrop.class)
-    private List<ProjectCrop> projectCrops;
+    @Relation(parentColumn = "id", entityColumn = "project_id", entity = Sow.class)
+    private List<SowWithCrop> sows;
 }

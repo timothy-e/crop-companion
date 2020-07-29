@@ -14,7 +14,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Entity(tableName = "project_crops",
+/**
+ * A {@link Sow} happens when a {@link Crop} is used by a {@link Project}.
+ */
+@Entity(tableName = "sows",
         primaryKeys = {"project_id", "crop_id"},
         foreignKeys = {
                 @ForeignKey(entity = Project.class, parentColumns = "id", childColumns = "project_id", onDelete = ForeignKey.CASCADE),
@@ -32,7 +35,7 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 @Builder
-public final class ProjectCrop {
+public final class Sow {
     @ColumnInfo(name = "project_id")
     private int projectId;
     @ColumnInfo(name = "crop_id")

@@ -18,9 +18,15 @@ public interface ProjectDao {
     @Query("SELECT * FROM projects WHERE id = :id")
     Project loadOneById(int id);
 
+    /**
+     * A {@link Project} inner joined with {@link Sow} inner joined with {@link Crop}, returned as
+     * one query.
+     * @param id the id of the project to load
+     * @return the project, its associated sows and crops.
+     */
     @Transaction
     @Query("SELECT * FROM projects WHERE id = :id")
-    ProjectWithCrops loadOneByIdWithCropPlans(int id);
+    ProjectWithSow loadOneByIdWithSows(int id);
 
     @Update
     void update(Project project);
