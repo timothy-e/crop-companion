@@ -29,8 +29,6 @@ public interface MonthlyHeadCountContract extends BaseContract {
          */
         void changedHeadCount(int month, int headCount);
 
-        // todo: remove probably
-        void saveButtonClicked();
     }
 
 }

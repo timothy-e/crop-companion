@@ -160,14 +160,14 @@
             android:id="@+id/start_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{@string/project_start_date(startDate)}"
+            android:layout_marginStart="92dp"
             android:layout_marginBottom="32dp"
-            android:layout_marginStart="32dp"
+            android:text="@{@string/project_start_date(startDate)}"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="@android:color/black"
             app:layout_constraintBottom_toTopOf="@id/planting_schedule_button"
             app:layout_constraintStart_toStartOf="parent"
-            tools:text="Start Date: June 16, 2020"/>
+            tools:text="Start Date: June 16, 2020" />
 
         <Button
             android:id="@+id/planting_schedule_button"

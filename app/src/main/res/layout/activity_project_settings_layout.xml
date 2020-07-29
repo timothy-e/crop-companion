@@ -13,7 +13,7 @@
 
         <variable
             name="startDate"
-            type="java.util.Date" />
+            type="java.time.LocalDate" />
 
         <variable
             name="calPerDayPerPerson"

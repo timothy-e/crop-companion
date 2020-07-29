@@ -38,15 +38,6 @@ public class MonthlyHeadCountPresenter extends BasePresenter implements MonthlyH
         mView.setBedCount(month, getRequiredBeds(month, headCount));
     }
 
-    //todo : remove this probably
-    @Override
-    public void saveButtonClicked() {
-        //Intent intent = new Intent(context, ProjectDetailsActivity.class);
-        //Intent intent = new Intent(context, CropSummaryActivity.class);
-        //intent.putExtra(GlobalConstants.CROP_KEY, crop);
-        //mView.launchActivity(intent);
-    }
-
     private int getRequiredBeds(int month, int headCount) {
         return (int) Math.pow(headCount, 2); // sophisticated backend calculation
     }

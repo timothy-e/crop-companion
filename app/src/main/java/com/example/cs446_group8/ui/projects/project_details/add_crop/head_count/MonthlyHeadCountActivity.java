@@ -51,7 +51,6 @@ public class MonthlyHeadCountActivity extends BaseActivity implements MonthlyHea
             @Override
             public void onClick(View view) {
                 saveHeadcounts();
-                //mPresenter.saveButtonClicked();
             }
         });
 
@@ -92,7 +91,7 @@ public class MonthlyHeadCountActivity extends BaseActivity implements MonthlyHea
         return textView;
     }
 
-    //todo: get db context, dao, and update headcounts
+    //TODO: update project headcounts in db
     private void saveHeadcounts() {
 
     }
