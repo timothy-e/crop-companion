@@ -60,4 +60,7 @@ public final class Project {
      */
     @ColumnInfo(name = "calories_from_green")
     private int caloriesFromGreen;
+
+    @Embedded
+    private HeadCounts headCounts;
 }

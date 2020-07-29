@@ -1,10 +1,7 @@
 package com.example.cs446_group8.data;
 
 import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.ForeignKey;
 import androidx.room.Ignore;
-import androidx.room.Index;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,16 +12,6 @@ import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 
-@Entity(tableName = "head_counts",
-        primaryKeys = {"id"},
-        foreignKeys = {
-                @ForeignKey(entity = Project.class, parentColumns = "id", childColumns = "project_id", onDelete = ForeignKey.CASCADE)
-        },
-        indices = {
-                @Index(value = "project_id", unique = true),
-                @Index(value = "id", unique = true),
-                @Index(value = {"project_id", "id"}, unique = true),
-        })
 @Getter
 @Setter
 @AllArgsConstructor(onConstructor = @__({@Ignore}))
@@ -33,11 +20,6 @@ import lombok.ToString;
 @EqualsAndHashCode
 @Builder
 public final class HeadCounts {
-    @ColumnInfo(name = "id")
-    private int id;
-    @ColumnInfo(name = "project_id")
-    private int projectId;
-
     @NonNull
     @ColumnInfo(name = "people_january")
     private Integer peopleJanuary;

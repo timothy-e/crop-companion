@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "b0dd1affce810f94a10f562b0413c57a",
+    "identityHash": "785206385256d19f199592cfbcfaf4f4",
     "entities": [
       {
         "tableName": "crops",
@@ -85,7 +85,7 @@
       },
       {
         "tableName": "projects",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `beginning_of_session` INTEGER NOT NULL, `calories_per_day_per_person` INTEGER NOT NULL, `calories_from_colorful` INTEGER NOT NULL, `calories_from_starch` INTEGER NOT NULL, `calories_from_green` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `beginning_of_session` INTEGER NOT NULL, `calories_per_day_per_person` INTEGER NOT NULL, `calories_from_colorful` INTEGER NOT NULL, `calories_from_starch` INTEGER NOT NULL, `calories_from_green` INTEGER NOT NULL, `people_january` INTEGER, `people_february` INTEGER, `people_march` INTEGER, `people_april` INTEGER, `people_may` INTEGER, `people_june` INTEGER, `people_july` INTEGER, `people_august` INTEGER, `people_september` INTEGER, `people_october` INTEGER, `people_november` INTEGER, `people_december` INTEGER)",
         "fields": [
           {
             "fieldPath": "id",
@@ -128,6 +128,78 @@
             "columnName": "calories_from_green",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "headCounts.peopleJanuary",
+            "columnName": "people_january",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "headCounts.peopleFebruary",
+            "columnName": "people_february",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "headCounts.peopleMarch",
+            "columnName": "people_march",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "headCounts.peopleApril",
+            "columnName": "people_april",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "headCounts.peopleMay",
+            "columnName": "people_may",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "headCounts.peopleJune",
+            "columnName": "people_june",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "headCounts.peopleJuly",
+            "columnName": "people_july",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "headCounts.peopleAugust",
+            "columnName": "people_august",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "headCounts.peopleSeptember",
+            "columnName": "people_september",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "headCounts.peopleOctober",
+            "columnName": "people_october",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "headCounts.peopleNovember",
+            "columnName": "people_november",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "headCounts.peopleDecember",
+            "columnName": "people_december",
+            "affinity": "INTEGER",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -223,148 +295,12 @@
             ]
           }
         ]
-      },
-      {
-        "tableName": "head_counts",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `project_id` INTEGER NOT NULL, `people_january` INTEGER NOT NULL, `people_february` INTEGER NOT NULL, `people_march` INTEGER, `people_april` INTEGER, `people_may` INTEGER, `people_june` INTEGER, `people_july` INTEGER, `people_august` INTEGER, `people_september` INTEGER, `people_october` INTEGER, `people_november` INTEGER, `people_december` INTEGER, PRIMARY KEY(`id`), FOREIGN KEY(`project_id`) REFERENCES `projects`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
-        "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "projectId",
-            "columnName": "project_id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "peopleJanuary",
-            "columnName": "people_january",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "peopleFebruary",
-            "columnName": "people_february",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "peopleMarch",
-            "columnName": "people_march",
-            "affinity": "INTEGER",
-            "notNull": false
-          },
-          {
-            "fieldPath": "peopleApril",
-            "columnName": "people_april",
-            "affinity": "INTEGER",
-            "notNull": false
-          },
-          {
-            "fieldPath": "peopleMay",
-            "columnName": "people_may",
-            "affinity": "INTEGER",
-            "notNull": false
-          },
-          {
-            "fieldPath": "peopleJune",
-            "columnName": "people_june",
-            "affinity": "INTEGER",
-            "notNull": false
-          },
-          {
-            "fieldPath": "peopleJuly",
-            "columnName": "people_july",
-            "affinity": "INTEGER",
-            "notNull": false
-          },
-          {
-            "fieldPath": "peopleAugust",
-            "columnName": "people_august",
-            "affinity": "INTEGER",
-            "notNull": false
-          },
-          {
-            "fieldPath": "peopleSeptember",
-            "columnName": "people_september",
-            "affinity": "INTEGER",
-            "notNull": false
-          },
-          {
-            "fieldPath": "peopleOctober",
-            "columnName": "people_october",
-            "affinity": "INTEGER",
-            "notNull": false
-          },
-          {
-            "fieldPath": "peopleNovember",
-            "columnName": "people_november",
-            "affinity": "INTEGER",
-            "notNull": false
-          },
-          {
-            "fieldPath": "peopleDecember",
-            "columnName": "people_december",
-            "affinity": "INTEGER",
-            "notNull": false
-          }
-        ],
-        "primaryKey": {
-          "columnNames": [
-            "id"
-          ],
-          "autoGenerate": false
-        },
-        "indices": [
-          {
-            "name": "index_head_counts_project_id",
-            "unique": true,
-            "columnNames": [
-              "project_id"
-            ],
-            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_head_counts_project_id` ON `${TABLE_NAME}` (`project_id`)"
-          },
-          {
-            "name": "index_head_counts_id",
-            "unique": true,
-            "columnNames": [
-              "id"
-            ],
-            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_head_counts_id` ON `${TABLE_NAME}` (`id`)"
-          },
-          {
-            "name": "index_head_counts_project_id_id",
-            "unique": true,
-            "columnNames": [
-              "project_id",
-              "id"
-            ],
-            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_head_counts_project_id_id` ON `${TABLE_NAME}` (`project_id`, `id`)"
-          }
-        ],
-        "foreignKeys": [
-          {
-            "table": "projects",
-            "onDelete": "CASCADE",
-            "onUpdate": "NO ACTION",
-            "columns": [
-              "project_id"
-            ],
-            "referencedColumns": [
-              "id"
-            ]
-          }
-        ]
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b0dd1affce810f94a10f562b0413c57a')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '785206385256d19f199592cfbcfaf4f4')"
     ]
   }
 }
