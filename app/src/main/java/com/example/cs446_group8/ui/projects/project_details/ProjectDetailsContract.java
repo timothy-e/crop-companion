@@ -7,6 +7,7 @@ public interface ProjectDetailsContract extends BaseContract {
     interface Presenter extends BaseContract.Presenter {
         void addButtonClicked();
         void settingsButtonClicked();
+        void scheduleButtonClicked();
     }
 
 }
