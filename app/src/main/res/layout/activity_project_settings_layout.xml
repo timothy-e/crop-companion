@@ -10,6 +10,22 @@
         <variable
             name="projectName"
             type="String" />
+
+        <variable
+            name="calPerDayPerPerson"
+            type="int" />
+
+        <variable
+            name="calLeafyGreens"
+            type="int" />
+
+        <variable
+            name="calColourful"
+            type="int" />
+
+        <variable
+            name="calStarches"
+            type="int" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -125,6 +141,7 @@
                     android:layout_width="350dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:text="@{calPerDayPerPerson}"
                     android:gravity="center"
                     android:inputType="number" />
 
@@ -142,6 +159,7 @@
                     android:layout_width="350dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:text="@{calLeafyGreens}"
                     android:gravity="center"
                     android:inputType="number" />
 
@@ -159,6 +177,7 @@
                     android:layout_width="350dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:text="@{calColourful}"
                     android:gravity="center"
                     android:inputType="number" />
 
@@ -176,6 +195,7 @@
                     android:layout_width="350dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:text="@{calStarches}"
                     android:gravity="center"
                     android:inputType="number" />
 
