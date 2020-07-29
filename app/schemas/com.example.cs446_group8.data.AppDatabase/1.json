@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "ddfaa037982e2e2e80ba402d8ae13b1c",
+    "identityHash": "b0dd1affce810f94a10f562b0413c57a",
     "entities": [
       {
         "tableName": "crops",
@@ -226,7 +226,7 @@
       },
       {
         "tableName": "head_counts",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `project_id` INTEGER NOT NULL, `people_january` INTEGER, `people_february` INTEGER, `people_march` INTEGER, `people_april` INTEGER, `people_may` INTEGER, `people_june` INTEGER, `people_july` INTEGER, `people_august` INTEGER, `people_september` INTEGER, `people_october` INTEGER, `people_november` INTEGER, `people_december` INTEGER, PRIMARY KEY(`id`), FOREIGN KEY(`project_id`) REFERENCES `projects`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `project_id` INTEGER NOT NULL, `people_january` INTEGER NOT NULL, `people_february` INTEGER NOT NULL, `people_march` INTEGER, `people_april` INTEGER, `people_may` INTEGER, `people_june` INTEGER, `people_july` INTEGER, `people_august` INTEGER, `people_september` INTEGER, `people_october` INTEGER, `people_november` INTEGER, `people_december` INTEGER, PRIMARY KEY(`id`), FOREIGN KEY(`project_id`) REFERENCES `projects`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -244,13 +244,13 @@
             "fieldPath": "peopleJanuary",
             "columnName": "people_january",
             "affinity": "INTEGER",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "peopleFebruary",
             "columnName": "people_february",
             "affinity": "INTEGER",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "peopleMarch",
@@ -364,7 +364,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ddfaa037982e2e2e80ba402d8ae13b1c')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b0dd1affce810f94a10f562b0413c57a')"
     ]
   }
 }

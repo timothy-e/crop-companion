@@ -24,7 +24,6 @@ public final class ProjectWithCrops {
     @Embedded
     private Project project;
 
-    @NonNull
     @Relation(parentColumn = "id", entityColumn = "project_id", entity = HeadCounts.class)
     private HeadCounts headCounts;
 
