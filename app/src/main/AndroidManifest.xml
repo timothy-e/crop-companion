@@ -29,6 +29,7 @@
         <activity android:name=".ui.projects.project_details.add_crop.AddCropActivity" />
         <activity android:name=".ui.projects.project_settings.ProjectSettingsActivity" />
         <activity android:name=".ui.projects.project_details.add_crop.crop_summary.CropSummaryActivity" />
+        <activity android:name=".ui.projects.project_details.planting_schedule.PlantingScheduleActivity" />
     </application>
 
 </manifest>
