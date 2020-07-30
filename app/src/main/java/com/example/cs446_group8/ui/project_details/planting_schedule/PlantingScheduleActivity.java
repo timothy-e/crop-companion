@@ -1,9 +1,8 @@
-package com.example.cs446_group8.ui.projects.project_details.planting_schedule;
+package com.example.cs446_group8.ui.project_details.planting_schedule;
 
 import android.os.Bundle;
 
 import com.example.cs446_group8.R;
-import com.example.cs446_group8.data.Crop;
 import com.example.cs446_group8.databinding.ActivityPlantingScheduleLayoutBinding;
 import com.example.cs446_group8.ui.BaseActivity;
 

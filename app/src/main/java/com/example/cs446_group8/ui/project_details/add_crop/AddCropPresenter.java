@@ -1,11 +1,11 @@
-package com.example.cs446_group8.ui.projects.project_details.add_crop;
+package com.example.cs446_group8.ui.project_details.add_crop;
 
 import android.content.Context;
 import android.content.Intent;
 
 import com.example.cs446_group8.GlobalConstants;
 import com.example.cs446_group8.ui.BasePresenter;
-import com.example.cs446_group8.ui.projects.project_details.add_crop.head_count.MonthlyHeadCountActivity;
+import com.example.cs446_group8.ui.project_details.add_crop.head_count.MonthlyHeadCountActivity;
 
 import androidx.annotation.NonNull;
 

@@ -1,8 +1,7 @@
-package com.example.cs446_group8.ui.projects.project_details;
+package com.example.cs446_group8.ui.project_details;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 import com.example.cs446_group8.R;
 import com.example.cs446_group8.databinding.ActivityProjectDetailsLayoutBinding;

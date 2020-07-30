@@ -1,4 +1,4 @@
-package com.example.cs446_group8.ui.projects.project_details.add_crop;
+package com.example.cs446_group8.ui.project_details.add_crop;
 
 import android.os.Bundle;
 import android.text.TextUtils;

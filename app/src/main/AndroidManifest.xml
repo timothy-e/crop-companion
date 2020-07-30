@@ -22,14 +22,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.projects.project_details.add_crop.head_count.MonthlyHeadCountActivity" />
+        <activity android:name=".ui.project_details.add_crop.head_count.MonthlyHeadCountActivity" />
         <activity
-            android:name=".ui.projects.project_details.ProjectDetailsActivity"
+            android:name=".ui.project_details.ProjectDetailsActivity"
             android:launchMode="singleTop"/>
-        <activity android:name=".ui.projects.project_details.add_crop.AddCropActivity" />
-        <activity android:name=".ui.projects.project_settings.ProjectSettingsActivity" />
-        <activity android:name=".ui.projects.project_details.add_crop.crop_summary.CropSummaryActivity" />
-        <activity android:name=".ui.projects.project_details.planting_schedule.PlantingScheduleActivity" />
+        <activity android:name=".ui.project_details.add_crop.AddCropActivity" />
+        <activity android:name=".ui.project_settings.ProjectSettingsActivity" />
+        <activity android:name=".ui.project_details.add_crop.crop_summary.CropSummaryActivity" />
+        <activity android:name=".ui.project_details.planting_schedule.PlantingScheduleActivity" />
     </application>
 
 </manifest>

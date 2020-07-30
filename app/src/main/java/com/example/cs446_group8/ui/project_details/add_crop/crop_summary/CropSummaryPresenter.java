@@ -1,10 +1,10 @@
-package com.example.cs446_group8.ui.projects.project_details.add_crop.crop_summary;
+package com.example.cs446_group8.ui.project_details.add_crop.crop_summary;
 
 import android.content.Context;
 import android.content.Intent;
 
 import com.example.cs446_group8.ui.BasePresenter;
-import com.example.cs446_group8.ui.projects.project_details.ProjectDetailsActivity;
+import com.example.cs446_group8.ui.project_details.ProjectDetailsActivity;
 
 import androidx.annotation.NonNull;
 
