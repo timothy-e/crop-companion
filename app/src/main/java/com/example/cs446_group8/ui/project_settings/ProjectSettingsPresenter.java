@@ -1,4 +1,4 @@
-package com.example.cs446_group8.ui.projects.project_settings;
+package com.example.cs446_group8.ui.project_settings;
 
 import android.content.Context;
 

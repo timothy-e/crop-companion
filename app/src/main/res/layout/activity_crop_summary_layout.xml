@@ -34,7 +34,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.projects.project_details.add_crop.crop_summary.CropSummaryActivity">
+        tools:context=".ui.project_details.add_crop.crop_summary.CropSummaryActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/title_container"

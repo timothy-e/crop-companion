@@ -1,4 +1,4 @@
-package com.example.cs446_group8.ui.projects.project_details.planting_schedule;
+package com.example.cs446_group8.ui.project_details.planting_schedule;
 
 import android.content.Context;
 

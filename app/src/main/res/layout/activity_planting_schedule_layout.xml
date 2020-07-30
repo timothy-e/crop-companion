@@ -5,7 +5,7 @@
     <data>
         <variable
             name="presenter"
-            type="com.example.cs446_group8.ui.projects.project_details.planting_schedule.PlantingScheduleContract.Presenter" />
+            type="com.example.cs446_group8.ui.project_details.planting_schedule.PlantingScheduleContract.Presenter" />
 
         <variable
             name="selectedWeek"
@@ -15,7 +15,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.projects.project_details.planting_schedule.PlantingScheduleActivity">
+        tools:context=".ui.project_details.planting_schedule.PlantingScheduleActivity">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/date_bar"

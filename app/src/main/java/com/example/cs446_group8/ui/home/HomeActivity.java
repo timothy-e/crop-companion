@@ -1,15 +1,13 @@
 package com.example.cs446_group8.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.example.cs446_group8.R;
 import com.example.cs446_group8.ui.BaseActivity;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
+import com.example.cs446_group8.ui.project_details.ProjectDetailsActivity;
 
 public class HomeActivity extends BaseActivity implements HomeContract {
 
@@ -22,14 +20,8 @@ public class HomeActivity extends BaseActivity implements HomeContract {
         setContentView(R.layout.activity_home_layout);
         mPresenter = new HomePresenter(this, this);
 
-        BottomNavigationView bottomNavigation = findViewById(R.id.bottom_navigation);
-        bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                return mPresenter.navigationTabClicked(item.getItemId());
-            }
-        });
-        bottomNavigation.setSelectedItemId(R.id.page_1);
+        Button button = findViewById(R.id.go_btn);
+        button.setOnClickListener(view -> jumpToProject());
 
     }
 
@@ -45,11 +37,8 @@ public class HomeActivity extends BaseActivity implements HomeContract {
         mPresenter.pause();
     }
 
-
-    @Override
-    public void openFragment(Fragment fragment) {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.container, fragment);
-        ft.commit();
+    public void jumpToProject() {
+        Intent intent = new Intent(this, ProjectDetailsActivity.class);
+        startActivity(intent);
     }
 }

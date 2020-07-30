@@ -1,4 +1,4 @@
-package com.example.cs446_group8.ui.projects.project_details;
+package com.example.cs446_group8.ui.project_details;
 
 import com.example.cs446_group8.ui.BaseContract;
 

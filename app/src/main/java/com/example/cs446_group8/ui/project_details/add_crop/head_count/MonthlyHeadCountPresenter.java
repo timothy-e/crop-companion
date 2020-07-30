@@ -1,14 +1,10 @@
-package com.example.cs446_group8.ui.projects.project_details.add_crop.head_count;
+package com.example.cs446_group8.ui.project_details.add_crop.head_count;
 
 import android.content.Context;
-import android.content.Intent;
 
 import androidx.annotation.NonNull;
 
-import com.example.cs446_group8.GlobalConstants;
 import com.example.cs446_group8.ui.BasePresenter;
-import com.example.cs446_group8.ui.projects.project_details.ProjectDetailsActivity;
-import com.example.cs446_group8.ui.projects.project_details.add_crop.crop_summary.CropSummaryActivity;
 
 public class MonthlyHeadCountPresenter extends BasePresenter implements MonthlyHeadCountContract.Presenter {
 
