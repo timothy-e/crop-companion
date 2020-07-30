@@ -48,14 +48,14 @@
             android:id="@+id/headcounts_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="80dp"
+            android:layout_margin="16dp"
             android:backgroundTint="@android:color/white"
             android:onClick="@{()->presenter.headcountsButtonClicked()}"
             android:src="@drawable/ic_headcounts"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.027" />
+            android:padding="8dp"
+            app:layout_constraintBottom_toTopOf="@id/title_divider"
+            app:layout_constraintEnd_toStartOf="@id/settings_button"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/settings_button"
