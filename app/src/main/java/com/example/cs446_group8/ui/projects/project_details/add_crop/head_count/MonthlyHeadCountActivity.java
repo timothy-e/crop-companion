@@ -46,11 +46,11 @@ public class MonthlyHeadCountActivity extends BaseActivity implements MonthlyHea
             }
         });
 
-        FloatingActionButton nextButton = findViewById(R.id.floatingActionButton);
-        nextButton.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton saveButton = findViewById(R.id.floatingActionButton);
+        saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mPresenter.nextButtonClicked(crop);
+                saveHeadcounts();
             }
         });
 
@@ -89,6 +89,11 @@ public class MonthlyHeadCountActivity extends BaseActivity implements MonthlyHea
         textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
         return textView;
+    }
+
+    //TODO: update project headcounts in db
+    private void saveHeadcounts() {
+
     }
 
     private EditText createHeadcountInput(Context context, final int monthNum) {

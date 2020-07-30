@@ -5,6 +5,8 @@ import android.content.Intent;
 
 import com.example.cs446_group8.ui.BasePresenter;
 import com.example.cs446_group8.ui.projects.project_details.add_crop.AddCropActivity;
+
+import com.example.cs446_group8.ui.projects.project_details.add_crop.head_count.MonthlyHeadCountActivity;
 import com.example.cs446_group8.ui.projects.project_details.planting_schedule.PlantingScheduleActivity;
 import com.example.cs446_group8.ui.projects.project_settings.ProjectSettingsActivity;
 
@@ -42,6 +44,11 @@ public class ProjectDetailsPresenter extends BasePresenter implements ProjectDet
     }
 
     @Override
+    public void headcountsButtonClicked() {
+        Intent intent = new Intent(context, MonthlyHeadCountActivity.class);
+        mView.launchActivity(intent);
+    }
+
     public void scheduleButtonClicked() {
         Intent intent = new Intent(context, PlantingScheduleActivity.class);
         mView.launchActivity(intent);

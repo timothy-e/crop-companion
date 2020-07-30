@@ -10,6 +10,23 @@
         <variable
             name="projectName"
             type="String" />
+
+
+        <variable
+            name="calPerDayPerPerson"
+            type="int" />
+
+        <variable
+            name="calLeafyGreens"
+            type="int" />
+
+        <variable
+            name="calColourful"
+            type="int" />
+
+        <variable
+            name="calStarches"
+            type="int" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -51,16 +68,16 @@
             android:id="@+id/save_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="352dp"
+            android:layout_marginStart="336dp"
+            android:backgroundTint="@android:color/white"
+            android:onClick="@{()->presenter.saveButtonClicked()}"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:paddingEnd="8dp"
+            android:paddingStart="8dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
-            android:backgroundTint="@android:color/white"
-            android:paddingStart="8dp"
-            android:paddingTop="8dp"
-            android:paddingEnd="8dp"
-            android:paddingBottom="8dp"
             android:src="@drawable/ic_save"
-            android:onClick="@{()->presenter.saveButtonClicked()}"
             app:layout_constraintBottom_toTopOf="@id/title_divider"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -102,6 +119,25 @@
                     android:layout_gravity="center"
                     android:inputType="text" />
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/project_start_date_label"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp" />
+
+                <DatePicker
+                    android:layout_width="350dp"
+                    android:id="@+id/start_date_field"
+                    android:layout_height="wrap_content"
+                    android:datePickerMode="spinner"
+                    android:calendarViewShown="false"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:inputType="text" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -125,6 +161,7 @@
                     android:layout_width="350dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:text="@{calPerDayPerPerson}"
                     android:gravity="center"
                     android:inputType="number" />
 
@@ -142,6 +179,7 @@
                     android:layout_width="350dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:text="@{calLeafyGreens}"
                     android:gravity="center"
                     android:inputType="number" />
 
@@ -159,6 +197,7 @@
                     android:layout_width="350dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:text="@{calColourful}"
                     android:gravity="center"
                     android:inputType="number" />
 
@@ -176,6 +215,7 @@
                     android:layout_width="350dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:text="@{calStarches}"
                     android:gravity="center"
                     android:inputType="number" />
 
