@@ -14,7 +14,6 @@ public class ProjectDetailsActivity extends BaseActivity implements ProjectDetai
 
     private ProjectDetailsContract.Presenter mPresenter;
     private String projectName = "Project 1"; //todo replace with actual project name passed from previous activity
-    private String projectStartDate = "June 16, 2020"; //todo replace with actual start date of project
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +24,6 @@ public class ProjectDetailsActivity extends BaseActivity implements ProjectDetai
 
         binding.setProjectName(projectName);
         binding.setPresenter(mPresenter);
-        binding.setStartDate(projectStartDate);
 
         binding.backButton.setOnClickListener(view -> onBackPressed());
 

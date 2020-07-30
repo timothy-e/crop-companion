@@ -8,7 +8,7 @@
             type="com.example.cs446_group8.ui.projects.project_details.planting_schedule.PlantingScheduleContract.Presenter" />
 
         <variable
-            name="projectName"
+            name="selectedWeek"
             type="String" />
     </data>
 
@@ -68,7 +68,8 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/calendar_container"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -78,18 +79,39 @@
                 android:id="@+id/calendar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
                 app:cv_dayViewResource="@layout/calendar_day"
                 app:cv_monthHeaderResource="@layout/calendar_header"
                 app:cv_orientation="horizontal"
                 app:cv_outDateStyle="endOfGrid"
                 app:cv_scrollMode="paged" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/events_rv"
-                android:layout_width="match_parent"
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <FrameLayout
+            android:id="@+id/crop_header_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintTop_toBottomOf="@id/calendar_container">
+
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="false" />
-        </LinearLayout>
+                android:text="@{@string/schedule_selected_week(selectedWeek)}"
+                android:textColor="@android:color/black"
+                android:layout_gravity="center"
+                tools:text="Selected Week: 15 June, 2020" />
+        </FrameLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/events_rv"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:nestedScrollingEnabled="false"
+            app:layout_constraintTop_toBottomOf="@id/crop_header_container"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

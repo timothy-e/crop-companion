@@ -10,10 +10,6 @@
         <variable
             name="projectName"
             type="String" />
-
-        <variable
-            name="startDate"
-            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -52,14 +48,14 @@
             android:id="@+id/headcounts_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="80dp"
+            android:layout_margin="16dp"
             android:backgroundTint="@android:color/white"
             android:onClick="@{()->presenter.headcountsButtonClicked()}"
             android:src="@drawable/ic_headcounts"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.027" />
+            android:padding="8dp"
+            app:layout_constraintBottom_toTopOf="@id/title_divider"
+            app:layout_constraintEnd_toStartOf="@id/settings_button"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/settings_button"
@@ -152,22 +148,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toTopOf="@id/start_text"
+            app:layout_constraintBottom_toTopOf="@id/planting_schedule_button"
             app:layout_constraintTop_toBottomOf="@+id/crops_divider"
             app:layout_constraintVertical_bias="0.0" />
-
-        <TextView
-            android:id="@+id/start_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="92dp"
-            android:layout_marginBottom="32dp"
-            android:text="@{@string/project_start_date(startDate)}"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="@android:color/black"
-            app:layout_constraintBottom_toTopOf="@id/planting_schedule_button"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:text="Start Date: June 16, 2020" />
 
         <Button
             android:id="@+id/planting_schedule_button"

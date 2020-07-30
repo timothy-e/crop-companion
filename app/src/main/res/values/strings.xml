@@ -29,5 +29,6 @@
     <string name="calories_starches_label">Calories from starches (%)</string>
     <string name="project_start_date">Start Date: %1$s</string>
     <string name="planting_schedule_label">Planting Schedule</string>
-
+    <string name="schedule_selected_week">Selected Week: %1$s</string>
+    <string name="amount_beds_to_plant"># of beds to plant</string>
 </resources>

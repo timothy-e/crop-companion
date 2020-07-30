@@ -3,6 +3,7 @@ package com.example.cs446_group8.ui.projects.project_details.planting_schedule;
 import android.os.Bundle;
 
 import com.example.cs446_group8.R;
+import com.example.cs446_group8.data.Crop;
 import com.example.cs446_group8.databinding.ActivityPlantingScheduleLayoutBinding;
 import com.example.cs446_group8.ui.BaseActivity;
 
@@ -10,9 +11,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
-import java.util.Locale;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -26,15 +25,17 @@ import com.kizitonwose.calendarview.ui.MonthHeaderFooterBinder;
 import com.kizitonwose.calendarview.ui.ViewContainer;
 
 import androidx.databinding.DataBindingUtil;
-import kotlin.Unit;
-import kotlin.jvm.functions.Function1;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 public class PlantingScheduleActivity extends BaseActivity implements PlantingScheduleContract {
 
     private ActivityPlantingScheduleLayoutBinding binding;
     private PlantingScheduleContract.Presenter mPresenter;
+    private ScheduleAdapter scheduleAdapter;
 
     private LocalDate selectedDate = null;
+    private String selectedWeek = "";
     private DateTimeFormatter monthTitleFormatter = DateTimeFormatter.ofPattern("MMMM");
 
     class DayViewContainer extends ViewContainer {
@@ -66,7 +67,12 @@ public class PlantingScheduleActivity extends BaseActivity implements PlantingSc
         binding = DataBindingUtil.setContentView(this, R.layout.activity_planting_schedule_layout);
         mPresenter = new PlantingSchedulePresenter(this, this);
 
-        //binding.setPresenter(mPresenter);
+        binding.setSelectedWeek(selectedWeek);
+
+        scheduleAdapter = new ScheduleAdapter();
+        binding.eventsRv.setLayoutManager(new LinearLayoutManager(this));
+        binding.eventsRv.setItemAnimator(new DefaultItemAnimator());
+        binding.eventsRv.setAdapter(scheduleAdapter);
 
         //todo replace with YearMonth objects of actual starting and ending months for project
         YearMonth startingMonth = YearMonth.now();
@@ -81,6 +87,8 @@ public class PlantingScheduleActivity extends BaseActivity implements PlantingSc
         binding.calendar.scrollToMonth(activeMonth);
 
         binding.calendar.setDayBinder(new DayBinder<DayViewContainer>() {
+            //todo display total number of individual crops to be planted,total beds planted so far including this week, for each week row
+            //todo highlight entire week when a day cell is selected
             @NonNull
             @Override
             public DayViewContainer create(@NonNull View view) {
@@ -159,7 +167,9 @@ public class PlantingScheduleActivity extends BaseActivity implements PlantingSc
     }
 
     private void updateAdapterForDate(@Nullable LocalDate date) {
-
+        //scheduleAdapter.croplist =
+        //todo set the list in the adapter to a list of the crops coupled with their amount, to be planted on the week of the selected date
+        // get this from whatever structure backend gives as the schedule of crops
     }
 
 }
