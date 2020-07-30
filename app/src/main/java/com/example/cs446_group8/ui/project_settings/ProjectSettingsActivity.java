@@ -38,18 +38,18 @@ public class ProjectSettingsActivity extends BaseActivity implements ProjectSett
         projectDao = db.projectDao();
 
         Intent mIntent = getIntent();
-        //projectId = mIntent.getIntExtra("projectId", -1);
-        //projectName = mIntent.getStringExtra("projectName", "New Project");
+        projectId = mIntent.getIntExtra("projectId", -1);
 
         ActivityProjectSettingsLayoutBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_project_settings_layout);
         mPresenter = new ProjectSettingsPresenter(this, this);
 
-        binding.setProjectName(projectName);
         curProject = new Project();
 
         // existing project
-        if (projectId != -1 && projectName != "New Project") {
+        if (projectId != -1) {
+            // todo (PR) : just bringing your attention here
             curProject = projectDao.loadOneById(projectId);
+            binding.setProjectName(projectName);
             binding.setProjectName(curProject.getName());
 
             LocalDate ld = curProject.getBeginningOfSession();
@@ -125,7 +125,7 @@ public class ProjectSettingsActivity extends BaseActivity implements ProjectSett
         int newCalStarches = Integer.parseInt(calStarchesField.getText().toString());
         curProject.setCaloriesFromStarch(newCalStarches);
 
-        // save operation
+        // todo (PR) : save operation (double check)
         projectDao.update(curProject);
     }
 }

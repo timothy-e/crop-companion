@@ -27,6 +27,10 @@ public class AddProjectActivity extends BaseActivity implements AddProjectContra
         ActivityAddProjectLayoutBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_add_project_layout);
         mPresenter = new AddProjectPresenter(this, this);
 
+        // todo (PR): get db instance
+
+        // todo (PR): get projectsDAO so we can insert later
+
         binding.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -55,7 +59,8 @@ public class AddProjectActivity extends BaseActivity implements AddProjectContra
     }
 
     protected void insertProjectToDb() {
-        // todo: grab all fields and construct a Project out of it
+        // todo (PR): construct a Project obj out of all the fields we grabbed here
+
         // grab and set name
         EditText nameField = (EditText) findViewById(R.id.name_field);
         String newName = nameField.getText().toString();
@@ -83,10 +88,14 @@ public class AddProjectActivity extends BaseActivity implements AddProjectContra
         EditText calStarchesField = (EditText) findViewById(R.id.calories_starches_field);
         int newCalStarches = Integer.parseInt(calStarchesField.getText().toString());
 
-        // todo: insert to db, need to get id of inserted record back so we can pass this
-        //  to the next activity (headcounts)
+        // todo (PR) : insert Project obj to db via projectDAO, need to get id of inserted record
+        //  back so we can pass this to the next activity (headcounts)
 
-        mPresenter.saveButtonClicked();
+        // placeholder for now
+        int newlyInsertedProjectId = 0;
+
+        // pass newly created ID of Project obj to the method call below (update signatures as well ofc)
+        mPresenter.saveButtonClicked(newlyInsertedProjectId);
     }
 
 

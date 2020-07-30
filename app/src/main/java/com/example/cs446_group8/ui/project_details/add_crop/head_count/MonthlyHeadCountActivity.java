@@ -24,6 +24,8 @@ public class MonthlyHeadCountActivity extends BaseActivity implements MonthlyHea
     private TextView[] monthTextViews = new TextView[12];
     private EditText[] headCountEditTexts = new EditText[12];
     private TextView[] bedsRequiredTextViews = new TextView[12];
+    private int projectId;
+    private String fromActivity;
 
     private String crop;
 
@@ -36,6 +38,10 @@ public class MonthlyHeadCountActivity extends BaseActivity implements MonthlyHea
 
         Intent intent = getIntent();
         crop = intent.getStringExtra(GlobalConstants.CROP_KEY);
+        projectId = intent.getIntExtra("projectId", -1);
+        fromActivity = intent.getStringExtra("FROM_ACTIVITY");
+
+        // todo (PR) : get db instance here
 
         ImageView backButton = findViewById(R.id.back_button);
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -73,6 +79,21 @@ public class MonthlyHeadCountActivity extends BaseActivity implements MonthlyHea
             monthsContainer.addView(monthContainer);
         }
 
+        // we came from ProjectDetails, so we have an existing Project with headcount values so
+        //      query for it in here
+        // if we came from AddProject we have no headcount values to query for so we don't enter
+        //      this block.
+        if (!fromActivity.equals("AddProject")) {
+
+            // todo (PR) : query for project WHERE id = projectId
+
+            // todo (PR): by now you'll have the Project obj from the DB, but we need to go through and
+            //     update the UI input fields with the headcount values we got from the DB
+            //     You don't have to do this, but ask Tim about it because he designed this screen
+
+        }
+
+
         // calculate beds required
         mPresenter.changedHeadCount(0, getHeadCount(0));
     }
@@ -90,10 +111,14 @@ public class MonthlyHeadCountActivity extends BaseActivity implements MonthlyHea
         return textView;
     }
 
-    //TODO: update project headcounts in db
+    // todo (PR) : update project headcounts in db
     private void saveHeadcounts() {
 
-        mPresenter.saveButtonClicked();
+        // todo (PR) : i think over here you can just loop through 0-11 (months) and call getHeadCount
+        //   to get the headcount for each month, and then you can update it in the db for project with
+        //   id = projectId
+
+        mPresenter.saveButtonClicked(projectId, fromActivity);
     }
 
     private EditText createHeadcountInput(Context context, final int monthNum) {

@@ -32,23 +32,24 @@ public class ProjectDetailsPresenter extends BasePresenter implements ProjectDet
     }
 
     @Override
-    public void addButtonClicked() {
+    public void addButtonClicked(int projectId) {
         Intent intent = new Intent(context, AddCropActivity.class);
+        intent.putExtra("projectId", projectId);
         mView.launchActivity(intent);
     }
 
     @Override
-    public void settingsButtonClicked() {
-        // todo: need to check if headcounts exist, if headcounts dont exist, add dialog box saying
-        //  user needs to enter headcounts first
-
+    public void settingsButtonClicked(int projectId) {
         Intent intent = new Intent(context, ProjectSettingsActivity.class);
+        intent.putExtra("projectId", projectId);
         mView.launchActivity(intent);
     }
 
     @Override
-    public void headcountsButtonClicked() {
+    public void headcountsButtonClicked(int projectId) {
         Intent intent = new Intent(context, MonthlyHeadCountActivity.class);
+        intent.putExtra("projectId", projectId);
+        intent.putExtra("FROM_ACTIVITY", "ProjectDetails");
         mView.launchActivity(intent);
     }
 

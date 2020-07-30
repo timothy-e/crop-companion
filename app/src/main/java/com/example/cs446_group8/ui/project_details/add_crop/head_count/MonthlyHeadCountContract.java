@@ -29,7 +29,7 @@ public interface MonthlyHeadCountContract extends BaseContract {
          */
         void changedHeadCount(int month, int headCount);
 
-        void saveButtonClicked();
+        void saveButtonClicked(int projectId, String fromActivity);
     }
 
 }
