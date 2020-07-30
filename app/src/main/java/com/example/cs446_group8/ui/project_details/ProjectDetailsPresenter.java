@@ -39,6 +39,9 @@ public class ProjectDetailsPresenter extends BasePresenter implements ProjectDet
 
     @Override
     public void settingsButtonClicked() {
+        // todo: need to check if headcounts exist, if headcounts dont exist, add dialog box saying
+        //  user needs to enter headcounts first
+
         Intent intent = new Intent(context, ProjectSettingsActivity.class);
         mView.launchActivity(intent);
     }
