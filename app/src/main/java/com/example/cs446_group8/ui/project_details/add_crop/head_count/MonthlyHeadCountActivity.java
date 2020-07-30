@@ -26,7 +26,6 @@ public class MonthlyHeadCountActivity extends BaseActivity implements MonthlyHea
     private TextView[] bedsRequiredTextViews = new TextView[12];
 
     private String crop;
-    //t
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +93,7 @@ public class MonthlyHeadCountActivity extends BaseActivity implements MonthlyHea
     //TODO: update project headcounts in db
     private void saveHeadcounts() {
 
+        mPresenter.saveButtonClicked();
     }
 
     private EditText createHeadcountInput(Context context, final int monthNum) {

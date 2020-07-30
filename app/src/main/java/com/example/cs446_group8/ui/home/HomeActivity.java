@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.example.cs446_group8.R;
 import com.example.cs446_group8.ui.BaseActivity;
@@ -22,6 +23,14 @@ public class HomeActivity extends BaseActivity implements HomeContract {
 
         Button button = findViewById(R.id.go_btn);
         button.setOnClickListener(view -> jumpToProject());
+
+        ImageView btn = findViewById(R.id.add_button);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.addButtonClicked();
+            }
+        });
 
     }
 

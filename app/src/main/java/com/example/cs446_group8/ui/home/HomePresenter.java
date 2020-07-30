@@ -1,8 +1,10 @@
 package com.example.cs446_group8.ui.home;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.example.cs446_group8.ui.BasePresenter;
+import com.example.cs446_group8.ui.add_project.AddProjectActivity;
 
 import androidx.annotation.NonNull;
 
@@ -23,5 +25,11 @@ public class HomePresenter extends BasePresenter implements HomeContract.Present
     @Override
     public void pause() {
 
+    }
+
+    @Override
+    public void addButtonClicked(){
+        Intent intent = new Intent(context, AddProjectActivity.class);
+        mView.launchActivity(intent);
     }
 }

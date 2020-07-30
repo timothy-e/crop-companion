@@ -1,10 +1,12 @@
 package com.example.cs446_group8.ui.project_details.add_crop.head_count;
 
 import android.content.Context;
+import android.content.Intent;
 
 import androidx.annotation.NonNull;
 
 import com.example.cs446_group8.ui.BasePresenter;
+import com.example.cs446_group8.ui.project_settings.ProjectSettingsActivity;
 
 public class MonthlyHeadCountPresenter extends BasePresenter implements MonthlyHeadCountContract.Presenter {
 
@@ -36,5 +38,11 @@ public class MonthlyHeadCountPresenter extends BasePresenter implements MonthlyH
 
     private int getRequiredBeds(int month, int headCount) {
         return (int) Math.pow(headCount, 2); // sophisticated backend calculation
+    }
+
+    @Override
+    public void saveButtonClicked() {
+        Intent intent = new Intent(context, ProjectSettingsActivity.class);
+        mView.launchActivity(intent);
     }
 }
