@@ -5,7 +5,6 @@ import com.example.cs446_group8.ui.BaseContract;
 public interface AddCropContract extends BaseContract {
 
     interface Presenter extends BaseContract.Presenter {
-        void cropSelected(String crop);
     }
 
 }

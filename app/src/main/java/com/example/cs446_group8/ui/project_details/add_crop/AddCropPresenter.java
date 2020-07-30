@@ -27,9 +27,4 @@ public class AddCropPresenter extends BasePresenter implements AddCropContract.P
     public void pause() {
 
     }
-
-    @Override
-    public void cropSelected(String crop) {
-
-    }
 }
