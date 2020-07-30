@@ -25,7 +25,7 @@ public class ProjectSettingsActivity extends BaseActivity implements ProjectSett
 
     private ProjectSettingsContract.Presenter mPresenter;
     private String projectName = "Project Name";
-    private int projectId = 0;
+    private int projectId = -1;
     private ProjectDao projectDao;
     private Project curProject;
 
@@ -52,15 +52,15 @@ public class ProjectSettingsActivity extends BaseActivity implements ProjectSett
             curProject = projectDao.loadOneById(projectId);
             binding.setProjectName(curProject.getName());
 
-            //LocalDate ld = curProject.getBeginningOfSession();
-            //Date converted = Date.from(ld.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
-            //DatePicker dp = (DatePicker) findViewById(R.id.start_date_field);
-            //dp.updateDate(converted.getYear(), converted.getMonth(), converted.getDay());
+            LocalDate ld = curProject.getBeginningOfSession();
+            Date converted = Date.from(ld.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+            DatePicker dp = (DatePicker) findViewById(R.id.start_date_field);
+            dp.updateDate(converted.getYear(), converted.getMonth(), converted.getDay());
 
-            //binding.setCalPerDayPerPerson(curProject.getCaloriesPerDayPerPerson());
-            //binding.setCalLeafyGreens(curProject.getCaloriesFromGreen());
-            //binding.setCalColourful(curProject.getCaloriesFromColorful());
-            //binding.setCalStarches(curProject.getCaloriesFromStarch());
+            binding.setCalPerDayPerPerson(String.valueOf(curProject.getCaloriesPerDayPerPerson()));
+            binding.setCalLeafyGreens(String.valueOf(curProject.getCaloriesFromGreen()));
+            binding.setCalColourful(String.valueOf(curProject.getCaloriesFromColorful()));
+            binding.setCalStarches(String.valueOf(curProject.getCaloriesFromStarch()));
         }
 
         binding.setPresenter(mPresenter);
