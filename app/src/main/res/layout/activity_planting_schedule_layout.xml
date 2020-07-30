@@ -8,7 +8,7 @@
             type="com.example.cs446_group8.ui.projects.project_details.planting_schedule.PlantingScheduleContract.Presenter" />
 
         <variable
-            name="projectName"
+            name="selectedWeek"
             type="String" />
     </data>
 
@@ -83,6 +83,21 @@
                 app:cv_orientation="horizontal"
                 app:cv_outDateStyle="endOfGrid"
                 app:cv_scrollMode="paged" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:background="@android:color/darker_gray">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{@string/schedule_selected_week(selectedWeek)}"
+                    android:textColor="@android:color/black"
+                    android:layout_gravity="center"
+                    tools:text="Selected Week: 15 June, 2020" />
+            </FrameLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/events_rv"

@@ -35,6 +35,7 @@ public class PlantingScheduleActivity extends BaseActivity implements PlantingSc
     private PlantingScheduleContract.Presenter mPresenter;
 
     private LocalDate selectedDate = null;
+    private String selectedWeek = "";
     private DateTimeFormatter monthTitleFormatter = DateTimeFormatter.ofPattern("MMMM");
 
     class DayViewContainer extends ViewContainer {
@@ -66,7 +67,7 @@ public class PlantingScheduleActivity extends BaseActivity implements PlantingSc
         binding = DataBindingUtil.setContentView(this, R.layout.activity_planting_schedule_layout);
         mPresenter = new PlantingSchedulePresenter(this, this);
 
-        //binding.setPresenter(mPresenter);
+        binding.setSelectedWeek(selectedWeek);
 
         //todo replace with YearMonth objects of actual starting and ending months for project
         YearMonth startingMonth = YearMonth.now();
