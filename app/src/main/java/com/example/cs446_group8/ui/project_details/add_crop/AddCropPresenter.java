@@ -30,8 +30,6 @@ public class AddCropPresenter extends BasePresenter implements AddCropContract.P
 
     @Override
     public void cropSelected(String crop) {
-        Intent intent = new Intent(context, MonthlyHeadCountActivity.class);
-        intent.putExtra(GlobalConstants.CROP_KEY, crop);
-        mView.launchActivity(intent);
+
     }
 }
