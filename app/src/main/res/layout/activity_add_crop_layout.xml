@@ -5,12 +5,12 @@
     <data>
         <variable
             name="presenter"
-            type="com.example.cs446_group8.ui.projects.project_details.add_crop.AddCropContract.Presenter" />
+            type="com.example.cs446_group8.ui.project_details.add_crop.AddCropContract.Presenter" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.projects.project_details.add_crop.AddCropActivity">
+        tools:context=".ui.project_details.add_crop.AddCropActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/title_container"

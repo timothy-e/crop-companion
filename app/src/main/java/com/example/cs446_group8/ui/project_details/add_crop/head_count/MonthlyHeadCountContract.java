@@ -1,4 +1,4 @@
-package com.example.cs446_group8.ui.projects.project_details.add_crop.head_count;
+package com.example.cs446_group8.ui.project_details.add_crop.head_count;
 
 import com.example.cs446_group8.ui.BaseContract;
 

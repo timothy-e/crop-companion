@@ -2,9 +2,7 @@ package com.example.cs446_group8.ui.home;
 
 import android.content.Context;
 
-import com.example.cs446_group8.R;
 import com.example.cs446_group8.ui.BasePresenter;
-import com.example.cs446_group8.ui.projects.ProjectsFragment;
 
 import androidx.annotation.NonNull;
 
@@ -25,19 +23,5 @@ public class HomePresenter extends BasePresenter implements HomeContract.Present
     @Override
     public void pause() {
 
-    }
-
-    @Override
-    public boolean navigationTabClicked(int itemId) {
-        switch(itemId) {
-            case R.id.page_1 :
-                mView.openFragment(new ProjectsFragment());
-                return true;
-            case R.id.page_2 :
-                //todo open settings fragment
-                return true;
-            default:
-                return false;
-        }
     }
 }

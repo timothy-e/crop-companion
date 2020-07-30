@@ -1,4 +1,4 @@
-package com.example.cs446_group8.ui.projects.project_details.add_crop.crop_summary;
+package com.example.cs446_group8.ui.project_details.add_crop.crop_summary;
 
 import android.content.Intent;
 import android.os.Bundle;
