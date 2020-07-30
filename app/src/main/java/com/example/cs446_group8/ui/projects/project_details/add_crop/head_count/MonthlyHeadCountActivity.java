@@ -46,8 +46,8 @@ public class MonthlyHeadCountActivity extends BaseActivity implements MonthlyHea
             }
         });
 
-        FloatingActionButton nextButton = findViewById(R.id.floatingActionButton);
-        nextButton.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton saveButton = findViewById(R.id.floatingActionButton);
+        saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 saveHeadcounts();
