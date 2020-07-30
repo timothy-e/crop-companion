@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 
 import com.example.cs446_group8.GlobalConstants;
 import com.example.cs446_group8.ui.BasePresenter;
+import com.example.cs446_group8.ui.projects.project_details.ProjectDetailsActivity;
 import com.example.cs446_group8.ui.projects.project_details.add_crop.crop_summary.CropSummaryActivity;
 
 public class MonthlyHeadCountPresenter extends BasePresenter implements MonthlyHeadCountContract.Presenter {
@@ -35,13 +36,6 @@ public class MonthlyHeadCountPresenter extends BasePresenter implements MonthlyH
         // TODO: let the backend know about this
 
         mView.setBedCount(month, getRequiredBeds(month, headCount));
-    }
-
-    @Override
-    public void nextButtonClicked(String crop) {
-        Intent intent = new Intent(context, CropSummaryActivity.class);
-        intent.putExtra(GlobalConstants.CROP_KEY, crop);
-        mView.launchActivity(intent);
     }
 
     private int getRequiredBeds(int month, int headCount) {
