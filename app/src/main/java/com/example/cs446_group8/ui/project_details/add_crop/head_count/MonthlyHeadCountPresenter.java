@@ -6,7 +6,7 @@ import android.content.Intent;
 import androidx.annotation.NonNull;
 
 import com.example.cs446_group8.ui.BasePresenter;
-import com.example.cs446_group8.ui.project_settings.ProjectSettingsActivity;
+import com.example.cs446_group8.ui.project_details.ProjectDetailsActivity;
 
 public class MonthlyHeadCountPresenter extends BasePresenter implements MonthlyHeadCountContract.Presenter {
 
@@ -42,7 +42,7 @@ public class MonthlyHeadCountPresenter extends BasePresenter implements MonthlyH
 
     @Override
     public void saveButtonClicked() {
-        Intent intent = new Intent(context, ProjectSettingsActivity.class);
+        Intent intent = new Intent(context, ProjectDetailsActivity.class);
         mView.launchActivity(intent);
     }
 }
