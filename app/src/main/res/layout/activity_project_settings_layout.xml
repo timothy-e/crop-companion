@@ -14,19 +14,19 @@
 
         <variable
             name="calPerDayPerPerson"
-            type="int" />
+            type="String" />
 
         <variable
             name="calLeafyGreens"
-            type="int" />
+            type="String" />
 
         <variable
             name="calColourful"
-            type="int" />
+            type="String" />
 
         <variable
             name="calStarches"
-            type="int" />
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -97,7 +97,7 @@
 
             <LinearLayout
                 android:id="@+id/name_section"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -122,7 +122,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:text="@string/project_start_date_label"
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
@@ -144,7 +144,6 @@
                 android:id="@+id/calories_section"
                 android:layout_width="match_parent"
                 android:layout_height="358dp"
-                android:layout_marginTop="20dp"
                 android:orientation="vertical"
                 app:layout_constraintTop_toBottomOf="@+id/name_field">
 
@@ -168,7 +167,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="15dp"
                     android:text="@string/calories_leafy_greens_label"
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
@@ -186,7 +185,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="15dp"
                     android:text="@string/calories_colourful_veg_label"
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
@@ -204,7 +203,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="15dp"
                     android:text="@string/calories_starches_label"
                     android:textAlignment="center"
                     android:textColor="@android:color/black"

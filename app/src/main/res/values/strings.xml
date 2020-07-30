@@ -31,4 +31,5 @@
     <string name="planting_schedule_label">Planting Schedule</string>
     <string name="schedule_selected_week">Selected Week: %1$s</string>
     <string name="amount_beds_to_plant"># of beds to plant</string>
+    <string name="headcount_button_tooltip">Modify monthly headcounts</string>
 </resources>
