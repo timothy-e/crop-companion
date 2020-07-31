@@ -29,7 +29,7 @@ import lombok.ToString;
 @Builder
 public final class Crop {
     @PrimaryKey
-    private int id;
+    private long id;
 
     @ColumnInfo(name = "name")
     @NonNull

@@ -31,7 +31,7 @@ import lombok.ToString;
 @Builder
 public final class Project {
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private long id;
 
     @ColumnInfo(name = "name")
     @NonNull

@@ -32,21 +32,21 @@ public class ProjectDetailsPresenter extends BasePresenter implements ProjectDet
     }
 
     @Override
-    public void addButtonClicked(int projectId) {
+    public void addButtonClicked(long projectId) {
         Intent intent = new Intent(context, AddCropActivity.class);
         intent.putExtra("projectId", projectId);
         mView.launchActivity(intent);
     }
 
     @Override
-    public void settingsButtonClicked(int projectId) {
+    public void settingsButtonClicked(long projectId) {
         Intent intent = new Intent(context, ProjectSettingsActivity.class);
         intent.putExtra("projectId", projectId);
         mView.launchActivity(intent);
     }
 
     @Override
-    public void headcountsButtonClicked(int projectId) {
+    public void headcountsButtonClicked(long projectId) {
         Intent intent = new Intent(context, MonthlyHeadCountActivity.class);
         intent.putExtra("projectId", projectId);
         intent.putExtra("FROM_ACTIVITY", "ProjectDetails");

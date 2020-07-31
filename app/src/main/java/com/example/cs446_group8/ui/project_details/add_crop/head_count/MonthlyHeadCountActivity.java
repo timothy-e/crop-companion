@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import com.example.cs446_group8.GlobalConstants;
 import com.example.cs446_group8.R;
+import com.example.cs446_group8.data.AppDatabase;
+import com.example.cs446_group8.data.ProjectDao;
 import com.example.cs446_group8.ui.BaseActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -24,10 +26,12 @@ public class MonthlyHeadCountActivity extends BaseActivity implements MonthlyHea
     private TextView[] monthTextViews = new TextView[12];
     private EditText[] headCountEditTexts = new EditText[12];
     private TextView[] bedsRequiredTextViews = new TextView[12];
-    private int projectId;
+    private long projectId;
     private String fromActivity;
 
     private String crop;
+
+    private ProjectDao projectDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,26 +42,17 @@ public class MonthlyHeadCountActivity extends BaseActivity implements MonthlyHea
 
         Intent intent = getIntent();
         crop = intent.getStringExtra(GlobalConstants.CROP_KEY);
-        projectId = intent.getIntExtra("projectId", -1);
+        projectId = intent.getLongExtra("projectId", GlobalConstants.ID_DOES_NOT_EXIST);
         fromActivity = intent.getStringExtra("FROM_ACTIVITY");
 
-        // todo (PR) : get db instance here
+        AppDatabase db = AppDatabase.getInstance(getApplicationContext());
+        projectDao = db.projectDao();
 
         ImageView backButton = findViewById(R.id.back_button);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
+        backButton.setOnClickListener(view -> onBackPressed());
 
         FloatingActionButton saveButton = findViewById(R.id.floatingActionButton);
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                saveHeadcounts();
-            }
-        });
+        saveButton.setOnClickListener(view -> saveHeadcounts());
 
         LinearLayout monthsContainer = findViewById(R.id.months_container);
 

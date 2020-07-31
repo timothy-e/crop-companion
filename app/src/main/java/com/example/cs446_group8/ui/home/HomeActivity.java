@@ -25,12 +25,7 @@ public class HomeActivity extends BaseActivity implements HomeContract {
         button.setOnClickListener(view -> jumpToProject());
 
         ImageView btn = findViewById(R.id.add_button);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mPresenter.addButtonClicked();
-            }
-        });
+        btn.setOnClickListener(v -> mPresenter.addButtonClicked());
 
     }
 

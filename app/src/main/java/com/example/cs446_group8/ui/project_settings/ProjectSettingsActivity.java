@@ -3,12 +3,12 @@ package com.example.cs446_group8.ui.project_settings;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
 import androidx.databinding.DataBindingUtil;
 
+import com.example.cs446_group8.GlobalConstants;
 import com.example.cs446_group8.R;
 import com.example.cs446_group8.data.AppDatabase;
 import com.example.cs446_group8.data.Project;
@@ -17,15 +17,13 @@ import com.example.cs446_group8.databinding.ActivityProjectSettingsLayoutBinding
 import com.example.cs446_group8.ui.BaseActivity;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 
 
 public class ProjectSettingsActivity extends BaseActivity implements ProjectSettingsContract {
 
     private ProjectSettingsContract.Presenter mPresenter;
     private String projectName = "Project Name";
-    private int projectId = -1;
+    private long projectId = -1;
     private ProjectDao projectDao;
     private Project curProject;
 
@@ -38,7 +36,7 @@ public class ProjectSettingsActivity extends BaseActivity implements ProjectSett
         projectDao = db.projectDao();
 
         Intent mIntent = getIntent();
-        projectId = mIntent.getIntExtra("projectId", -1);
+        projectId = mIntent.getLongExtra("projectId", GlobalConstants.ID_DOES_NOT_EXIST);
 
         ActivityProjectSettingsLayoutBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_project_settings_layout);
         mPresenter = new ProjectSettingsPresenter(this, this);
@@ -46,16 +44,14 @@ public class ProjectSettingsActivity extends BaseActivity implements ProjectSett
         curProject = new Project();
 
         // existing project
-        if (projectId != -1) {
-            // todo (PR) : just bringing your attention here
+        if (projectId != GlobalConstants.ID_DOES_NOT_EXIST) {
             curProject = projectDao.loadOneById(projectId);
             binding.setProjectName(projectName);
             binding.setProjectName(curProject.getName());
 
             LocalDate ld = curProject.getBeginningOfSession();
-            Date converted = Date.from(ld.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
             DatePicker dp = (DatePicker) findViewById(R.id.start_date_field);
-            dp.updateDate(converted.getYear(), converted.getMonth(), converted.getDay());
+            dp.updateDate(ld.getYear(), ld.getMonthValue(), ld.getDayOfMonth());
 
             binding.setCalPerDayPerPerson(String.valueOf(curProject.getCaloriesPerDayPerPerson()));
             binding.setCalLeafyGreens(String.valueOf(curProject.getCaloriesFromGreen()));
@@ -65,18 +61,8 @@ public class ProjectSettingsActivity extends BaseActivity implements ProjectSett
 
         binding.setPresenter(mPresenter);
 
-        binding.backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
-        binding.saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                saveProject();
-            }
-        });
+        binding.backButton.setOnClickListener(view -> onBackPressed());
+        binding.saveButton.setOnClickListener(view -> saveProject());
     }
 
     @Override
@@ -101,9 +87,8 @@ public class ProjectSettingsActivity extends BaseActivity implements ProjectSett
         int month = datePickerField.getMonth();
         int day = datePickerField.getDayOfMonth();
         int year = datePickerField.getYear();
-        Date newStartDate = new Date(year, month, day);
-        LocalDate ld = newStartDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        curProject.setBeginningOfSession(ld);
+        LocalDate newStartDate = LocalDate.of(year, month, day);
+        curProject.setBeginningOfSession(newStartDate);
 
         // grab and set calories per day per person
         EditText calPerDayPerPersonField = (EditText) findViewById(R.id.calories_per_day_per_person_field);
@@ -125,7 +110,6 @@ public class ProjectSettingsActivity extends BaseActivity implements ProjectSett
         int newCalStarches = Integer.parseInt(calStarchesField.getText().toString());
         curProject.setCaloriesFromStarch(newCalStarches);
 
-        // todo (PR) : save operation (double check)
         projectDao.update(curProject);
     }
 }

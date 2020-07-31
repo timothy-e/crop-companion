@@ -8,6 +8,10 @@ import android.widget.EditText;
 import androidx.databinding.DataBindingUtil;
 
 import com.example.cs446_group8.R;
+import com.example.cs446_group8.data.AppDatabase;
+import com.example.cs446_group8.data.HeadCounts;
+import com.example.cs446_group8.data.Project;
+import com.example.cs446_group8.data.ProjectDao;
 import com.example.cs446_group8.databinding.ActivityAddProjectLayoutBinding;
 import com.example.cs446_group8.ui.BaseActivity;
 
@@ -19,6 +23,7 @@ import java.util.Date;
 public class AddProjectActivity extends BaseActivity implements AddProjectContract {
 
     private AddProjectContract.Presenter mPresenter;
+    private ProjectDao projectDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,22 +32,11 @@ public class AddProjectActivity extends BaseActivity implements AddProjectContra
         ActivityAddProjectLayoutBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_add_project_layout);
         mPresenter = new AddProjectPresenter(this, this);
 
-        // todo (PR): get db instance
+        AppDatabase db = AppDatabase.getInstance(getApplicationContext());
+        projectDao = db.projectDao();
 
-        // todo (PR): get projectsDAO so we can insert later
-
-        binding.backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
-        binding.saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                insertProjectToDb();
-            }
-        });
+        binding.backButton.setOnClickListener(view -> onBackPressed());
+        binding.saveButton.setOnClickListener(view -> insertProjectToDb());
 
     }
 
@@ -59,18 +53,15 @@ public class AddProjectActivity extends BaseActivity implements AddProjectContra
     }
 
     protected void insertProjectToDb() {
-        // todo (PR): construct a Project obj out of all the fields we grabbed here
-
         // grab and set name
         EditText nameField = (EditText) findViewById(R.id.name_field);
         String newName = nameField.getText().toString();
 
         DatePicker datePickerField = (DatePicker) findViewById(R.id.start_date_field);
-        int month = datePickerField.getMonth();
+        int month = datePickerField.getMonth() + 1;
         int day = datePickerField.getDayOfMonth();
         int year = datePickerField.getYear();
-        Date newStartDate = new Date(year, month, day);
-        LocalDate ld = newStartDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate newStartDate = LocalDate.of(year, month, day);
 
         // grab and set calories per day per person
         EditText calPerDayPerPersonField = (EditText) findViewById(R.id.calories_per_day_per_person_field);
@@ -88,11 +79,15 @@ public class AddProjectActivity extends BaseActivity implements AddProjectContra
         EditText calStarchesField = (EditText) findViewById(R.id.calories_starches_field);
         int newCalStarches = Integer.parseInt(calStarchesField.getText().toString());
 
-        // todo (PR) : insert Project obj to db via projectDAO, need to get id of inserted record
-        //  back so we can pass this to the next activity (headcounts)
-
-        // placeholder for now
-        int newlyInsertedProjectId = 0;
+        long newlyInsertedProjectId = projectDao.insert(Project.builder()
+                .name(newName)
+                .beginningOfSession(newStartDate)
+                .caloriesPerDayPerPerson(newCalPerDayPerPerson)
+                .caloriesFromGreen(newCalLeafyGreens)
+                .caloriesFromColorful(newCalColourful)
+                .caloriesFromStarch(newCalStarches)
+                .headCounts(HeadCounts.empty())
+                .build());
 
         // pass newly created ID of Project obj to the method call below (update signatures as well ofc)
         mPresenter.saveButtonClicked(newlyInsertedProjectId);

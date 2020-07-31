@@ -3,7 +3,11 @@ package com.example.cs446_group8.ui.project_details;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.cs446_group8.GlobalConstants;
 import com.example.cs446_group8.R;
+import com.example.cs446_group8.data.AppDatabase;
+import com.example.cs446_group8.data.ProjectDao;
+import com.example.cs446_group8.data.ProjectWithSows;
 import com.example.cs446_group8.databinding.ActivityProjectDetailsLayoutBinding;
 import com.example.cs446_group8.ui.BaseActivity;
 
@@ -12,21 +16,22 @@ import androidx.databinding.DataBindingUtil;
 public class ProjectDetailsActivity extends BaseActivity implements ProjectDetailsContract {
 
     private ProjectDetailsContract.Presenter mPresenter;
-    private String projectName = "Project 1"; //todo replace with actual project name passed from previous activity
-    private int projectId;
+    private String projectName;
+    private long projectId;
+    private ProjectDao projectDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Intent mIntent = getIntent();
-        projectId = mIntent.getIntExtra("projectId", -1);
+        projectId = mIntent.getLongExtra("projectId", GlobalConstants.ID_DOES_NOT_EXIST);
 
-        // todo (PR): get database instance
+        AppDatabase db = AppDatabase.getInstance(getApplicationContext());
+        projectDao = db.projectDao();
 
-        // todo (PR): query for Project WHERE id = projectId (you'll also need to grab the crops associated with the project)
-
-        // todo (PR): once the Project obj is received, get the project name and assign it to the member projectName
+        ProjectWithSows projectWithSows = projectDao.loadOneByIdWithSows(projectId);
+        projectName = projectWithSows.getProject().getName();
 
         ActivityProjectDetailsLayoutBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_project_details_layout);
         mPresenter = new ProjectDetailsPresenter(this, this);
