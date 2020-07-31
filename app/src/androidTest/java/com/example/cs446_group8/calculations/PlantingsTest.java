@@ -132,6 +132,10 @@ public final class PlantingsTest {
                 .orElse(null);
         CropSchedule amaranthSchedule2 = schedule2.get(0);
 
+        assertThat(amaranthSchedule1, notNullValue());
+        assertThat(arrowRootsSchedule1, notNullValue());
+        assertThat(amaranthSchedule2, notNullValue());
+
         assertThat(amaranthSchedule1.firstPlanting, equalTo(startDate1.minus(2, ChronoUnit.WEEKS)));
         assertThat(arrowRootsSchedule1.firstPlanting, equalTo(startDate1.minus(3, ChronoUnit.WEEKS)));
         assertThat(amaranthSchedule2.firstPlanting, equalTo(startDate2.minus(2, ChronoUnit.WEEKS)));
@@ -141,14 +145,22 @@ public final class PlantingsTest {
         assertThat(amaranthSchedule2.weeklyPlantingAmounts.size(), equalTo(52 + 2));
 
         assertThat(
-                amaranthSchedule1.weeklyPlantingAmounts.subList(0, 5),
-                equalTo(Arrays.asList(1500, 3000, 3000, 3000, 3000)));
+                amaranthSchedule1.weeklyPlantingAmounts.subList(0, 3),
+                equalTo(Arrays.asList(1500, 1500, 1500)));
         assertThat(
-                amaranthSchedule2.weeklyPlantingAmounts.subList(0, 5),
-                equalTo(Arrays.asList(3000, 6000, 6000, 6000, 6000)));
+                amaranthSchedule2.weeklyPlantingAmounts.subList(0, 3),
+                equalTo(Arrays.asList(3000, 3000, 3000)));
         assertThat(
-                arrowRootsSchedule1.weeklyPlantingAmounts.subList(0, 5),
-                equalTo(Arrays.asList(750, 1500, 1500, 1500, 1500)));
+                arrowRootsSchedule1.weeklyPlantingAmounts.subList(0, 3),
+                equalTo(Arrays.asList(750, 750, 750)));
+
+        assertThat(
+                plantings1.getMonthlySquareFeet().subList(0, 4),
+                equalTo(Arrays.asList(2250, 2250, 2250, 2250)));
+        assertThat(
+                plantings2.getMonthlySquareFeet().subList(0, 4),
+                equalTo(Arrays.asList(3000, 3000, 3000, 3000)));
+
 
         // If we update calorie ratios, we still get correct data
         Project project = projectDao.loadOneById(1);
@@ -168,13 +180,19 @@ public final class PlantingsTest {
                 .findAny()
                 .orElse(null);
 
-        assertThat(
-                amaranthSchedule1.weeklyPlantingAmounts.subList(0, 5),
-                equalTo(Arrays.asList(3000, 6000, 6000, 6000, 6000)));
-        assertThat(
-                arrowRootsSchedule1.weeklyPlantingAmounts.subList(0, 5),
-                equalTo(Arrays.asList(375, 150, 150, 150, 150)));
+        assertThat(amaranthSchedule1, notNullValue());
+        assertThat(arrowRootsSchedule1, notNullValue());
 
+        assertThat(
+                amaranthSchedule1.weeklyPlantingAmounts.subList(0, 3),
+                equalTo(Arrays.asList(3000, 3000, 3000)));
+        assertThat(
+                arrowRootsSchedule1.weeklyPlantingAmounts.subList(0, 3),
+                equalTo(Arrays.asList(375, 375, 375)));
+
+        assertThat(
+                plantings1.getMonthlySquareFeet().subList(0, 4),
+                equalTo(Arrays.asList(3375, 3375, 3375, 3375)));
 
         // if we add more crops, we still get correct data
         cropDao.insertAll(
@@ -206,14 +224,23 @@ public final class PlantingsTest {
                 .orElse(null);
 
         assertThat(kaleSchedule1, notNullValue());
+        assertThat(amaranthSchedule1, notNullValue());
+        assertThat(arrowRootsSchedule1, notNullValue());
         assertThat(kaleSchedule1.getFirstPlanting(), equalTo(startDate1.minus(1, ChronoUnit.WEEKS)));
 
         assertThat(
-                kaleSchedule1.weeklyPlantingAmounts.subList(0, 5),
-                equalTo(Arrays.asList(1500, 3000, 3000, 3000, 3000)));
+                kaleSchedule1.weeklyPlantingAmounts.subList(0, 3),
+                equalTo(Arrays.asList(1500, 1500, 1500)));
         assertThat(
-                amaranthSchedule1.weeklyPlantingAmounts.subList(0, 5),
-                equalTo(Arrays.asList(1500, 3000, 3000, 3000, 3000)));
+                amaranthSchedule1.weeklyPlantingAmounts.subList(0, 3),
+                equalTo(Arrays.asList(1500, 1500, 1500)));
+        assertThat(
+                arrowRootsSchedule1.weeklyPlantingAmounts.subList(0, 3),
+                equalTo(Arrays.asList(375, 375, 375)));
+
+        assertThat(
+                plantings1.getMonthlySquareFeet().subList(0, 4),
+                equalTo(Arrays.asList(3375, 3375, 3375, 3375)));
     }
 
 }
