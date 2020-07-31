@@ -3,6 +3,9 @@ package com.example.cs446_group8.data;
 import androidx.room.ColumnInfo;
 import androidx.room.Ignore;
 
+import java.util.Arrays;
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -61,5 +64,12 @@ public final class HeadCounts {
 
     public static HeadCounts empty() {
         return new HeadCounts();
+    }
+
+    public List<Integer> toList() {
+        return Arrays.asList(
+                getJanuary(), getFebruary(), getMarch(), getApril(), getMay(), getJune(),
+                getJuly(), getAugust(), getSeptember(), getOctober(), getNovember(), getDecember()
+        );
     }
 }
