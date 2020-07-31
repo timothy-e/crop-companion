@@ -31,8 +31,7 @@ public class Plantings {
     private ProjectDao projectDao;
     private int projectId;
 
-    public Plantings(Context context, int projectId) {
-        AppDatabase db = AppDatabase.getInstance(context);
+    public Plantings(AppDatabase db, int projectId) {
         projectDao = db.projectDao();
         this.projectId = projectId;
     }

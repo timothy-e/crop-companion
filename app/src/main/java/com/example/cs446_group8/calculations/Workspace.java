@@ -45,7 +45,7 @@ public class Workspace {
         int excess = 0;
 
         for (int i = 0; i < 12; i++) {
-            int monthSquareFeet = initialSquareFeet * monthlyHeadCounts.get(i) / monthlyHeadCounts.get(0) + excess;
+            int monthSquareFeet = initialSquareFeet * monthlyHeadCounts.get(i) + excess;
             int weeks = getWeeksInMonth(i);
 
             int currentSquareFeet = 0;

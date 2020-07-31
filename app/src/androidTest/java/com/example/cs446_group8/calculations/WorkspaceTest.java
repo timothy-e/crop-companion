@@ -125,7 +125,7 @@ public final class WorkspaceTest {
     }
 
     private void testWeeklySquareFeet(List<Integer> headCounts, int initialSquareFeet) {
-        int totalSquareFeet = headCounts.stream().mapToInt(Integer::intValue).sum() * initialSquareFeet / headCounts.get(0);
+        int totalSquareFeet = headCounts.stream().mapToInt(Integer::intValue).sum() * initialSquareFeet;
         List<Integer> weekly = Workspace.getWeeklySquareFeet(headCounts, initialSquareFeet);
 
         // rounded to 25 sqft, so make sure that it adds up to within 25 square feet
@@ -138,7 +138,7 @@ public final class WorkspaceTest {
         int month = 0;
         while(i < 52) {
             int weeks = 4 + (month % 3 == 0? 1 : 0);
-            int squareFeetForMonth = initialSquareFeet * headCounts.get(month) / headCounts.get(0);
+            int squareFeetForMonth = initialSquareFeet * headCounts.get(month);
             int calculatedSquareFeet = 0;
             for (int j = 0; j < weeks; j++) {
                 calculatedSquareFeet += weekly.get(i);
