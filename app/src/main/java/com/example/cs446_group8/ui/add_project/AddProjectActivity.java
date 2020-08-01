@@ -37,7 +37,6 @@ public class AddProjectActivity extends BaseActivity implements AddProjectContra
 
         binding.backButton.setOnClickListener(view -> onBackPressed());
         binding.saveButton.setOnClickListener(view -> insertProjectToDb());
-
     }
 
     @Override

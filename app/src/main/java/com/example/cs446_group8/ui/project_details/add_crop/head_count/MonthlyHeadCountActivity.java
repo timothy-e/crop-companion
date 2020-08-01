@@ -16,9 +16,16 @@ import android.widget.TextView;
 import com.example.cs446_group8.GlobalConstants;
 import com.example.cs446_group8.R;
 import com.example.cs446_group8.data.AppDatabase;
+import com.example.cs446_group8.data.HeadCounts;
+import com.example.cs446_group8.data.Project;
 import com.example.cs446_group8.data.ProjectDao;
 import com.example.cs446_group8.ui.BaseActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.time.Month;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class MonthlyHeadCountActivity extends BaseActivity implements MonthlyHeadCountContract {
 
@@ -32,6 +39,11 @@ public class MonthlyHeadCountActivity extends BaseActivity implements MonthlyHea
     private String crop;
 
     private ProjectDao projectDao;
+    private Project project;
+
+    private static final List<String> MONTH_NAMES = Collections.unmodifiableList(
+            Arrays.asList("Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec")
+    );
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,41 +68,30 @@ public class MonthlyHeadCountActivity extends BaseActivity implements MonthlyHea
 
         LinearLayout monthsContainer = findViewById(R.id.months_container);
 
-        String[] months = new String[]{ "Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"};
+        project = projectDao.loadOneById(projectId);
 
-        for (int i = 0; i < 12; i++) {
-            String monthName = months[i];
+        for (int monthIndex = 0; monthIndex < MONTH_NAMES.size(); monthIndex++) {
+            String monthName = MONTH_NAMES.get(monthIndex);
+            Month month = Month.of(monthIndex + 1);
 
-            monthTextViews[i] = createMonthTextView(this, monthName);
-            headCountEditTexts[i] = createHeadcountInput(this, i);
-            bedsRequiredTextViews[i] = createBedCountTextView(this);
+            monthTextViews[monthIndex] = createMonthTextView(this, monthName);
+            int headCount = project.getHeadCounts().get(month);
+            headCountEditTexts[monthIndex] = createHeadcountInput(this, project, month, headCount);
+            bedsRequiredTextViews[monthIndex] = createBedCountTextView(this);
 
             LinearLayout monthContainer = new LinearLayout(this);
             monthContainer.setOrientation(LinearLayout.HORIZONTAL);
-            monthContainer.addView(monthTextViews[i]);
-            monthContainer.addView(headCountEditTexts[i]);
-            monthContainer.addView(bedsRequiredTextViews[i]);
+            monthContainer.addView(monthTextViews[monthIndex]);
+            monthContainer.addView(headCountEditTexts[monthIndex]);
+            monthContainer.addView(bedsRequiredTextViews[monthIndex]);
 
             monthsContainer.addView(monthContainer);
         }
 
-        // we came from ProjectDetails, so we have an existing Project with headcount values so
-        //      query for it in here
-        // if we came from AddProject we have no headcount values to query for so we don't enter
-        //      this block.
-        if (!fromActivity.equals("AddProject")) {
-
-            // todo (PR) : query for project WHERE id = projectId
-
-            // todo (PR): by now you'll have the Project obj from the DB, but we need to go through and
-            //     update the UI input fields with the headcount values we got from the DB
-            //     You don't have to do this, but ask Tim about it because he designed this screen
-
-        }
-
-
         // calculate beds required
-        mPresenter.changedHeadCount(0, getHeadCount(0));
+        for (Month month : Month.values()) {
+            mPresenter.changedHeadCount(project, month, parseHeadCount(month));
+        }
     }
 
     private TextView createMonthTextView(Context context, String monthName) {
@@ -106,17 +107,16 @@ public class MonthlyHeadCountActivity extends BaseActivity implements MonthlyHea
         return textView;
     }
 
-    // todo (PR) : update project headcounts in db
     private void saveHeadcounts() {
-
-        // todo (PR) : i think over here you can just loop through 0-11 (months) and call getHeadCount
-        //   to get the headcount for each month, and then you can update it in the db for project with
-        //   id = projectId
-
+        HeadCounts headCounts = project.getHeadCounts();
+        for (Month month : Month.values()) {
+            headCounts.set(month, parseHeadCount(month));
+        }
+        projectDao.update(project);
         mPresenter.saveButtonClicked(projectId, fromActivity);
     }
 
-    private EditText createHeadcountInput(Context context, final int monthNum) {
+    private EditText createHeadcountInput(Context context, Project project, final Month month, int initialValue) {
         EditText editText = new EditText(context);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
@@ -127,14 +127,14 @@ public class MonthlyHeadCountActivity extends BaseActivity implements MonthlyHea
         editText.setLayoutParams(params);
         editText.setInputType(InputType.TYPE_CLASS_NUMBER);
         editText.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        editText.setHint("10");
+        editText.setText(Integer.toString(initialValue));
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mPresenter.changedHeadCount(monthNum, getHeadCount(monthNum));
+                mPresenter.changedHeadCount(project, month, parseHeadCount(month));
             }
 
             @Override
@@ -169,13 +169,16 @@ public class MonthlyHeadCountActivity extends BaseActivity implements MonthlyHea
     }
 
     @Override
-    public void setFollowingHeadCountHints(int currentMonth, int headCount) {
-        for (int i = currentMonth + 1; i < 12; i++) {
+    public void setFollowingHeadCountHints(Project project, Month currentMonth, int headCount) {
+        final int nextMonthIndex = currentMonth.getValue();
+        final int lastMonthIndex = Month.DECEMBER.getValue() - 1;
+        for (int i = nextMonthIndex; i <= lastMonthIndex; i++) {
             if (TextUtils.isEmpty(headCountEditTexts[i].getText())) {
                 headCountEditTexts[i].setHint(String.valueOf(headCount));
 
                 // now that the hint is changed, we need to recalculate the number of beds required
-                mPresenter.changedHeadCount(i, headCount);
+                Month month = Month.of(i + 1);
+                mPresenter.changedHeadCount(project, month, headCount);
             } else {
                 // don't set anything that's already had it's hint changed
                 break;
@@ -184,17 +187,21 @@ public class MonthlyHeadCountActivity extends BaseActivity implements MonthlyHea
     }
 
     @Override
-    public void setBedCount(int month, int bedCount) {
-        bedsRequiredTextViews[month].setText(String.valueOf(bedCount));
+    public void setBedCount(Month month, int bedCount) {
+        int monthIndex = month.getValue() - 1;
+        bedsRequiredTextViews[monthIndex].setText(String.valueOf(bedCount));
     }
 
-    private int getHeadCount(int month) {
-        if (TextUtils.isEmpty(headCountEditTexts[month].getText())) {
-            // if unset, use the hint (default val)
-            return Integer.parseInt(headCountEditTexts[month].getHint().toString());
+    private int parseHeadCount(Month month) {
+        int monthIndex = month.getValue() - 1;
+        // TODO: do we need error handling?
+        String text = headCountEditTexts[monthIndex].getText().toString();
+        if (TextUtils.isEmpty(text)) {
+            // if unset, use the default value of 0
+            return 0;
         } else {
             // if set, use that value
-            return Integer.parseInt(headCountEditTexts[month].getText().toString());
+            return Integer.parseInt(text);
         }
     }
 }
