@@ -4,6 +4,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Ignore;
 
 import java.time.Month;
+import java.util.Arrays;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -122,5 +124,12 @@ public final class HeadCounts {
 
     public static HeadCounts empty() {
         return new HeadCounts();
+    }
+
+    public List<Integer> toList() {
+        return Arrays.asList(
+                getJanuary(), getFebruary(), getMarch(), getApril(), getMay(), getJune(),
+                getJuly(), getAugust(), getSeptember(), getOctober(), getNovember(), getDecember()
+        );
     }
 }
