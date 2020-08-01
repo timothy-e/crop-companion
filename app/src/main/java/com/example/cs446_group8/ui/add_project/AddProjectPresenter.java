@@ -28,8 +28,6 @@ public class AddProjectPresenter extends BasePresenter implements AddProjectCont
     }
 
     @Override
-    // todo: update signature here and in the Contract class to accept an int param being the id
-    //   of the newly created project
     public void saveButtonClicked(long projectId) {
         Intent intent = new Intent(context, MonthlyHeadCountActivity.class);
         intent.putExtra("projectId", projectId);

@@ -9,6 +9,7 @@ public interface ProjectDetailsContract extends BaseContract {
         void settingsButtonClicked(long projectId);
         void headcountsButtonClicked(long projectId);
         void scheduleButtonClicked();
+        void backButtonClicked();
     }
 
 }

@@ -39,7 +39,7 @@ public class ProjectDetailsActivity extends BaseActivity implements ProjectDetai
         binding.setProjectName(projectName);
         binding.setPresenter(mPresenter);
 
-        binding.backButton.setOnClickListener(view -> onBackPressed());
+        binding.backButton.setOnClickListener(view -> mPresenter.backButtonClicked());
 
         binding.settingsButton.setOnClickListener(view -> mPresenter.settingsButtonClicked(projectId));
 

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.example.cs446_group8.ui.BasePresenter;
+import com.example.cs446_group8.ui.home.HomeActivity;
 import com.example.cs446_group8.ui.project_details.add_crop.AddCropActivity;
 
 import com.example.cs446_group8.ui.project_details.add_crop.head_count.MonthlyHeadCountActivity;
@@ -55,6 +56,13 @@ public class ProjectDetailsPresenter extends BasePresenter implements ProjectDet
 
     public void scheduleButtonClicked() {
         Intent intent = new Intent(context, PlantingScheduleActivity.class);
+        mView.launchActivity(intent);
+    }
+
+    // if we're in project details, going back should only send the user to the "home" screen
+    //    with the list of projects to select
+    public void backButtonClicked() {
+        Intent intent = new Intent(context, HomeActivity.class);
         mView.launchActivity(intent);
     }
 

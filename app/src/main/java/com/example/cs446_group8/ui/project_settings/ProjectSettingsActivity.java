@@ -51,7 +51,7 @@ public class ProjectSettingsActivity extends BaseActivity implements ProjectSett
 
             LocalDate ld = curProject.getBeginningOfSession();
             DatePicker dp = (DatePicker) findViewById(R.id.start_date_field);
-            dp.updateDate(ld.getYear(), ld.getMonthValue(), ld.getDayOfMonth());
+            dp.updateDate(ld.getYear(), ld.getMonthValue() - 1, ld.getDayOfMonth());
 
             binding.setCalPerDayPerPerson(String.valueOf(curProject.getCaloriesPerDayPerPerson()));
             binding.setCalLeafyGreens(String.valueOf(curProject.getCaloriesFromGreen()));
