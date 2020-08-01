@@ -33,6 +33,7 @@ public abstract class AppDatabase extends RoomDatabase {
         AppDatabase instance = DATABASE_INSTANCES.get(context);
         if (instance == null) {
             instance = Room.databaseBuilder(context, AppDatabase.class, "app_database.db")
+                    .allowMainThreadQueries()
                     .createFromAsset("app_database.db")
                     .build();
             DATABASE_INSTANCES.put(context, instance);
