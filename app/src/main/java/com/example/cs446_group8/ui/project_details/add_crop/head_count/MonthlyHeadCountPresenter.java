@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import androidx.annotation.NonNull;
 
+import com.example.cs446_group8.calculations.Plantings;
 import com.example.cs446_group8.data.AppDatabase;
 import com.example.cs446_group8.data.Project;
 import com.example.cs446_group8.data.ProjectDao;
@@ -12,14 +13,19 @@ import com.example.cs446_group8.ui.BasePresenter;
 import com.example.cs446_group8.ui.project_details.ProjectDetailsActivity;
 
 import java.time.Month;
+import java.util.List;
+import java.util.logging.Logger;
 
 public class MonthlyHeadCountPresenter extends BasePresenter implements MonthlyHeadCountContract.Presenter {
 
     private MonthlyHeadCountContract mView;
+    private AppDatabase db;
 
     MonthlyHeadCountPresenter(@NonNull Context context, @NonNull MonthlyHeadCountContract view) {
         super.subscribe(context);
         this.mView = view;
+
+        db = AppDatabase.getInstance(context);
     }
 
     @Override
@@ -34,12 +40,13 @@ public class MonthlyHeadCountPresenter extends BasePresenter implements MonthlyH
 
     @Override
     public void changedHeadCount(Project project, Month month, int headCount) {
-        mView.setFollowingHeadCountHints(project, month, headCount);
-        mView.setBedCount(month, getRequiredBeds(month, headCount));
-    }
+        Plantings plantings = new Plantings(db, project.getId());
 
-    private int getRequiredBeds(Month month, int headCount) {
-        return (int) Math.pow(headCount, 2); // sophisticated backend calculation
+        List<Integer> monthlySquareFeet = plantings.getMonthlySquareFeet();
+
+        for (Month i : Month.values()) {
+            mView.setBedCount(i, monthlySquareFeet.get(i.ordinal()));
+        }
     }
 
     @Override
