@@ -29,9 +29,9 @@ import lombok.ToString;
 
 public class Plantings {
     private ProjectDao projectDao;
-    private int projectId;
+    private long projectId;
 
-    public Plantings(AppDatabase db, int projectId) {
+    public Plantings(AppDatabase db, long projectId) {
         projectDao = db.projectDao();
         this.projectId = projectId;
     }

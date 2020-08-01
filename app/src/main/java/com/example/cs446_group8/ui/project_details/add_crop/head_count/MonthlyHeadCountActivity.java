@@ -88,10 +88,7 @@ public class MonthlyHeadCountActivity extends BaseActivity implements MonthlyHea
             monthsContainer.addView(monthContainer);
         }
 
-        // calculate beds required
-        for (Month month : Month.values()) {
-            mPresenter.changedHeadCount(project, month, parseHeadCount(month));
-        }
+        mPresenter.changedHeadCount(project, Month.JANUARY, project.getHeadCounts().getJanuary());
     }
 
     private TextView createMonthTextView(Context context, String monthName) {
@@ -134,6 +131,7 @@ public class MonthlyHeadCountActivity extends BaseActivity implements MonthlyHea
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                setFollowingHeadCountHints(project, month, parseHeadCount(month));
                 mPresenter.changedHeadCount(project, month, parseHeadCount(month));
             }
 
@@ -175,10 +173,6 @@ public class MonthlyHeadCountActivity extends BaseActivity implements MonthlyHea
         for (int i = nextMonthIndex; i <= lastMonthIndex; i++) {
             if (TextUtils.isEmpty(headCountEditTexts[i].getText())) {
                 headCountEditTexts[i].setHint(String.valueOf(headCount));
-
-                // now that the hint is changed, we need to recalculate the number of beds required
-                Month month = Month.of(i + 1);
-                mPresenter.changedHeadCount(project, month, headCount);
             } else {
                 // don't set anything that's already had it's hint changed
                 break;
