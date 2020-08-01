@@ -45,7 +45,7 @@ public class MonthlyHeadCountPresenter extends BasePresenter implements MonthlyH
         List<Integer> monthlySquareFeet = plantings.getMonthlySquareFeet();
 
         for (Month i : Month.values()) {
-            mView.setBedCount(i, monthlySquareFeet.get(i.ordinal()));
+            mView.setBedCount(i, monthlySquareFeet.get(i.ordinal()) / 100);
         }
     }
 
