@@ -57,7 +57,7 @@ public class AddProjectActivity extends BaseActivity implements AddProjectContra
         String newName = nameField.getText().toString();
 
         DatePicker datePickerField = (DatePicker) findViewById(R.id.start_date_field);
-        int month = datePickerField.getMonth() + 1;
+        int month = datePickerField.getMonth();
         int day = datePickerField.getDayOfMonth();
         int year = datePickerField.getYear();
         LocalDate newStartDate = LocalDate.of(year, month, day);
