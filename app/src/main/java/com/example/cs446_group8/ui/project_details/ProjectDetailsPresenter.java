@@ -66,4 +66,9 @@ public class ProjectDetailsPresenter extends BasePresenter implements ProjectDet
         mView.launchActivity(intent);
     }
 
+    //public void cropClicked(String cropName) {
+        //Intent intent = new Intent(context, ); //todo: go to Jasper's class)
+        //intent.putExtra("cropName", cropName);
+    //}
+
 }
