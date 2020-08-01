@@ -3,6 +3,7 @@ package com.example.cs446_group8.data;
 import androidx.room.ColumnInfo;
 import androidx.room.Ignore;
 
+import java.time.Month;
 import java.util.Arrays;
 import java.util.List;
 
@@ -61,6 +62,65 @@ public final class HeadCounts {
 
     @ColumnInfo(name = "december")
     private int december;
+
+    public int get(Month month) {
+        switch (month) {
+            case JANUARY: return january;
+            case FEBRUARY: return february;
+            case MARCH: return march;
+            case APRIL: return april;
+            case MAY: return may;
+            case JUNE: return june;
+            case JULY: return july;
+            case AUGUST: return august;
+            case SEPTEMBER: return september;
+            case OCTOBER: return october;
+            case NOVEMBER: return november;
+            case DECEMBER: return december;
+            default: return 0;
+        }
+    }
+
+    public void set(Month month, int value) {
+        switch (month) {
+            case JANUARY:
+                january = value;
+                break;
+            case FEBRUARY:
+                february = value;
+                break;
+            case MARCH:
+                march = value;
+                break;
+            case APRIL:
+                april = value;
+                break;
+            case MAY:
+                may = value;
+                break;
+            case JUNE:
+                june = value;
+                break;
+            case JULY:
+                july = value;
+                break;
+            case AUGUST:
+                august = value;
+                break;
+            case SEPTEMBER:
+                september = value;
+                break;
+            case OCTOBER:
+                october = value;
+                break;
+            case NOVEMBER:
+                november = value;
+                break;
+            case DECEMBER:
+                december = value;
+                break;
+        }
+    }
 
     public static HeadCounts empty() {
         return new HeadCounts();

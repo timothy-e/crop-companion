@@ -24,9 +24,4 @@ public class ProjectSettingsPresenter extends BasePresenter implements ProjectSe
     public void pause() {
 
     }
-
-    @Override
-    public void saveButtonClicked() {
-        //todo: save operation
-    }
 }

@@ -16,7 +16,7 @@ public interface ProjectDao {
     List<Project> loadAll();
 
     @Query("SELECT * FROM projects WHERE id = :id")
-    Project loadOneById(int id);
+    Project loadOneById(long id);
 
     /**
      * A {@link Project} inner joined with {@link Sow} inner joined with {@link Crop}, returned as
@@ -26,7 +26,7 @@ public interface ProjectDao {
      */
     @Transaction
     @Query("SELECT * FROM projects WHERE id = :id")
-    ProjectWithSows loadOneByIdWithSows(int id);
+    ProjectWithSows loadOneByIdWithSows(long id);
 
     @Update
     void update(Project project);
@@ -35,7 +35,7 @@ public interface ProjectDao {
     void delete(Project project);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(Project project);
+    long insert(Project project);
 
     @Insert
     void insertAll(Project... projects);
