@@ -70,30 +70,31 @@ public class AddCropActivity extends BaseActivity implements AddCropContract {
 
         projectId  = mIntent.getLongExtra("projectId", -1);
         //Receives set difference of crops the user has not added.
-        ProjectWithSows projectSows = projectDao.loadOneByIdWithSows((int)projectId);
-        List<CropListItem> projectSowsList = new ArrayList<CropListItem>();
-        if(projectSows != null) {
+        ProjectWithSows projectSows = projectDao.loadOneByIdWithSows(projectId);
+           crops = cropDao.loadAll();
+        ArrayList<CropListItem> cropItemList = new ArrayList<CropListItem>();
+        ArrayList<CropListItem> currentCrops = new ArrayList<CropListItem>();
+           if(projectSows != null) {
             List<SowWithCrop> cropWithSows = projectSows.getSows();
             for(int i = 0; i < cropWithSows.size(); i++){
                 CropListItem cli = new CropListItem();
-                cli.cropId = projectSowsList.get(i).cropId;
-                cli.cropName = projectSowsList.get(i).cropName;
-                projectSowsList.add(cli);
-
+                cli.cropId = crops.get(i).getId();
+                cli.cropName = crops.get(i).getName();
+                currentCrops.add(cli);
             }
         }
-        ActivityAddCropLayoutBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_add_crop_layout);
-        mPresenter = new AddCropPresenter(this, this);
-        crops = cropDao.loadAll();
-        ArrayList<CropListItem> cropItemList = new ArrayList<CropListItem>();
         for(int i =0; i < crops.size(); i++){
             CropListItem cli = new CropListItem();
             cli.cropId = crops.get(i).getId();
             cli.cropName = crops.get(i).getName();
-            cropItemList.add(cli);
+            if(!find(currentCrops, cli.cropId)) {
+                cropItemList.add(cli);
+            }
         }
-        cropItemList.remove(projectSowsList); // Set difference
 
+
+        ActivityAddCropLayoutBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_add_crop_layout);
+        mPresenter = new AddCropPresenter(this, this);
 
         ImageView backButton = findViewById(R.id.back_button);
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -116,7 +117,12 @@ public class AddCropActivity extends BaseActivity implements AddCropContract {
         listView.setAdapter(adapter1);
         binding.setPresenter(mPresenter);
     }
-
+    protected boolean find(ArrayList<CropListItem> currentCrops, long cropId){
+        for(CropListItem cli : currentCrops){
+            if(cli.cropId == cropId) return true;
+        }
+        return false;
+    }
     @Override
     protected void onResume() {
         super.onResume();
