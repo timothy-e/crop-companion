@@ -109,10 +109,6 @@ public class AddCropActivity extends BaseActivity implements AddCropContract {
                 android.R.layout.simple_list_item_1
                 ,cropItemList));
 
-        listView.setOnItemClickListener((adapterView, view, i, l) -> {
-            CropListItem cl = (CropListItem) listView.getItemAtPosition(i);
-           // sowDao.insertAll(Sow.builder().projectId((int)projectId).cropId((int)cl.cropId).build());
-        });
         CropListAdapter adapter1 = new CropListAdapter(cropItemList, projectId, sowDao, this);
         listView.setAdapter(adapter1);
         binding.setPresenter(mPresenter);

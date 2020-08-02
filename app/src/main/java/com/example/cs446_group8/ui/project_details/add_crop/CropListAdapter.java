@@ -63,7 +63,7 @@ public class CropListAdapter extends BaseAdapter implements ListAdapter {
                 addBtn.setAlpha(.2f);
                 addBtn.setClickable(false);
                 // TODO: store crop as "added" to parent Project obj
-                sowDao.insertAll(Sow.builder().projectId((int)projectId).cropId((int)cropList.get(position).cropId).build());
+                sowDao.insertAll(Sow.builder().projectId(projectId).cropId(cropList.get(position).cropId).build());
 
             }
         });
