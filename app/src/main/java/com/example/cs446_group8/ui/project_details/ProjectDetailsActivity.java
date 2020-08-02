@@ -77,7 +77,7 @@ public class ProjectDetailsActivity extends BaseActivity implements ProjectDetai
 
         listView.setOnItemClickListener((adapterView, view, i, l) -> {
             CropListItem c1 = (CropListItem) listView.getItemAtPosition(i);
-            //mPresenter.cropClicked(c1.name);
+            mPresenter.cropClicked(c1.name);
         });
 
         binding.setProjectName(projectName);

@@ -37,7 +37,7 @@ import lombok.ToString;
 @Builder
 public final class Sow {
     @ColumnInfo(name = "project_id")
-    private int projectId;
+    private long projectId;
     @ColumnInfo(name = "crop_id")
-    private int cropId;
+    private long cropId;
 }

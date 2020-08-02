@@ -51,7 +51,7 @@ public class MonthlyHeadCountPresenter extends BasePresenter implements MonthlyH
 
     @Override
     public void saveButtonClicked(long projectId, String fromActivity) {
-        if (fromActivity.equals("AddProject")) {
+        if (fromActivity.equals("AddCrop")) {
             Intent intent = new Intent(context, ProjectDetailsActivity.class);
             intent.putExtra("projectId", projectId);
             mView.launchActivity(intent);

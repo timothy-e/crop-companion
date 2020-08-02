@@ -8,6 +8,7 @@ import com.example.cs446_group8.ui.home.HomeActivity;
 import com.example.cs446_group8.ui.project_details.add_crop.AddCropActivity;
 
 import com.example.cs446_group8.ui.project_details.add_crop.head_count.MonthlyHeadCountActivity;
+import com.example.cs446_group8.ui.project_details.crop_timelapse.timelapseActivity;
 import com.example.cs446_group8.ui.project_details.planting_schedule.PlantingScheduleActivity;
 import com.example.cs446_group8.ui.project_settings.ProjectSettingsActivity;
 
@@ -36,6 +37,7 @@ public class ProjectDetailsPresenter extends BasePresenter implements ProjectDet
     public void addButtonClicked(long projectId) {
         Intent intent = new Intent(context, AddCropActivity.class);
         intent.putExtra("projectId", projectId);
+        intent.putExtra("FROM_ACTIVITY", "ProjectDetails");
         mView.launchActivity(intent);
     }
 
@@ -66,9 +68,10 @@ public class ProjectDetailsPresenter extends BasePresenter implements ProjectDet
         mView.launchActivity(intent);
     }
 
-    //public void cropClicked(String cropName) {
-        //Intent intent = new Intent(context, ); //todo: go to Jasper's class)
-        //intent.putExtra("cropName", cropName);
-    //}
+    public void cropClicked(String cropName) {
+        Intent intent = new Intent(context, timelapseActivity.class); //todo: go to Jasper's class)
+        intent.putExtra("cropName", cropName);
+        mView.launchActivity(intent);
+    }
 
 }
