@@ -55,13 +55,13 @@ public final class CropTest {
         assertThat(allCrops.size(), equalTo(2));
 
         Crop first = allCrops.get(0);
-        assertThat(first.getId(), equalTo(1));
+        assertThat(first.getId(), equalTo(1L));
         assertThat(first.getName(), equalTo("Amaranth leaves"));
         assertThat(first.getType(), equalTo(CropType.Green));
         assertThat(first.getCaloriesPer100Gram(), equalTo(371d));
 
         Crop second = allCrops.get(1);
-        assertThat(second.getId(), equalTo(2));
+        assertThat(second.getId(), equalTo(2L));
         assertThat(second.getName(), equalTo("Arrow roots"));
         assertThat(second.getType(), equalTo(CropType.Colorful));
         assertThat(second.getCaloriesPer100Gram(), equalTo(100d));

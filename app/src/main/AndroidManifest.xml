@@ -30,6 +30,7 @@
         <activity android:name=".ui.project_settings.ProjectSettingsActivity" />
         <activity android:name=".ui.project_details.add_crop.crop_summary.CropSummaryActivity" />
         <activity android:name=".ui.project_details.planting_schedule.PlantingScheduleActivity" />
+        <activity android:name=".ui.add_project.AddProjectActivity" />
     </application>
 
 </manifest>

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.example.cs446_group8.ui.BasePresenter;
+import com.example.cs446_group8.ui.home.HomeActivity;
 import com.example.cs446_group8.ui.project_details.add_crop.AddCropActivity;
 
 import com.example.cs446_group8.ui.project_details.add_crop.head_count.MonthlyHeadCountActivity;
@@ -32,20 +33,24 @@ public class ProjectDetailsPresenter extends BasePresenter implements ProjectDet
     }
 
     @Override
-    public void addButtonClicked() {
+    public void addButtonClicked(long projectId) {
         Intent intent = new Intent(context, AddCropActivity.class);
+        intent.putExtra("projectId", projectId);
         mView.launchActivity(intent);
     }
 
     @Override
-    public void settingsButtonClicked() {
+    public void settingsButtonClicked(long projectId) {
         Intent intent = new Intent(context, ProjectSettingsActivity.class);
+        intent.putExtra("projectId", projectId);
         mView.launchActivity(intent);
     }
 
     @Override
-    public void headcountsButtonClicked() {
+    public void headcountsButtonClicked(long projectId) {
         Intent intent = new Intent(context, MonthlyHeadCountActivity.class);
+        intent.putExtra("projectId", projectId);
+        intent.putExtra("FROM_ACTIVITY", "ProjectDetails");
         mView.launchActivity(intent);
     }
 
@@ -53,5 +58,17 @@ public class ProjectDetailsPresenter extends BasePresenter implements ProjectDet
         Intent intent = new Intent(context, PlantingScheduleActivity.class);
         mView.launchActivity(intent);
     }
+
+    // if we're in project details, going back should only send the user to the "home" screen
+    //    with the list of projects to select
+    public void backButtonClicked() {
+        Intent intent = new Intent(context, HomeActivity.class);
+        mView.launchActivity(intent);
+    }
+
+    //public void cropClicked(String cropName) {
+        //Intent intent = new Intent(context, ); //todo: go to Jasper's class)
+        //intent.putExtra("cropName", cropName);
+    //}
 
 }

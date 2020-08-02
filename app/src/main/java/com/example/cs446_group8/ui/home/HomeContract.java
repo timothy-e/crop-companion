@@ -7,7 +7,8 @@ import androidx.fragment.app.Fragment;
 public interface HomeContract extends BaseContract {
 
     interface Presenter extends BaseContract.Presenter {
-
+        void addButtonClicked();
+        void projectClicked(long projectId);
     }
 
 }

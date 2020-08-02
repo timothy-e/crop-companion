@@ -1,18 +1,31 @@
 package com.example.cs446_group8.ui.project_details.add_crop.head_count;
 
 import android.content.Context;
+import android.content.Intent;
 
 import androidx.annotation.NonNull;
 
+import com.example.cs446_group8.calculations.Plantings;
+import com.example.cs446_group8.data.AppDatabase;
+import com.example.cs446_group8.data.Project;
+import com.example.cs446_group8.data.ProjectDao;
 import com.example.cs446_group8.ui.BasePresenter;
+import com.example.cs446_group8.ui.project_details.ProjectDetailsActivity;
+
+import java.time.Month;
+import java.util.List;
+import java.util.logging.Logger;
 
 public class MonthlyHeadCountPresenter extends BasePresenter implements MonthlyHeadCountContract.Presenter {
 
     private MonthlyHeadCountContract mView;
+    private AppDatabase db;
 
     MonthlyHeadCountPresenter(@NonNull Context context, @NonNull MonthlyHeadCountContract view) {
         super.subscribe(context);
         this.mView = view;
+
+        db = AppDatabase.getInstance(context);
     }
 
     @Override
@@ -26,15 +39,22 @@ public class MonthlyHeadCountPresenter extends BasePresenter implements MonthlyH
     }
 
     @Override
-    public void changedHeadCount(int month, int headCount) {
-        mView.setFollowingHeadCountHints(month, headCount);
+    public void changedHeadCount(Project project, Month month, int headCount) {
+        Plantings plantings = new Plantings(db, project.getId());
 
-        // TODO: let the backend know about this
+        List<Integer> monthlySquareFeet = plantings.getMonthlySquareFeet();
 
-        mView.setBedCount(month, getRequiredBeds(month, headCount));
+        for (Month i : Month.values()) {
+            mView.setBedCount(i, monthlySquareFeet.get(i.ordinal()) / 100);
+        }
     }
 
-    private int getRequiredBeds(int month, int headCount) {
-        return (int) Math.pow(headCount, 2); // sophisticated backend calculation
+    @Override
+    public void saveButtonClicked(long projectId, String fromActivity) {
+        if (fromActivity.equals("AddProject")) {
+            Intent intent = new Intent(context, ProjectDetailsActivity.class);
+            intent.putExtra("projectId", projectId);
+            mView.launchActivity(intent);
+        }
     }
 }
