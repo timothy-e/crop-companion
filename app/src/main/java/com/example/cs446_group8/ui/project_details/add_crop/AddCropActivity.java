@@ -21,10 +21,12 @@ import com.example.cs446_group8.data.Project;
 import com.example.cs446_group8.data.ProjectDao;
 import com.example.cs446_group8.data.ProjectDao_Impl;
 import com.example.cs446_group8.data.ProjectWithSows;
+import com.example.cs446_group8.data.SowDao;
 import com.example.cs446_group8.data.SowWithCrop;
 import com.example.cs446_group8.databinding.ActivityAddCropLayoutBinding;
 import com.example.cs446_group8.ui.BaseActivity;
 
+import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 
 import java.lang.reflect.Array;
@@ -40,9 +42,20 @@ public class AddCropActivity extends BaseActivity implements AddCropContract {
     private ListView listView;
 
     ArrayList<String> cropList;
+    private List<Crop> crops;
     private ProjectDao projectDao;
     private CropDao cropDao;
+    private SowDao sowDao;
     private long projectId = -1;
+    private ArrayAdapter<CropListItem> adapter;
+    class CropListItem{
+        long cropId;
+        String cropName;
+        @Override
+        public String toString() {
+            return cropName;
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,22 +65,35 @@ public class AddCropActivity extends BaseActivity implements AddCropContract {
         final AppDatabase db = AppDatabase.getInstance(context);
         projectDao = db.projectDao();
         cropDao = db.cropDao();
+        sowDao = db.sowDao();
         Intent mIntent = getIntent();
+
         projectId  = mIntent.getLongExtra("projectId", -1);
         //Receives set difference of crops the user has not added.
         ProjectWithSows projectSows = projectDao.loadOneByIdWithSows((int)projectId);
-
-        cropList = new ArrayList<String>( cropDao.loadAll().stream().map(crop -> crop.getName()).collect(Collectors.toList()));
+        List<CropListItem> projectSowsList = new ArrayList<CropListItem>();
         if(projectSows != null) {
-            ArrayList<String> cropsInProject = new ArrayList<String>(projectDao.loadOneByIdWithSows((int) projectId).getSows().
-                    stream().map(projectWithSow -> projectWithSow.getCrop().getName()).collect(Collectors.toList())); // cropList already existing in project
-            cropList.removeAll(cropsInProject);
-        }
+            List<SowWithCrop> cropWithSows = projectSows.getSows();
+            for(int i = 0; i < cropWithSows.size(); i++){
+                CropListItem cli = new CropListItem();
+                cli.cropId = projectSowsList.get(i).cropId;
+                cli.cropName = projectSowsList.get(i).cropName;
+                projectSowsList.add(cli);
 
+            }
+        }
         ActivityAddCropLayoutBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_add_crop_layout);
         mPresenter = new AddCropPresenter(this, this);
+        crops = cropDao.loadAll();
+        ArrayList<CropListItem> cropItemList = new ArrayList<CropListItem>();
+        for(int i =0; i < crops.size(); i++){
+            CropListItem cli = new CropListItem();
+            cli.cropId = crops.get(i).getId();
+            cli.cropName = crops.get(i).getName();
+            cropItemList.add(cli);
+        }
+        cropItemList.remove(projectSowsList); // Set difference
 
-        binding.setPresenter(mPresenter);
 
         ImageView backButton = findViewById(R.id.back_button);
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -78,9 +104,17 @@ public class AddCropActivity extends BaseActivity implements AddCropContract {
         });
 
         listView = findViewById(R.id.list_view);
+        listView.setAdapter(adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_list_item_1
+                ,cropItemList));
 
-        CropListAdapter adapter1 = new CropListAdapter(cropList, this);
+        listView.setOnItemClickListener((adapterView, view, i, l) -> {
+            CropListItem cl = (CropListItem) listView.getItemAtPosition(i);
+           // sowDao.insertAll(Sow.builder().projectId((int)projectId).cropId((int)cl.cropId).build());
+        });
+        CropListAdapter adapter1 = new CropListAdapter(cropItemList, projectId, sowDao, this);
         listView.setAdapter(adapter1);
+        binding.setPresenter(mPresenter);
     }
 
     @Override

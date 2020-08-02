@@ -10,16 +10,22 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.example.cs446_group8.R;
+import com.example.cs446_group8.data.Sow;
+import com.example.cs446_group8.data.SowDao;
 
 import java.util.ArrayList;
 
 public class CropListAdapter extends BaseAdapter implements ListAdapter {
-    private ArrayList<String> cropList = new ArrayList<String>();
+    private ArrayList<AddCropActivity.CropListItem> cropList = new ArrayList<AddCropActivity.CropListItem>();
     private Context context;
-
-    public CropListAdapter(ArrayList<String> list, Context context) {
+    private long projectId;
+    private SowDao sowDao;
+    public CropListAdapter(ArrayList<AddCropActivity.CropListItem> list, long projectId, SowDao sowDao, Context context) {
         this.cropList = list;
         this.context = context;
+        this.sowDao = sowDao;
+        this.projectId = projectId;
+
     }
 
     @Override
@@ -46,7 +52,7 @@ public class CropListAdapter extends BaseAdapter implements ListAdapter {
         }
 
         TextView listItemText = (TextView) view.findViewById(R.id.list_item_string);
-        listItemText.setText(cropList.get(position));
+        listItemText.setText(cropList.get(position).cropName);
 
         // onClickListener
         ImageButton addBtn = (ImageButton) view.findViewById(R.id.add_btn);
@@ -57,10 +63,11 @@ public class CropListAdapter extends BaseAdapter implements ListAdapter {
                 addBtn.setAlpha(.2f);
                 addBtn.setClickable(false);
                 // TODO: store crop as "added" to parent Project obj
+                sowDao.insertAll(Sow.builder().projectId((int)projectId).cropId((int)cropList.get(position).cropId).build());
+
             }
         });
 
         return view;
     }
-
 }
