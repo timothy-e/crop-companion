@@ -1,7 +1,10 @@
 package com.example.cs446_group8.ui.project_details.crop_timelapse;
 
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -27,6 +30,7 @@ import com.viewpagerindicator.LinePageIndicator;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,6 +42,7 @@ public class timelapseActivity extends AppCompatActivity {
 
     String currentImagePath = null;
     private static final int IMAGE_REQUEST = 1;
+    private static final int STORAGE_PERMISSION = 101;
     File cropsFolder;
     File parentFolder;
 
@@ -47,57 +52,69 @@ public class timelapseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timelapse);
 
-        parentFolder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Crops");
-        parentFolder.mkdir();
+        String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        if (!hasPermissions(timelapseActivity.this, permissions)) {
+            ActivityCompat.requestPermissions(timelapseActivity.this, permissions, STORAGE_PERMISSION);
+        } else{
+            parentFolder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Crops");
+            parentFolder.mkdir();
 
-        String cropName = null;
-        Bundle extras = getIntent().getExtras();
-        cropName = null;
-        if (extras != null) {
-            cropName = extras.getString("cropName");
-        }
-
-        TextView titlebar = findViewById(R.id.title_bar);
-        titlebar.setText(cropName + " Gallery");
-
-        //checkPermissions();
-
-        //Ensuring crop folder/album is created
-        cropsFolder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Crops/" + cropName);
-        cropsFolder.mkdir();
-
-
-        final SwipeRefreshLayout refreshLayout = findViewById(R.id.refresh);
-        final File[] listOfFiles = cropsFolder.listFiles();
-
-        assert listOfFiles != null;
-        Arrays.sort(listOfFiles, (f1, f2) -> Long.compare(f1.lastModified(), f2.lastModified()));
-
-        final ViewPager viewPager = findViewById(R.id.image1);
-        ImageAdapter adapter = new ImageAdapter(this, listOfFiles);
-        viewPager.setAdapter(adapter);
-
-        final LinePageIndicator linePageIndicator = findViewById(R.id.indicator);
-        linePageIndicator.setViewPager(viewPager);
-
-        refreshLayout.setOnRefreshListener(() -> {
-            //finish();
-            startActivity(getIntent());
-            //viewPager.setCurrentItem(listOfFiles.length-1);
-        });
-
-        ImageView backBtn = findViewById(R.id.back_button);
-        backBtn.setOnClickListener(view -> onBackPressed());
-
-        ImageView uploadBtn = findViewById(R.id.uploadBtn);
-        String finalCropName = cropName;
-        uploadBtn.setOnClickListener(view -> {
-            if (isExternalStorageReadable() && isExternalStorageWritable()) {
-                takePhotoIntent(finalCropName);
-            } else {
-                //storage is full
+            String cropName = null;
+            Bundle extras = getIntent().getExtras();
+            cropName = null;
+            if (extras != null) {
+                cropName = extras.getString("cropName");
             }
-        });
+
+            TextView titlebar = findViewById(R.id.title_bar);
+            titlebar.setText(cropName + " Gallery");
+
+            //Ensuring crop folder/album is created
+            cropsFolder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Crops/" + cropName);
+            cropsFolder.mkdir();
+
+
+            final SwipeRefreshLayout refreshLayout = findViewById(R.id.refresh);
+            final File[] listOfFiles = cropsFolder.listFiles();
+
+            assert listOfFiles != null;
+            Arrays.sort(listOfFiles, (f1, f2) -> Long.compare(f1.lastModified(), f2.lastModified()));
+
+            final ViewPager viewPager = findViewById(R.id.image1);
+            ImageAdapter adapter = new ImageAdapter(this, listOfFiles);
+            viewPager.setAdapter(adapter);
+
+            final LinePageIndicator linePageIndicator = findViewById(R.id.indicator);
+            linePageIndicator.setViewPager(viewPager);
+
+            refreshLayout.setOnRefreshListener(() -> {
+                //finish();
+                startActivity(getIntent());
+                //viewPager.setCurrentItem(listOfFiles.length-1);
+            });
+
+            ImageView backBtn = findViewById(R.id.back_button);
+            backBtn.setOnClickListener(view -> onBackPressed());
+
+            ImageView uploadBtn = findViewById(R.id.uploadBtn);
+            String finalCropName = cropName;
+            uploadBtn.setOnClickListener(view -> {
+                if (isExternalStorageReadable() && isExternalStorageWritable()) {
+                    takePhotoIntent(finalCropName);
+                } else {
+                    //storage is full
+                }
+            });
+        }
+    }
+
+    private static boolean hasPermissions(Context context, String... permissions){
+        for (String permission : permissions) {
+            if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /* Checks if external storage is available for read and write */
@@ -119,29 +136,16 @@ public class timelapseActivity extends AppCompatActivity {
         return false;
     }
 
-//    private boolean checkPermissions() {
-//        int result;
-//        List<String> listPermissionsNeeded = new ArrayList<>();
-//        for (String p : GlobalConstants.permissions) {
-//            result = ContextCompat.checkSelfPermission(this, p);
-//            if (result != PackageManager.PERMISSION_GRANTED) {
-//                listPermissionsNeeded.add(p);
-//            }
-//        }
-//        if (!listPermissionsNeeded.isEmpty()) {
-//            ActivityCompat.requestPermissions(this, listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]), 100);
-//            return false;
-//        }
-//        return true;
-//    }
-
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        if (requestCode == IMAGE_REQUEST) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == STORAGE_PERMISSION) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(getApplicationContext(), "Permission granted", Toast.LENGTH_SHORT).show();
+                onBackPressed();
             } else {
-                //
+                Toast.makeText(getApplicationContext(), "Permission Denied", Toast.LENGTH_SHORT).show();
+                onBackPressed();
             }
         }
     }
@@ -162,7 +166,6 @@ public class timelapseActivity extends AppCompatActivity {
             }
         }
     }
-
 
     private File getImageFile(String cropName) throws IOException {
         @SuppressLint("SimpleDateFormat") String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
