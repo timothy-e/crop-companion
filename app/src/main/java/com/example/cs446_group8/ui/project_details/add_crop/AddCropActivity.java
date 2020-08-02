@@ -3,43 +3,34 @@ package com.example.cs446_group8.ui.project_details.add_crop;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.SearchView;
 
-import com.example.cs446_group8.GlobalConstants;
 import com.example.cs446_group8.R;
 import com.example.cs446_group8.data.AppDatabase;
 import com.example.cs446_group8.data.Crop;
 import com.example.cs446_group8.data.CropDao;
-import com.example.cs446_group8.data.Project;
 import com.example.cs446_group8.data.ProjectDao;
-import com.example.cs446_group8.data.ProjectDao_Impl;
 import com.example.cs446_group8.data.ProjectWithSows;
 import com.example.cs446_group8.data.SowDao;
 import com.example.cs446_group8.data.SowWithCrop;
 import com.example.cs446_group8.databinding.ActivityAddCropLayoutBinding;
 import com.example.cs446_group8.ui.BaseActivity;
 
-import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class AddCropActivity extends BaseActivity implements AddCropContract {
 
     private AddCropContract.Presenter mPresenter;
 
     private ListView listView;
+
+    private String fromActivity;
 
     ArrayList<String> cropList;
     private List<Crop> crops;
@@ -69,6 +60,7 @@ public class AddCropActivity extends BaseActivity implements AddCropContract {
         Intent mIntent = getIntent();
 
         projectId  = mIntent.getLongExtra("projectId", -1);
+        fromActivity = mIntent.getStringExtra("FROM_ACTIVITY");
         //Receives set difference of crops the user has not added.
         ProjectWithSows projectSows = projectDao.loadOneByIdWithSows(projectId);
            crops = cropDao.loadAll();
@@ -96,13 +88,13 @@ public class AddCropActivity extends BaseActivity implements AddCropContract {
         ActivityAddCropLayoutBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_add_crop_layout);
         mPresenter = new AddCropPresenter(this, this);
 
+        // todo go to MonthlyHeadcount next
+        if (fromActivity == "AddProject") {
+            // dynamically add floating button to AddCrop page to go to MonthlyHeadcount next
+        }
+
         ImageView backButton = findViewById(R.id.back_button);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
+        backButton.setOnClickListener(view -> mPresenter.backPressed(projectId));
 
         listView = findViewById(R.id.list_view);
         listView.setAdapter(adapter = new ArrayAdapter<>(this,

@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import com.example.cs446_group8.GlobalConstants;
 import com.example.cs446_group8.ui.BasePresenter;
+import com.example.cs446_group8.ui.project_details.ProjectDetailsActivity;
 import com.example.cs446_group8.ui.project_details.add_crop.head_count.MonthlyHeadCountActivity;
 
 import androidx.annotation.NonNull;
@@ -26,5 +27,11 @@ public class AddCropPresenter extends BasePresenter implements AddCropContract.P
     @Override
     public void pause() {
 
+    }
+
+    public void backPressed(long projectId) {
+        Intent intent = new Intent(context, ProjectDetailsActivity.class);
+        intent.putExtra("projectId", projectId);
+        mView.launchActivity(intent);
     }
 }
