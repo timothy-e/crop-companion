@@ -31,6 +31,23 @@ public class AddCropActivity extends BaseActivity implements AddCropContract {
     private AddCropContract.Presenter mPresenter;
 
     private ListView listView;
+    private String fromActivity;
+
+    ArrayList<String> cropList;
+    private List<Crop> crops;
+    private ProjectDao projectDao;
+    private CropDao cropDao;
+    private SowDao sowDao;
+    private long projectId = -1;
+    private ArrayAdapter<CropListItem> adapter;
+    class CropListItem{
+        long cropId;
+        String cropName;
+        @Override
+        public String toString() {
+            return cropName;
+        }
+    }
 
     private String fromActivity;
 
@@ -66,7 +83,8 @@ public class AddCropActivity extends BaseActivity implements AddCropContract {
 
         // Receives set difference of crops the user has not added.
         ProjectWithSows projectSows = projectDao.loadOneByIdWithSows(projectId);
-           crops = cropDao.loadAll();
+        crops = cropDao.loadAll();
+
         ArrayList<CropListItem> cropItemList = new ArrayList<CropListItem>();
         ArrayList<CropListItem> currentCrops = new ArrayList<CropListItem>();
         if (projectSows != null) {
@@ -111,6 +129,17 @@ public class AddCropActivity extends BaseActivity implements AddCropContract {
         listView.setAdapter(adapter1);
         binding.setPresenter(mPresenter);
     }
+
+    protected boolean find(ArrayList<CropListItem> currentCrops, long cropId){
+        for(CropListItem cli : currentCrops){
+            if(cli.cropId == cropId) return true;
+        }
+        return false;
+
+        CropListAdapter adapter1 = new CropListAdapter(cropItemList, projectId, sowDao, this);
+        listView.setAdapter(adapter1);
+        binding.setPresenter(mPresenter);
+    }
     protected boolean find(ArrayList<CropListItem> currentCrops, long cropId){
         for(CropListItem cli : currentCrops){
             if(cli.cropId == cropId) return true;
@@ -128,4 +157,5 @@ public class AddCropActivity extends BaseActivity implements AddCropContract {
         super.onPause();
         mPresenter.pause();
     }
+
 }

@@ -20,6 +20,6 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="300dp"
         android:src="@drawable/ic_add_black"
-         />
+        />
 
 </RelativeLayout>

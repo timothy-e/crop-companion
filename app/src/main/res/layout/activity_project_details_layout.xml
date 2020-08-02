@@ -133,6 +133,7 @@
             app:layout_constraintTop_toBottomOf="@+id/crops_divider"
             app:layout_constraintVertical_bias="0.0" />
 
+
         <Button
             android:id="@+id/planting_schedule_button"
             style="@style/Widget.AppCompat.Button.Colored"

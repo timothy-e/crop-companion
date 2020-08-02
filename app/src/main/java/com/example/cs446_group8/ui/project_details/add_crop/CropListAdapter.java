@@ -70,4 +70,5 @@ public class CropListAdapter extends BaseAdapter implements ListAdapter {
 
         return view;
     }
+
 }
