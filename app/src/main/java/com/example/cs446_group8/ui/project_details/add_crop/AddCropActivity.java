@@ -49,23 +49,6 @@ public class AddCropActivity extends BaseActivity implements AddCropContract {
         }
     }
 
-    private String fromActivity;
-
-    ArrayList<String> cropList;
-    private List<Crop> crops;
-    private ProjectDao projectDao;
-    private CropDao cropDao;
-    private SowDao sowDao;
-    private long projectId = -1;
-    private ArrayAdapter<CropListItem> adapter;
-    class CropListItem{
-        long cropId;
-        String cropName;
-        @Override
-        public String toString() {
-            return cropName;
-        }
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -135,17 +118,8 @@ public class AddCropActivity extends BaseActivity implements AddCropContract {
             if(cli.cropId == cropId) return true;
         }
         return false;
+    }
 
-        CropListAdapter adapter1 = new CropListAdapter(cropItemList, projectId, sowDao, this);
-        listView.setAdapter(adapter1);
-        binding.setPresenter(mPresenter);
-    }
-    protected boolean find(ArrayList<CropListItem> currentCrops, long cropId){
-        for(CropListItem cli : currentCrops){
-            if(cli.cropId == cropId) return true;
-        }
-        return false;
-    }
     @Override
     protected void onResume() {
         super.onResume();
