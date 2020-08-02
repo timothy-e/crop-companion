@@ -73,8 +73,8 @@ public class AddCropActivity extends BaseActivity implements AddCropContract {
             List<SowWithCrop> cropWithSows = projectSows.getSows();
             for (int i = 0; i < cropWithSows.size(); i++) {
                 CropListItem cli = new CropListItem();
-                cli.cropId = crops.get(i).getId();
-                cli.cropName = crops.get(i).getName();
+                cli.cropId = cropWithSows.get(i).getCrop().getId();
+                cli.cropName = cropWithSows.get(i).getCrop().getName();
                 currentCrops.add(cli);
             }
         }
