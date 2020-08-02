@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.cs446_group8.R;
 import com.example.cs446_group8.data.Sow;
@@ -60,15 +61,14 @@ public class CropListAdapter extends BaseAdapter implements ListAdapter {
         addBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                addBtn.setAlpha(.2f);
-                addBtn.setClickable(false);
                 // TODO: store crop as "added" to parent Project obj
                 sowDao.insertAll(Sow.builder().projectId(projectId).cropId(cropList.get(position).cropId).build());
-
+                Toast.makeText(context, cropList.get(position).cropName + " added to the project! ", Toast.LENGTH_SHORT).show();
+                cropList.remove(position);
+                notifyDataSetChanged();
             }
         });
 
         return view;
     }
-
 }
