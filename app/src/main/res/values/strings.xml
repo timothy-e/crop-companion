@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">cs446-group8</string>
+    <string name="app_title">Crop Companion</string>
     <string name="month_label">Month</string>
     <string name="head_count_label"># of People</string>
     <string name="beds_required_label">Beds Required</string>

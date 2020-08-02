@@ -1,18 +1,17 @@
 package com.example.cs446_group8.ui.home;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 
 import com.example.cs446_group8.R;
 import com.example.cs446_group8.data.AppDatabase;
 import com.example.cs446_group8.data.Project;
 import com.example.cs446_group8.data.ProjectDao;
 import com.example.cs446_group8.ui.BaseActivity;
-import com.example.cs446_group8.ui.project_details.ProjectDetailsActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HomeActivity extends BaseActivity implements HomeContract {
@@ -20,6 +19,18 @@ public class HomeActivity extends BaseActivity implements HomeContract {
     private HomeContract.Presenter mPresenter;
     private ProjectDao projectDao;
     private List<Project> projects;
+    private ArrayAdapter<ProjectListItem> adapter;
+    private ListView listView;
+
+    class ProjectListItem {
+        long projectId;
+        String name;
+
+        @Override
+        public String toString() {
+            return name;
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,9 +39,6 @@ public class HomeActivity extends BaseActivity implements HomeContract {
         setContentView(R.layout.activity_home_layout);
         mPresenter = new HomePresenter(this, this);
 
-        Button button = findViewById(R.id.go_btn);
-        button.setOnClickListener(view -> jumpToProject());
-
         ImageView btn = findViewById(R.id.add_button);
         btn.setOnClickListener(v -> mPresenter.addButtonClicked());
 
@@ -38,6 +46,27 @@ public class HomeActivity extends BaseActivity implements HomeContract {
         projectDao = db.projectDao();
 
         projects = projectDao.loadAll();
+
+        List<ProjectListItem> projectList = new ArrayList<>();
+
+        // nicely formatted object for the list
+        for (int i = 0; i < projects.size(); i++) {
+            ProjectListItem pli = new ProjectListItem();
+            pli.projectId = projects.get(i).getId();
+            pli.name = projects.get(i).getName();
+            projectList.add(pli);
+        }
+
+        listView = findViewById(R.id.project_list_view);
+        listView.setAdapter(adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_list_item_1,
+                projectList
+        ));
+
+        listView.setOnItemClickListener((adapterView, view, i, l) -> {
+            ProjectListItem p1 = (ProjectListItem) listView.getItemAtPosition(i);
+            mPresenter.projectClicked(p1.projectId);
+        });
 
     }
 
@@ -53,10 +82,4 @@ public class HomeActivity extends BaseActivity implements HomeContract {
         mPresenter.pause();
     }
 
-    public void jumpToProject() {
-        //long projectId;
-        Intent intent = new Intent(this, ProjectDetailsActivity.class);
-        //intent.putExtra("projectId", projectId);
-        startActivity(intent);
-    }
 }
