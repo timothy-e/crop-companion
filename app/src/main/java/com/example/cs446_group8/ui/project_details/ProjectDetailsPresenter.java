@@ -36,6 +36,7 @@ public class ProjectDetailsPresenter extends BasePresenter implements ProjectDet
     public void addButtonClicked(long projectId) {
         Intent intent = new Intent(context, AddCropActivity.class);
         intent.putExtra("projectId", projectId);
+        intent.putExtra("FROM_ACTIVITY", "ProjectDetails");
         mView.launchActivity(intent);
     }
 
