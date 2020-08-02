@@ -61,7 +61,7 @@ public class ProjectSettingsActivity extends BaseActivity implements ProjectSett
 
         binding.setPresenter(mPresenter);
 
-        binding.backButton.setOnClickListener(view -> onBackPressed());
+        binding.backButton.setOnClickListener(view -> mPresenter.goBackToDetails(projectId));
         binding.saveButton.setOnClickListener(view -> saveProject());
     }
 
