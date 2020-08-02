@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.telephony.emergency.EmergencyNumber;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -38,14 +39,20 @@ public class timelapseActivity extends AppCompatActivity {
     String currentImagePath = null;
     private static final int IMAGE_REQUEST = 1;
     File cropsFolder;
+    File parentFolder;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timelapse);
 
-        Bundle extras = getIntent().getExtras();
+        parentFolder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Crops");
+        parentFolder.mkdir();
+
         String cropName = null;
+        Bundle extras = getIntent().getExtras();
+        cropName = null;
         if (extras != null) {
             cropName = extras.getString("cropName");
         }
@@ -58,6 +65,7 @@ public class timelapseActivity extends AppCompatActivity {
         //Ensuring crop folder/album is created
         cropsFolder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Crops/" + cropName);
         cropsFolder.mkdir();
+
 
         final SwipeRefreshLayout refreshLayout = findViewById(R.id.refresh);
         final File[] listOfFiles = cropsFolder.listFiles();
