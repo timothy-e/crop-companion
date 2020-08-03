@@ -199,14 +199,13 @@ public class PlantingScheduleActivity extends BaseActivity implements PlantingSc
             LocalDate firstDateOfWeek = mPresenter.getFirstDateOfWeek(date);
             selectedWeek = firstDateOfWeek.toString() + " - " + firstDateOfWeek.plusDays(6).toString();
             List<PlantingSchedulePresenter.SingleWeekCrop> weekCrops = scheduleMap.get(firstDateOfWeek);
+            scheduleAdapter.cropList.clear();
             if (weekCrops != null) {
-                scheduleAdapter.cropList = weekCrops;
-            } else {
-                scheduleAdapter.cropList = new ArrayList<>();
+                scheduleAdapter.cropList.addAll(weekCrops);
             }
         } else {
             selectedWeek = "";
-            scheduleAdapter.cropList = new ArrayList<>();
+            scheduleAdapter.cropList.clear();
         }
         binding.setSelectedWeek(selectedWeek);
         scheduleAdapter.notifyDataSetChanged();

@@ -3,6 +3,7 @@ package com.example.cs446_group8.ui.project_settings;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
@@ -65,7 +66,52 @@ public class ProjectSettingsActivity extends BaseActivity implements ProjectSett
         binding.setPresenter(mPresenter);
 
         binding.backButton.setOnClickListener(view -> mPresenter.goBackToDetails(projectId));
-        binding.saveButton.setOnClickListener(view -> saveProject());
+        binding.saveButton.setOnClickListener(view -> { //disgusting lazy error checking lol
+            EditText nameField = findViewById(R.id.name_field);
+            EditText calPerDayPerPersonField = findViewById(R.id.calories_per_day_per_person_field);
+            EditText calLeafyGreensField = findViewById(R.id.calories_leafy_greens_field);
+            EditText calColourfulField = findViewById(R.id.calories_colourful_veg_field);
+            EditText calStarchesField = findViewById(R.id.calories_starches_field);
+            boolean noError = true;
+            if (TextUtils.isEmpty(nameField.getText())) {
+                noError = false;
+                nameField.setError(getString(R.string.empty_field_error));
+            }
+
+            if (TextUtils.isEmpty(calPerDayPerPersonField.getText())) {
+                noError = false;
+                calPerDayPerPersonField.setError(getString(R.string.empty_field_error));
+            }
+
+            if (TextUtils.isEmpty(calLeafyGreensField.getText())) {
+                noError = false;
+                calLeafyGreensField.setError(getString(R.string.empty_field_error));
+            } else if (Integer.parseInt(calLeafyGreensField.getText().toString()) < 0 || Integer.parseInt(calLeafyGreensField.getText().toString()) > 100) {
+                noError = false;
+                calLeafyGreensField.setError(getString(R.string.field_percent_error));
+            }
+
+            if (TextUtils.isEmpty(calColourfulField.getText())) {
+                noError = false;
+                calColourfulField.setError(getString(R.string.empty_field_error));
+            } else if (Integer.parseInt(calColourfulField.getText().toString()) < 0 || Integer.parseInt(calColourfulField.getText().toString()) > 100) {
+                noError = false;
+                calColourfulField.setError(getString(R.string.field_percent_error));
+            }
+
+            if (TextUtils.isEmpty(calStarchesField.getText())) {
+                noError = false;
+                calStarchesField.setError(getString(R.string.empty_field_error));
+            } else if (Integer.parseInt(calStarchesField.getText().toString()) < 0 || Integer.parseInt(calStarchesField.getText().toString()) > 100) {
+                noError = false;
+                calStarchesField.setError(getString(R.string.field_percent_error));
+            }
+
+            if (noError) {
+                saveProject();
+            }
+
+        });
     }
 
     @Override

@@ -43,7 +43,7 @@ public class AddProjectActivity extends BaseActivity implements AddProjectContra
             EditText calLeafyGreensField = findViewById(R.id.calories_leafy_greens_field);
             EditText calColourfulField = findViewById(R.id.calories_colourful_veg_field);
             EditText calStarchesField = findViewById(R.id.calories_starches_field);
-            Boolean noError = true;
+            boolean noError = true;
             if (TextUtils.isEmpty(nameField.getText())) {
                 noError = false;
                 nameField.setError(getString(R.string.empty_field_error));
@@ -65,7 +65,7 @@ public class AddProjectActivity extends BaseActivity implements AddProjectContra
             if (TextUtils.isEmpty(calColourfulField.getText())) {
                 noError = false;
                 calColourfulField.setError(getString(R.string.empty_field_error));
-            } else if (Integer.parseInt(calColourfulField.getText().toString()) < 0 || Integer.parseInt(calLeafyGreensField.getText().toString()) > 100) {
+            } else if (Integer.parseInt(calColourfulField.getText().toString()) < 0 || Integer.parseInt(calColourfulField.getText().toString()) > 100) {
                 noError = false;
                 calColourfulField.setError(getString(R.string.field_percent_error));
             }
@@ -73,7 +73,7 @@ public class AddProjectActivity extends BaseActivity implements AddProjectContra
             if (TextUtils.isEmpty(calStarchesField.getText())) {
                 noError = false;
                 calStarchesField.setError(getString(R.string.empty_field_error));
-            } else if (Integer.parseInt(calStarchesField.getText().toString()) < 0 || Integer.parseInt(calLeafyGreensField.getText().toString()) > 100) {
+            } else if (Integer.parseInt(calStarchesField.getText().toString()) < 0 || Integer.parseInt(calStarchesField.getText().toString()) > 100) {
                 noError = false;
                 calStarchesField.setError(getString(R.string.field_percent_error));
             }
