@@ -18,7 +18,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
-import androidx.viewpager.widget.ViewPager;
 
 import com.example.cs446_group8.R;
 import com.viewpagerindicator.LinePageIndicator;
@@ -78,6 +77,9 @@ public class timelapseActivity extends AppCompatActivity {
 
             final AutoScrollViewPager viewPager = findViewById(R.id.image1);
             ImageAdapter adapter = new ImageAdapter(this, listOfFiles);
+            if (listOfFiles.length == 0){
+                Toast.makeText(getApplicationContext(), "Add photos to your Crop Gallery! Click Camera Icon above to take photos.", Toast.LENGTH_LONG).show();
+            }
             viewPager.setAdapter(adapter);
             viewPager.setInterval(2000);
             viewPager.startAutoScroll();
