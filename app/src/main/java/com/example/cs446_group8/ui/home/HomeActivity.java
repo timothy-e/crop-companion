@@ -10,9 +10,15 @@ import com.example.cs446_group8.data.AppDatabase;
 import com.example.cs446_group8.data.Project;
 import com.example.cs446_group8.data.ProjectDao;
 import com.example.cs446_group8.ui.BaseActivity;
+import com.example.cs446_group8.ui.SimpleRecyclerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class HomeActivity extends BaseActivity implements HomeContract {
 
@@ -20,9 +26,10 @@ public class HomeActivity extends BaseActivity implements HomeContract {
     private ProjectDao projectDao;
     private List<Project> projects;
     private ArrayAdapter<ProjectListItem> adapter;
-    private ListView listView;
 
-    class ProjectListItem {
+    private SimpleRecyclerAdapter simpleAdapter;
+
+    public class ProjectListItem {
         long projectId;
         String name;
 
@@ -57,16 +64,20 @@ public class HomeActivity extends BaseActivity implements HomeContract {
             projectList.add(pli);
         }
 
-        listView = findViewById(R.id.project_list_view);
-        listView.setAdapter(adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1,
-                projectList
-        ));
-
-        listView.setOnItemClickListener((adapterView, view, i, l) -> {
-            ProjectListItem p1 = (ProjectListItem) listView.getItemAtPosition(i);
-            mPresenter.projectClicked(p1.projectId);
-        });
+        RecyclerView rView = findViewById(R.id.project_list_view);
+        simpleAdapter = new SimpleRecyclerAdapter() {
+            @Override
+            public void onBindViewHolder(SimpleRecyclerAdapter.SimpleViewHolder holder, int position) {
+                ProjectListItem p1 = (ProjectListItem) simpleAdapter.list.get(position);
+                holder.name.setText(p1.name);
+                holder.mView.setOnClickListener(view -> {mPresenter.projectClicked(p1.projectId);});
+            }
+        };
+        rView.setLayoutManager(new LinearLayoutManager(this));
+        rView.setItemAnimator(new DefaultItemAnimator());
+        simpleAdapter.list.clear();
+        simpleAdapter.list.addAll(projectList);
+        rView.setAdapter(simpleAdapter);
 
     }
 

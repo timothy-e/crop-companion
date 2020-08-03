@@ -15,10 +15,14 @@ import com.example.cs446_group8.data.ProjectWithSows;
 import com.example.cs446_group8.data.SowWithCrop;
 import com.example.cs446_group8.databinding.ActivityProjectDetailsLayoutBinding;
 import com.example.cs446_group8.ui.BaseActivity;
+import com.example.cs446_group8.ui.SimpleRecyclerAdapter;
 
 import org.jetbrains.annotations.NotNull;
 
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,9 +35,10 @@ public class ProjectDetailsActivity extends BaseActivity implements ProjectDetai
     private long projectId;
     private ProjectDao projectDao;
     private ArrayAdapter<CropListItem> adapter;
-    private ListView listView;
 
-    class CropListItem {
+    private SimpleRecyclerAdapter simpleAdapter;
+
+    public class CropListItem {
         long cropId;
         String name;
 
@@ -72,16 +77,20 @@ public class ProjectDetailsActivity extends BaseActivity implements ProjectDetai
         ActivityProjectDetailsLayoutBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_project_details_layout);
         mPresenter = new ProjectDetailsPresenter(this, this);
 
-        listView = findViewById(R.id.crops_list);
-        listView.setAdapter(adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1,
-                cropList
-        ));
-
-        listView.setOnItemClickListener((adapterView, view, i, l) -> {
-            CropListItem c1 = (CropListItem) listView.getItemAtPosition(i);
-            mPresenter.cropClicked(c1.name, projectName);
-        });
+        RecyclerView rView = findViewById(R.id.crops_list);
+        simpleAdapter = new SimpleRecyclerAdapter() {
+            @Override
+            public void onBindViewHolder(SimpleRecyclerAdapter.SimpleViewHolder holder, int position) {
+                CropListItem c1 = (CropListItem) simpleAdapter.list.get(position);
+                holder.name.setText(c1.name);
+                holder.mView.setOnClickListener(view -> {mPresenter.cropClicked(c1.name, projectName);});
+            }
+        };
+        rView.setLayoutManager(new LinearLayoutManager(this));
+        rView.setItemAnimator(new DefaultItemAnimator());
+        simpleAdapter.list.clear();
+        simpleAdapter.list.addAll(cropList);
+        rView.setAdapter(simpleAdapter);
 
         binding.setProjectName(projectName);
         binding.setPresenter(mPresenter);
