@@ -103,6 +103,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_add_black"
                 android:backgroundTint="@android:color/white"
+                android:tooltipText="@string/add_crop_label"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
                 android:paddingEnd="8dp"

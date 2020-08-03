@@ -2,6 +2,7 @@ package com.example.cs446_group8.ui.project_details.add_crop.head_count;
 
 import android.content.Context;
 import android.content.Intent;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -49,6 +50,7 @@ public class MonthlyHeadCountPresenter extends BasePresenter implements MonthlyH
 
     @Override
     public void saveButtonClicked(long projectId, String fromActivity) {
+        Toast.makeText(context, "Headcounts saved successfully!", Toast.LENGTH_SHORT).show();
         if (fromActivity.equals("AddCrop")) {
             Intent intent = new Intent(context, ProjectDetailsActivity.class);
             intent.putExtra("projectId", projectId);

@@ -64,7 +64,7 @@ public class MonthlyHeadCountActivity extends BaseActivity implements MonthlyHea
         backButton.setOnClickListener(view -> onBackPressed());
 
         FloatingActionButton saveButton = findViewById(R.id.floatingActionButton);
-        saveButton.setOnClickListener(view -> saveHeadcounts());
+        saveButton.setOnClickListener(view -> saveHeadcounts(true));
 
         LinearLayout monthsContainer = findViewById(R.id.months_container);
 
@@ -104,13 +104,15 @@ public class MonthlyHeadCountActivity extends BaseActivity implements MonthlyHea
         return textView;
     }
 
-    private void saveHeadcounts() {
+    private void saveHeadcounts(boolean changeScreen) {
         HeadCounts headCounts = project.getHeadCounts();
         for (Month month : Month.values()) {
             headCounts.set(month, parseHeadCount(month));
         }
         projectDao.update(project);
-        mPresenter.saveButtonClicked(projectId, fromActivity);
+        if (changeScreen) {
+            mPresenter.saveButtonClicked(projectId, fromActivity);
+        }
     }
 
     private EditText createHeadcountInput(Context context, Project project, final Month month, int initialValue) {
@@ -132,7 +134,7 @@ public class MonthlyHeadCountActivity extends BaseActivity implements MonthlyHea
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 setFollowingHeadCountHints(project, month, parseHeadCount(month));
-                saveHeadcounts();
+                saveHeadcounts(false);
                 mPresenter.changedHeadCount(project, month, parseHeadCount(month));
             }
 

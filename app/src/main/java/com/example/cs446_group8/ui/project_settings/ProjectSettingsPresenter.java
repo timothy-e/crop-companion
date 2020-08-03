@@ -2,6 +2,7 @@ package com.example.cs446_group8.ui.project_settings;
 
 import android.content.Context;
 import android.content.Intent;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -32,5 +33,9 @@ public class ProjectSettingsPresenter extends BasePresenter implements ProjectSe
         intent.putExtra("projectId", projectId);
         mView.launchActivity(intent);
 
+    }
+
+    public void showSuccessToast() {
+        Toast.makeText(context, "Project saved successfully!", Toast.LENGTH_SHORT).show();
     }
 }

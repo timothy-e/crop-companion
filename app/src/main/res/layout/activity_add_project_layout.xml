@@ -49,6 +49,7 @@
 			android:layout_height="wrap_content"
 			android:layout_marginStart="336dp"
 			android:backgroundTint="@android:color/white"
+			android:tooltipText="@string/save_tooltip"
 			android:paddingTop="8dp"
 			android:paddingBottom="8dp"
 			android:paddingEnd="8dp"

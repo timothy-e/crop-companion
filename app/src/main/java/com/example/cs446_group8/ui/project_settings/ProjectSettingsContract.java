@@ -6,6 +6,7 @@ public interface ProjectSettingsContract extends BaseContract {
 
     interface Presenter extends BaseContract.Presenter {
         void goBackToDetails(long projectId);
+        void showSuccessToast();
     }
 
 }

@@ -111,5 +111,6 @@ public class ProjectSettingsActivity extends BaseActivity implements ProjectSett
         curProject.setCaloriesFromStarch(newCalStarches);
 
         projectDao.update(curProject);
+        mPresenter.showSuccessToast();
     }
 }
