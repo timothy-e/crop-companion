@@ -45,6 +45,7 @@ public class timelapseActivity extends AppCompatActivity {
     private static final int STORAGE_PERMISSION = 101;
     File cropsFolder;
     File parentFolder;
+    File projectsFolder;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -56,25 +57,27 @@ public class timelapseActivity extends AppCompatActivity {
         if (!hasPermissions(timelapseActivity.this, permissions)) {
             ActivityCompat.requestPermissions(timelapseActivity.this, permissions, STORAGE_PERMISSION);
         } else{
+            String cropName = null;
+            String projectName = null;
+            Bundle extras = getIntent().getExtras();
+            if (extras != null) {
+                cropName = extras.getString("cropName");
+                projectName = extras.getString("projectName");
+            }
+
             parentFolder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Crops");
             parentFolder.mkdir();
 
-            String cropName = null;
-            Bundle extras = getIntent().getExtras();
-            cropName = null;
-            if (extras != null) {
-                cropName = extras.getString("cropName");
-            }
+            projectsFolder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Crops/" + projectName);
+            projectsFolder.mkdir();
 
             TextView titlebar = findViewById(R.id.title_bar);
-            titlebar.setText(cropName + " Gallery");
+            titlebar.setText(projectName + ": " + cropName + " Gallery");
 
             //Ensuring crop folder/album is created
-            cropsFolder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Crops/" + cropName);
+            cropsFolder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Crops/" + projectName +"/" + cropName);
             cropsFolder.mkdir();
 
-
-            final SwipeRefreshLayout refreshLayout = findViewById(R.id.refresh);
             final File[] listOfFiles = cropsFolder.listFiles();
 
             assert listOfFiles != null;
@@ -87,20 +90,18 @@ public class timelapseActivity extends AppCompatActivity {
             final LinePageIndicator linePageIndicator = findViewById(R.id.indicator);
             linePageIndicator.setViewPager(viewPager);
 
-            refreshLayout.setOnRefreshListener(() -> {
-                //finish();
-                startActivity(getIntent());
-                //viewPager.setCurrentItem(listOfFiles.length-1);
-            });
-
             ImageView backBtn = findViewById(R.id.back_button);
             backBtn.setOnClickListener(view -> onBackPressed());
 
+            ImageView refreshBtn = findViewById(R.id.refreshBtn);
+            refreshBtn.setOnClickListener(view -> startActivity(getIntent()));
+
             ImageView uploadBtn = findViewById(R.id.uploadBtn);
             String finalCropName = cropName;
+            String finalProjectName = projectName;
             uploadBtn.setOnClickListener(view -> {
                 if (isExternalStorageReadable() && isExternalStorageWritable()) {
-                    takePhotoIntent(finalCropName);
+                    takePhotoIntent(finalCropName, finalProjectName);
                 } else {
                     //storage is full
                 }
@@ -150,12 +151,12 @@ public class timelapseActivity extends AppCompatActivity {
         }
     }
 
-    public void takePhotoIntent(String cropName){
+    public void takePhotoIntent(String cropName, String projectName){
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if(cameraIntent.resolveActivity(getPackageManager()) != null){
             File imageFile = null;
             try {
-                imageFile = getImageFile(cropName);
+                imageFile = getImageFile(cropName, projectName);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -167,10 +168,10 @@ public class timelapseActivity extends AppCompatActivity {
         }
     }
 
-    private File getImageFile(String cropName) throws IOException {
+    private File getImageFile(String cropName, String projectName) throws IOException {
         @SuppressLint("SimpleDateFormat") String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageName = "jpg_" + timeStamp + "_";
-        File storageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Crops/" + cropName);
+        File storageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Crops/" + projectName + "/" + cropName);
         File imageFile = File.createTempFile(imageName, ".jpg", storageDir);
         currentImagePath = imageFile.getAbsolutePath();
         return imageFile;
