@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 
 import com.example.cs446_group8.calculations.Plantings;
 import com.example.cs446_group8.data.AppDatabase;
+import com.example.cs446_group8.data.HeadCounts;
 import com.example.cs446_group8.data.Project;
 import com.example.cs446_group8.ui.BasePresenter;
 import com.example.cs446_group8.ui.project_details.ProjectDetailsActivity;
@@ -38,10 +39,10 @@ public class MonthlyHeadCountPresenter extends BasePresenter implements MonthlyH
     }
 
     @Override
-    public void changedHeadCount(Project project, Month month, int headCount) {
+    public void changedHeadCount(Project project, HeadCounts headCounts) {
         Plantings plantings = new Plantings(db, project.getId());
 
-        List<Integer> monthlySquareFeet = plantings.getMonthlySquareFeet();
+        List<Integer> monthlySquareFeet = plantings.getMonthlySquareFeet(headCounts);
 
         for (Month i : Month.values()) {
             mView.setBedCount(i, monthlySquareFeet.get(i.ordinal()) / 100);

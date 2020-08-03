@@ -88,7 +88,7 @@ public class MonthlyHeadCountActivity extends BaseActivity implements MonthlyHea
             monthsContainer.addView(monthContainer);
         }
 
-        mPresenter.changedHeadCount(project, Month.JANUARY, project.getHeadCounts().getJanuary());
+        mPresenter.changedHeadCount(project, project.getHeadCounts());
     }
 
     private TextView createMonthTextView(Context context, String monthName) {
@@ -134,8 +134,11 @@ public class MonthlyHeadCountActivity extends BaseActivity implements MonthlyHea
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 setFollowingHeadCountHints(project, month, parseHeadCount(month));
-                saveHeadcounts(false);
-                mPresenter.changedHeadCount(project, month, parseHeadCount(month));
+                HeadCounts newHeadCounts = HeadCounts.empty();
+                for (Month month : Month.values()) {
+                    newHeadCounts.set(month, parseHeadCount(month));
+                }
+                mPresenter.changedHeadCount(project, newHeadCounts);
             }
 
             @Override

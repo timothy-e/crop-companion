@@ -1,5 +1,6 @@
 package com.example.cs446_group8.ui.project_details.add_crop.head_count;
 
+import com.example.cs446_group8.data.HeadCounts;
 import com.example.cs446_group8.data.Project;
 import com.example.cs446_group8.ui.BaseContract;
 
@@ -29,10 +30,9 @@ public interface MonthlyHeadCountContract extends BaseContract {
          * Notifies the presenter that the given month has had its population count for the month
          * changed to headCount
          * @param project the project instance being modified
-         * @param month a month of the year
-         * @param headCount the newly set value
+         * @param headCounts the new headcounts object we want to use for calculations
          */
-        void changedHeadCount(Project project, Month month, int headCount);
+        void changedHeadCount(Project project, HeadCounts headCounts);
 
         void saveButtonClicked(long projectId, String fromActivity);
     }

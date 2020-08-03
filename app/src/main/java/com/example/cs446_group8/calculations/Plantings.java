@@ -1,7 +1,5 @@
 package com.example.cs446_group8.calculations;
 
-import android.content.Context;
-
 import androidx.room.Ignore;
 
 import com.example.cs446_group8.data.AppDatabase;
@@ -36,8 +34,22 @@ public class Plantings {
         this.projectId = projectId;
     }
 
+    /**
+     * Uses the headcounts stored on the project in the database
+     * @return A list of length 12 describing the number of square feet we need per month
+     */
     public List<Integer> getMonthlySquareFeet() {
-        WeeklySqft weeklySqft = getWeeklySqft(getSqftPerPerson());
+        Project project = projectDao.loadOneById(projectId);
+        return getMonthlySquareFeet(project.getHeadCounts());
+    }
+
+    /**
+     * Uses the supplied headcounts for the calculations
+     * @param headCounts any random headcounts thing
+     * @return A list of length 12 describing the number of square feet we need per month
+     */
+    public List<Integer> getMonthlySquareFeet(HeadCounts headCounts) {
+        WeeklySqft weeklySqft = getWeeklySqft(headCounts, getSqftPerPerson());
         ProjectWithSows projectWithSows = projectDao.loadOneByIdWithSows(projectId);
 
         List<Integer> weeklyConcurrentUse = Workspace.getWeeklyConcurrentUse(
@@ -52,10 +64,20 @@ public class Plantings {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Calculates the schedule. First planting date is some day before the project start date.
+     * The weekly amounts will typically be >0 until the end. Exceptions:
+     *    * if it takes 3 weeks for a crop to grow, we won't be planting any during the last 3 weeks
+     *    * if we have some months with no people, we will have no plantings for some weeks.
+     * @return A list of schedule objects
+     */
     public List<CropSchedule> getSchedule() {
         ProjectWithSows projectWithSows = projectDao.loadOneByIdWithSows(projectId);
         LocalDate projectStart = projectWithSows.getProject().getBeginningOfSession();
-        WeeklySqft weeklySqft = getWeeklySqft(getSqftPerPerson());
+        WeeklySqft weeklySqft = getWeeklySqft(
+                projectWithSows.getProject().getHeadCounts(),
+                getSqftPerPerson()
+        );
 
         return projectWithSows.getSows()
                 .stream()
@@ -79,10 +101,7 @@ public class Plantings {
                 .build();
     }
 
-    private WeeklySqft getWeeklySqft(SqftPerPerson sqftPerPerson) {
-        Project project = projectDao.loadOneById(projectId);
-        HeadCounts headCounts = project.getHeadCounts();
-
+    private WeeklySqft getWeeklySqft(HeadCounts headCounts, SqftPerPerson sqftPerPerson) {
         return WeeklySqft.builder()
                 .colorful(Workspace.getWeeklySquareFeet(headCounts, sqftPerPerson.getColorful()))
                 .green(Workspace.getWeeklySquareFeet(headCounts, sqftPerPerson.getGreen()))
