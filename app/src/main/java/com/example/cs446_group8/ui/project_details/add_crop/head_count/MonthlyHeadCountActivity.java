@@ -70,10 +70,12 @@ public class MonthlyHeadCountActivity extends BaseActivity implements MonthlyHea
 
         project = projectDao.loadOneById(projectId);
 
+        int firstMonth = project.getBeginningOfSession().getMonth().ordinal();
         for (int monthIndex = 0; monthIndex < MONTH_NAMES.size(); monthIndex++) {
-            String monthName = MONTH_NAMES.get(monthIndex);
-            Month month = Month.of(monthIndex + 1);
+            // we want to label a month based on the start date of the project
+            String monthName = MONTH_NAMES.get((monthIndex + firstMonth) % 12);
 
+            Month month = Month.of(monthIndex + 1);
             monthTextViews[monthIndex] = createMonthTextView(this, monthName);
             int headCount = project.getHeadCounts().get(month);
             headCountEditTexts[monthIndex] = createHeadcountInput(this, project, month, headCount);
