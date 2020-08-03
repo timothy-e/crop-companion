@@ -40,6 +40,5 @@ public class AddCropPresenter extends BasePresenter implements AddCropContract.P
         intent.putExtra("projectId", projectId);
         intent.putExtra("FROM_ACTIVITY", "AddCrop");
         mView.launchActivity(intent);
-
     }
 }

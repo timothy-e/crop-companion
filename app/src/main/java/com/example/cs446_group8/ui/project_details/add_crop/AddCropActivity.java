@@ -3,15 +3,11 @@ package com.example.cs446_group8.ui.project_details.add_crop;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.View;
-import android.widget.AdapterView;
+
 import android.widget.ArrayAdapter;
-import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.SearchView;
 
 import com.example.cs446_group8.R;
 import com.example.cs446_group8.data.AppDatabase;
@@ -71,14 +67,15 @@ public class AddCropActivity extends BaseActivity implements AddCropContract {
         // Receives set difference of crops the user has not added.
         ProjectWithSows projectSows = projectDao.loadOneByIdWithSows(projectId);
         crops = cropDao.loadAll();
+
         ArrayList<CropListItem> cropItemList = new ArrayList<CropListItem>();
         ArrayList<CropListItem> currentCrops = new ArrayList<CropListItem>();
         if (projectSows != null) {
             List<SowWithCrop> cropWithSows = projectSows.getSows();
             for (int i = 0; i < cropWithSows.size(); i++) {
                 CropListItem cli = new CropListItem();
-                cli.cropId = crops.get(i).getId();
-                cli.cropName = crops.get(i).getName();
+                cli.cropId = cropWithSows.get(i).getCrop().getId();
+                cli.cropName = cropWithSows.get(i).getCrop().getName();
                 currentCrops.add(cli);
             }
         }
@@ -106,7 +103,6 @@ public class AddCropActivity extends BaseActivity implements AddCropContract {
         ImageView backButton = findViewById(R.id.back_button);
         backButton.setOnClickListener(view -> mPresenter.backPressed(projectId));
 
-
         listView = findViewById(R.id.list_view);
         listView.setAdapter(adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1
@@ -122,7 +118,6 @@ public class AddCropActivity extends BaseActivity implements AddCropContract {
             if(cli.cropId == cropId) return true;
         }
         return false;
-
     }
 
     @Override
