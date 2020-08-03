@@ -84,13 +84,13 @@ public class Plantings {
                 .map(SowWithCrop::getCrop)
                 .map(crop -> CropSchedule.builder()
                         .crop(crop)
-                        .firstPlanting(projectStart.minus(
-                                (int) Math.ceil((double) crop.getDays() / 7),
-                                ChronoUnit.WEEKS))
+                        .firstPlanting(Workspace.roundToNearestSunday(
+                                projectStart.minus(crop.getDays(), ChronoUnit.DAYS)))
                         .weeklyPlantingAmounts(getWeeklySqftForCrop(crop, weeklySqft))
                         .build())
                 .collect(Collectors.toList());
     }
+
 
     private SqftPerPerson getSqftPerPerson() {
         ProjectWithSows projectWithSows = projectDao.loadOneByIdWithSows(projectId);

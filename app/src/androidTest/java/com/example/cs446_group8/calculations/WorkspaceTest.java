@@ -150,6 +150,34 @@ public final class WorkspaceTest {
     }
 
     @Test
+    public void roundToSunday() {
+        assertThat(
+                Workspace.roundToNearestSunday(LocalDate.of(2020, 8, 2)), // Sunday
+                equalTo(LocalDate.of(2020, 8, 2)));
+        assertThat(
+                Workspace.roundToNearestSunday(LocalDate.of(2020, 8, 3)), // Monday
+                equalTo(LocalDate.of(2020, 8, 2)));
+        assertThat(
+                Workspace.roundToNearestSunday(LocalDate.of(2020, 8, 4)), // Tuesday
+                equalTo(LocalDate.of(2020, 8, 2)));
+        assertThat(
+                Workspace.roundToNearestSunday(LocalDate.of(2020, 8, 5)), // Wednesday
+                equalTo(LocalDate.of(2020, 8, 2)));
+        assertThat(
+                Workspace.roundToNearestSunday(LocalDate.of(2020, 8, 6)), // Thursday
+                equalTo(LocalDate.of(2020, 8, 9)));
+        assertThat(
+                Workspace.roundToNearestSunday(LocalDate.of(2020, 8, 7)), // Friday
+                equalTo(LocalDate.of(2020, 8, 9)));
+        assertThat(
+                Workspace.roundToNearestSunday(LocalDate.of(2020, 8, 8)), // Saturday
+                equalTo(LocalDate.of(2020, 8, 9)));
+        assertThat(
+                Workspace.roundToNearestSunday(LocalDate.of(2020, 8, 9)), // Sunday
+                equalTo(LocalDate.of(2020, 8, 9)));
+    }
+
+    @Test
     public void testPlantingDays() {
         Crop amaranth = Crop.builder()
                 .name("amaranth leaves")
