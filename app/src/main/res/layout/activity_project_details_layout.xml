@@ -122,13 +122,14 @@
             style="@style/divider_dark"
             app:layout_constraintTop_toBottomOf="@id/action_container"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"/>
 
         <ListView
             android:id="@+id/crops_list"
-            android:layout_width="393dp"
-            android:layout_height="500dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toTopOf="@id/planting_schedule_button"
             app:layout_constraintTop_toBottomOf="@+id/crops_divider"

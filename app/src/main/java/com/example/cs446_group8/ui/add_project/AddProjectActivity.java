@@ -1,6 +1,7 @@
 package com.example.cs446_group8.ui.add_project;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -36,7 +37,52 @@ public class AddProjectActivity extends BaseActivity implements AddProjectContra
         projectDao = db.projectDao();
 
         binding.backButton.setOnClickListener(view -> onBackPressed());
-        binding.saveButton.setOnClickListener(view -> insertProjectToDb());
+        binding.saveButton.setOnClickListener(view -> { //disgusting lazy error checking lol
+            EditText nameField = findViewById(R.id.name_field);
+            EditText calPerDayPerPersonField = findViewById(R.id.calories_per_day_per_person_field);
+            EditText calLeafyGreensField = findViewById(R.id.calories_leafy_greens_field);
+            EditText calColourfulField = findViewById(R.id.calories_colourful_veg_field);
+            EditText calStarchesField = findViewById(R.id.calories_starches_field);
+            Boolean noError = true;
+            if (TextUtils.isEmpty(nameField.getText())) {
+                noError = false;
+                nameField.setError(getString(R.string.empty_field_error));
+            }
+
+            if (TextUtils.isEmpty(calPerDayPerPersonField.getText())) {
+                noError = false;
+                calPerDayPerPersonField.setError(getString(R.string.empty_field_error));
+            }
+
+            if (TextUtils.isEmpty(calLeafyGreensField.getText())) {
+                noError = false;
+                calLeafyGreensField.setError(getString(R.string.empty_field_error));
+            } else if (Integer.parseInt(calLeafyGreensField.getText().toString()) < 0 || Integer.parseInt(calLeafyGreensField.getText().toString()) > 100) {
+                noError = false;
+                calLeafyGreensField.setError(getString(R.string.field_percent_error));
+            }
+
+            if (TextUtils.isEmpty(calColourfulField.getText())) {
+                noError = false;
+                calColourfulField.setError(getString(R.string.empty_field_error));
+            } else if (Integer.parseInt(calColourfulField.getText().toString()) < 0 || Integer.parseInt(calLeafyGreensField.getText().toString()) > 100) {
+                noError = false;
+                calColourfulField.setError(getString(R.string.field_percent_error));
+            }
+
+            if (TextUtils.isEmpty(calStarchesField.getText())) {
+                noError = false;
+                calStarchesField.setError(getString(R.string.empty_field_error));
+            } else if (Integer.parseInt(calStarchesField.getText().toString()) < 0 || Integer.parseInt(calLeafyGreensField.getText().toString()) > 100) {
+                noError = false;
+                calStarchesField.setError(getString(R.string.field_percent_error));
+            }
+
+            if (noError) {
+                insertProjectToDb();
+            }
+
+        });
     }
 
     @Override
@@ -53,29 +99,29 @@ public class AddProjectActivity extends BaseActivity implements AddProjectContra
 
     protected void insertProjectToDb() {
         // grab and set name
-        EditText nameField = (EditText) findViewById(R.id.name_field);
+        EditText nameField = findViewById(R.id.name_field);
         String newName = nameField.getText().toString();
 
-        DatePicker datePickerField = (DatePicker) findViewById(R.id.start_date_field);
+        DatePicker datePickerField = findViewById(R.id.start_date_field);
         int month = datePickerField.getMonth();
         int day = datePickerField.getDayOfMonth();
         int year = datePickerField.getYear();
         LocalDate newStartDate = LocalDate.of(year, month, day);
 
         // grab and set calories per day per person
-        EditText calPerDayPerPersonField = (EditText) findViewById(R.id.calories_per_day_per_person_field);
+        EditText calPerDayPerPersonField = findViewById(R.id.calories_per_day_per_person_field);
         int newCalPerDayPerPerson = Integer.parseInt(calPerDayPerPersonField.getText().toString());
 
         // grab and set calories from leafy greens
-        EditText calLeafyGreensField = (EditText) findViewById(R.id.calories_leafy_greens_field);
+        EditText calLeafyGreensField = findViewById(R.id.calories_leafy_greens_field);
         int newCalLeafyGreens = Integer.parseInt(calLeafyGreensField.getText().toString());
 
         // grab and set calories from colourful vegetables
-        EditText calColourfulField = (EditText) findViewById(R.id.calories_colourful_veg_field);
+        EditText calColourfulField = findViewById(R.id.calories_colourful_veg_field);
         int newCalColourful = Integer.parseInt(calColourfulField.getText().toString());
 
         // grab and set calories from starches
-        EditText calStarchesField = (EditText) findViewById(R.id.calories_starches_field);
+        EditText calStarchesField = findViewById(R.id.calories_starches_field);
         int newCalStarches = Integer.parseInt(calStarchesField.getText().toString());
 
         long newlyInsertedProjectId = projectDao.insert(Project.builder()
