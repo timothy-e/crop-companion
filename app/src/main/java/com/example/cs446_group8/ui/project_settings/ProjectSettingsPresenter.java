@@ -1,10 +1,13 @@
 package com.example.cs446_group8.ui.project_settings;
 
 import android.content.Context;
+import android.content.Intent;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.example.cs446_group8.ui.BasePresenter;
+import com.example.cs446_group8.ui.project_details.ProjectDetailsActivity;
 
 public class ProjectSettingsPresenter extends BasePresenter implements ProjectSettingsContract.Presenter {
 
@@ -23,5 +26,16 @@ public class ProjectSettingsPresenter extends BasePresenter implements ProjectSe
     @Override
     public void pause() {
 
+    }
+
+    public void goBackToDetails(long projectId) {
+        Intent intent = new Intent(context, ProjectDetailsActivity.class);
+        intent.putExtra("projectId", projectId);
+        mView.launchActivity(intent);
+
+    }
+
+    public void showSuccessToast() {
+        Toast.makeText(context, "Project saved successfully!", Toast.LENGTH_SHORT).show();
     }
 }
