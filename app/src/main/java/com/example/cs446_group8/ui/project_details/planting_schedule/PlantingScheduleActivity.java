@@ -2,6 +2,7 @@ package com.example.cs446_group8.ui.project_details.planting_schedule;
 
 import android.os.Bundle;
 
+import com.example.cs446_group8.GlobalConstants;
 import com.example.cs446_group8.R;
 import com.example.cs446_group8.databinding.ActivityPlantingScheduleLayoutBinding;
 import com.example.cs446_group8.ui.BaseActivity;
@@ -10,7 +11,11 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -32,16 +37,22 @@ public class PlantingScheduleActivity extends BaseActivity implements PlantingSc
     private ActivityPlantingScheduleLayoutBinding binding;
     private PlantingScheduleContract.Presenter mPresenter;
     private ScheduleAdapter scheduleAdapter;
+    private Long projectId;
 
     private LocalDate selectedDate = null;
     private String selectedWeek = "";
     private DateTimeFormatter monthTitleFormatter = DateTimeFormatter.ofPattern("MMMM");
 
-    class DayViewContainer extends ViewContainer {
-        CalendarDay day = null;
+    private List<WeekSelectionListener> weekSelectionListeners = new ArrayList<>();
 
+    private HashMap<LocalDate, List<PlantingSchedulePresenter.SingleWeekCrop>> scheduleMap;
+
+    class DayViewContainer extends ViewContainer implements WeekSelectionListener {
+        CalendarDay day = null;
+        View mView;
         public DayViewContainer(@NonNull View view) {
             super(view);
+            mView = view;
             view.setOnClickListener(view1 -> {
                 if (day.getOwner() == DayOwner.THIS_MONTH) {
                     LocalDate date = day.getDate();
@@ -55,7 +66,21 @@ public class PlantingScheduleActivity extends BaseActivity implements PlantingSc
                         updateAdapterForDate(date);
                     }
                 }
+
+                for (WeekSelectionListener listener : weekSelectionListeners) {
+                    listener.weekSelected(day.getDay());
+                }
             });
+        }
+
+        //todo fix visual week selection lol
+        @Override
+        public void weekSelected(int date) {
+            if (day.getOwner() == DayOwner.THIS_MONTH) {
+                LocalDate datee = day.getDate();
+                //Log.d("Huhuhuh", "ghdsfhhs");
+                binding.calendar.notifyDateChanged(datee);
+            }
         }
     }
 
@@ -64,8 +89,12 @@ public class PlantingScheduleActivity extends BaseActivity implements PlantingSc
         super.onCreate(savedInstanceState);
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_planting_schedule_layout);
-        mPresenter = new PlantingSchedulePresenter(this, this);
+        binding.setLifecycleOwner(this);
 
+        mPresenter = new PlantingSchedulePresenter(this, this);
+        projectId = getIntent().getLongExtra(GlobalConstants.PROJECT_ID_KEY, GlobalConstants.ID_DOES_NOT_EXIST);
+
+        scheduleMap = mPresenter.getSchedule(projectId);
         binding.setSelectedWeek(selectedWeek);
 
         scheduleAdapter = new ScheduleAdapter();
@@ -73,16 +102,15 @@ public class PlantingScheduleActivity extends BaseActivity implements PlantingSc
         binding.eventsRv.setItemAnimator(new DefaultItemAnimator());
         binding.eventsRv.setAdapter(scheduleAdapter);
 
-        //todo replace with YearMonth objects of actual starting and ending months for project
-        YearMonth startingMonth = YearMonth.now();
-        YearMonth endingMonth = YearMonth.now().plusMonths(10);
+        YearMonth startingMonth = mPresenter.getFirstMonthOfProject(scheduleMap);
+        YearMonth endingMonth = mPresenter.getLastMonthOfProject(scheduleMap);
         YearMonth activeMonth;
-        if (false) { //todo if the currentMonth is within the project timeline, set active month to it, otherwise set to startingmonth
+        if (YearMonth.now().isAfter(startingMonth) && YearMonth.now().isBefore(endingMonth)) { //if the currentMonth is within the project timeline, set active month to it, otherwise set to starting month
             activeMonth = YearMonth.now();
         } else {
             activeMonth = startingMonth;
         }
-        binding.calendar.setup(startingMonth, endingMonth, DayOfWeek.MONDAY);
+        binding.calendar.setup(startingMonth, endingMonth, DayOfWeek.SUNDAY);
         binding.calendar.scrollToMonth(activeMonth);
 
         binding.calendar.setDayBinder(new DayBinder<DayViewContainer>() {
@@ -91,7 +119,9 @@ public class PlantingScheduleActivity extends BaseActivity implements PlantingSc
             @NonNull
             @Override
             public DayViewContainer create(@NonNull View view) {
-                return new DayViewContainer(view);
+                DayViewContainer cont = new DayViewContainer(view);
+                weekSelectionListeners.add(cont);
+                return cont;
             }
 
             @Override
@@ -108,7 +138,6 @@ public class PlantingScheduleActivity extends BaseActivity implements PlantingSc
                     textView.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimaryDark));
                     layout.setBackground(null);
                 }
-
             }
         });
 
@@ -132,11 +161,11 @@ public class PlantingScheduleActivity extends BaseActivity implements PlantingSc
             String title = monthTitleFormatter.format(month.getYearMonth()) + " " + month.getYearMonth().getYear();
             binding.monthYearText.setText(title);
 
-            /*if (selectedDate != null) {
+            if (selectedDate != null) {
                 selectedDate = null;
-                binding.calendar.notifyDateChanged(selectedDate);
+                // binding.calendar.notifyDateChanged(selectedDate); //todo this gives null error cause stupid kotlin to java decompilation error
                 updateAdapterForDate(null);
-            }*/
+            }
             return null;
         });
 
@@ -166,9 +195,21 @@ public class PlantingScheduleActivity extends BaseActivity implements PlantingSc
     }
 
     private void updateAdapterForDate(@Nullable LocalDate date) {
-        //scheduleAdapter.croplist =
-        //todo set the list in the adapter to a list of the crops coupled with their amount, to be planted on the week of the selected date
-        // get this from whatever structure backend gives as the schedule of crops
+        if (date != null ) {
+            LocalDate firstDateOfWeek = mPresenter.getFirstDateOfWeek(date);
+            selectedWeek = firstDateOfWeek.toString() + " - " + firstDateOfWeek.plusDays(6).toString();
+            List<PlantingSchedulePresenter.SingleWeekCrop> weekCrops = scheduleMap.get(firstDateOfWeek);
+            if (weekCrops != null) {
+                scheduleAdapter.cropList = weekCrops;
+            } else {
+                scheduleAdapter.cropList = new ArrayList<>();
+            }
+        } else {
+            selectedWeek = "";
+            scheduleAdapter.cropList = new ArrayList<>();
+        }
+        binding.setSelectedWeek(selectedWeek);
+        scheduleAdapter.notifyDataSetChanged();
     }
 
 }

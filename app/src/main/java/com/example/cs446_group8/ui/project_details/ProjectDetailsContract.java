@@ -8,7 +8,7 @@ public interface ProjectDetailsContract extends BaseContract {
         void addButtonClicked(long projectId);
         void settingsButtonClicked(long projectId);
         void headcountsButtonClicked(long projectId);
-        void scheduleButtonClicked();
+        void scheduleButtonClicked(long projectId);
         void backButtonClicked();
         void cropClicked(String cropName, String projectName);
     }
