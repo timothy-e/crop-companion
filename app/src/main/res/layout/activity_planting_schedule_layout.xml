@@ -4,10 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools" >
     <data>
         <variable
-            name="presenter"
-            type="com.example.cs446_group8.ui.project_details.planting_schedule.PlantingScheduleContract.Presenter" />
-
-        <variable
             name="selectedWeek"
             type="String" />
     </data>

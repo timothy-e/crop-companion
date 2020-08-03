@@ -3,6 +3,7 @@ package com.example.cs446_group8.ui.project_details;
 import android.content.Context;
 import android.content.Intent;
 
+import com.example.cs446_group8.GlobalConstants;
 import com.example.cs446_group8.ui.BasePresenter;
 import com.example.cs446_group8.ui.home.HomeActivity;
 import com.example.cs446_group8.ui.project_details.add_crop.AddCropActivity;
@@ -56,18 +57,22 @@ public class ProjectDetailsPresenter extends BasePresenter implements ProjectDet
         mView.launchActivity(intent);
     }
 
-    public void scheduleButtonClicked() {
+    @Override
+    public void scheduleButtonClicked(long projectId) {
         Intent intent = new Intent(context, PlantingScheduleActivity.class);
+        intent.putExtra(GlobalConstants.PROJECT_ID_KEY, projectId);
         mView.launchActivity(intent);
     }
 
     // if we're in project details, going back should only send the user to the "home" screen
     //    with the list of projects to select
+    @Override
     public void backButtonClicked() {
         Intent intent = new Intent(context, HomeActivity.class);
         mView.launchActivity(intent);
     }
 
+    @Override
     public void cropClicked(String cropName, String projectName) {
         Intent intent = new Intent(context, timelapseActivity.class);
         intent.putExtra("cropName", cropName);

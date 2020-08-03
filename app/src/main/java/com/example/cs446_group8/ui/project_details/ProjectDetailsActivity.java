@@ -16,6 +16,8 @@ import com.example.cs446_group8.data.SowWithCrop;
 import com.example.cs446_group8.databinding.ActivityProjectDetailsLayoutBinding;
 import com.example.cs446_group8.ui.BaseActivity;
 
+import org.jetbrains.annotations.NotNull;
+
 import androidx.databinding.DataBindingUtil;
 
 import java.util.ArrayList;
@@ -35,6 +37,7 @@ public class ProjectDetailsActivity extends BaseActivity implements ProjectDetai
         long cropId;
         String name;
 
+        @NotNull
         @Override
         public String toString() {
             return name;
@@ -56,7 +59,7 @@ public class ProjectDetailsActivity extends BaseActivity implements ProjectDetai
 
         // get crops on the project
         List<Crop> crops = projectWithSows.getSows().stream().map(SowWithCrop::getCrop).collect(Collectors.toList());
-        List<CropListItem> cropList = new ArrayList<CropListItem>();
+        List<CropListItem> cropList = new ArrayList<>();
 
         // nicely formatted object for the list
         for (int i = 0; i < crops.size(); i++) {
@@ -91,7 +94,7 @@ public class ProjectDetailsActivity extends BaseActivity implements ProjectDetai
 
         binding.addButton.setOnClickListener(view -> mPresenter.addButtonClicked(projectId));
 
-        binding.plantingScheduleButton.setOnClickListener(view -> mPresenter.scheduleButtonClicked());
+        binding.plantingScheduleButton.setOnClickListener(view -> mPresenter.scheduleButtonClicked(projectId));
 
     }
 
@@ -111,5 +114,10 @@ public class ProjectDetailsActivity extends BaseActivity implements ProjectDetai
     protected void onPause() {
         super.onPause();
         mPresenter.pause();
+    }
+
+    @Override
+    public void onBackPressed() {
+        mPresenter.backButtonClicked();
     }
 }
