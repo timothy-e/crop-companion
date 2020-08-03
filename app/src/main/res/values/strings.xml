@@ -32,6 +32,7 @@
     <string name="headcount_button_tooltip">Modify monthly headcounts</string>
     <string name="create_new_project">Create New Project</string>
     <string name="save_tooltip">Save</string>
+    <string name="first_harvest_at_label">First Harvest at</string>
     <string name="empty_field_error">Field required!</string>
     <string name="field_percent_error">Must be between 0 and 100</string>
 </resources>
