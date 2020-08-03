@@ -69,7 +69,7 @@ public class ProjectDetailsPresenter extends BasePresenter implements ProjectDet
     }
 
     public void cropClicked(String cropName, String projectName) {
-        Intent intent = new Intent(context, timelapseActivity.class); //todo: go to Jasper's class)
+        Intent intent = new Intent(context, timelapseActivity.class);
         intent.putExtra("cropName", cropName);
         intent.putExtra("projectName", projectName);
         mView.launchActivity(intent);

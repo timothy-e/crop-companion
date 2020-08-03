@@ -9,9 +9,6 @@
     <string name="crop_search_hint">Crop</string>
     <string name="add_people_label">People</string>
     <string name="projects_nav_label">Projects</string>
-    <string name="climate_nav_label">Climate</string>
-    <string name="trends_nav_label">Trends</string>
-    <string name="analytics_nav_label">Analytics</string>
     <string name="settings_nav_label">Settings</string>
     <string name="crop_summary_label">Summary</string>
     <string name="crop_summary_crop_name">Crop: %1$s</string>
@@ -34,4 +31,5 @@
     <string name="amount_beds_to_plant"># of beds to plant</string>
     <string name="headcount_button_tooltip">Modify monthly headcounts</string>
     <string name="create_new_project">Create New Project</string>
+    <string name="save_tooltip">Save</string>
 </resources>

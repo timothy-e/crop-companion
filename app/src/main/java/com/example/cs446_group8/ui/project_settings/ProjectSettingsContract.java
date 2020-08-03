@@ -5,6 +5,8 @@ import com.example.cs446_group8.ui.BaseContract;
 public interface ProjectSettingsContract extends BaseContract {
 
     interface Presenter extends BaseContract.Presenter {
+        void goBackToDetails(long projectId);
+        void showSuccessToast();
     }
 
 }
