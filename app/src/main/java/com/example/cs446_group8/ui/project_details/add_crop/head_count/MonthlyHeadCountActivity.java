@@ -132,6 +132,7 @@ public class MonthlyHeadCountActivity extends BaseActivity implements MonthlyHea
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 setFollowingHeadCountHints(project, month, parseHeadCount(month));
+                saveHeadcounts();
                 mPresenter.changedHeadCount(project, month, parseHeadCount(month));
             }
 
