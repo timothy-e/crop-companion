@@ -54,26 +54,25 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     </FrameLayout>
 
     <View
         android:id="@+id/divider2"
-        android:layout_width="391dp"
+        android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="?android:attr/listDivider"
-        app:layout_constraintBottom_toTopOf="@id/projects_container"
+        app:layout_constraintTop_toBottomOf="@id/container"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="68dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="550dp"
-        android:id="@+id/projects_container"
+        android:layout_height="wrap_content"
+        android:id="@+id/container2"
         app:layout_constraintTop_toBottomOf="@id/container"
         android:orientation="vertical">
 
@@ -87,20 +86,23 @@
             android:textColor="@android:color/black"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            />
+            android:layout_marginBottom="16dp" />
 
-        <ListView
-            android:id="@+id/project_list_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:divider="@null"
-            android:dividerHeight="0dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@id/project_label"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
+        <View
+            android:id="@+id/projects_divider"
+            style="@style/divider_dark"
+            app:layout_constraintTop_toBottomOf="@id/action_container"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"/>
     </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/project_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/container2"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
