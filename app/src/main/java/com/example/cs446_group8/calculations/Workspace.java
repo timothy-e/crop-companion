@@ -9,6 +9,7 @@ import com.example.cs446_group8.data.Project;
 import com.example.cs446_group8.data.ProjectWithSows;
 import com.example.cs446_group8.data.SowWithCrop;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -58,6 +59,21 @@ public class Workspace {
         }
 
         return list;
+    }
+
+
+    /**
+     * Rounds the given date to the nearest Sunday
+     * @param date
+     * @return
+     */
+    public static LocalDate roundToNearestSunday(LocalDate date) {
+        int day = date.getDayOfWeek().getValue();
+        int difference = DayOfWeek.SUNDAY.getValue() - day;
+        if (difference >= 4) { // Mon / Tues / Wed
+            return date.minus(7 - difference, ChronoUnit.DAYS); // move it to the Earlier Sunday
+        }
+        return date.plus(difference, ChronoUnit.DAYS); // move Thurs / Fri / Sat to the later Sunday
     }
 
     /**
@@ -122,7 +138,7 @@ public class Workspace {
      */
     public static List<Integer> getWeeklyConcurrentUse(List<Crop> crops, List<Integer> greenWeeklySqft, List<Integer> colorWeeklySqft, List<Integer> starchWeeklySqft) {
         int longestUseTime = 52 + crops.stream()
-                .mapToInt(c -> (int) Math.ceil((double) c.getDays() / 7))
+                .mapToInt(c -> (int) Math.ceil((double) c.getDays() / 7)) // convert to weeks
                 .max()
                 .orElse(0); // returns 0 if the list was empty
 

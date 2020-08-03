@@ -60,21 +60,21 @@ public final class PlantingsTest {
 
     @Test
     public void simple() {
-        LocalDate startDate1 = LocalDate.of(2020, 8, 1);
-        LocalDate startDate2 = LocalDate.of(2009, 7, 20);
+        LocalDate startDate1 = LocalDate.of(2020, 8, 1); // Saturday
+        LocalDate startDate2 = LocalDate.of(2009, 7, 20); // Monday
         cropDao.insertAll(
                 Crop.builder()
                         .id(1)
                         .name("Amaranth leaves")
                         .type(CropType.Green)
-                        .days(13) // 2 weeks
+                        .days(15) // 3 weeks
                         .caloriesPer100Gram(100)
                         .yieldPer100Sqft(100 / 4.54)
                         .build(),
                 Crop.builder()
                         .id(2)
                         .name("Arrow roots")
-                        .days(15) // 3 weeks
+                        .days(17) // 3 weeks
                         .type(CropType.Colorful)
                         .caloriesPer100Gram(200)
                         .yieldPer100Sqft(100 / 4.54)
@@ -136,9 +136,9 @@ public final class PlantingsTest {
         assertThat(arrowRootsSchedule1, notNullValue());
         assertThat(amaranthSchedule2, notNullValue());
 
-        assertThat(amaranthSchedule1.firstPlanting, equalTo(startDate1.minus(2, ChronoUnit.WEEKS)));
-        assertThat(arrowRootsSchedule1.firstPlanting, equalTo(startDate1.minus(3, ChronoUnit.WEEKS)));
-        assertThat(amaranthSchedule2.firstPlanting, equalTo(startDate2.minus(2, ChronoUnit.WEEKS)));
+        assertThat(amaranthSchedule1.firstPlanting, equalTo(LocalDate.of(2020, 7, 19)));
+        assertThat(arrowRootsSchedule1.firstPlanting, equalTo(LocalDate.of(2020, 7, 12)));
+        assertThat(amaranthSchedule2.firstPlanting, equalTo(LocalDate.of(2009, 7, 5)));
 
         assertThat(amaranthSchedule1.weeklyPlantingAmounts.size(), equalTo(52));
         assertThat(arrowRootsSchedule1.weeklyPlantingAmounts.size(), equalTo(52));
@@ -156,10 +156,10 @@ public final class PlantingsTest {
 
         assertThat(
                 plantings1.getMonthlySquareFeet().subList(0, 4),
-                equalTo(Arrays.asList(1325, 1325, 1300, 1325)));
+                equalTo(Arrays.asList(1700, 1700, 1675, 1700)));
         assertThat(
                 plantings2.getMonthlySquareFeet().subList(0, 4),
-                equalTo(Arrays.asList(1500, 1500, 1500, 1500)));
+                equalTo(Arrays.asList(2250, 2250, 2250, 2250)));
 
 
         // If we update calorie ratios, we still get correct data
@@ -192,7 +192,7 @@ public final class PlantingsTest {
 
         assertThat(
                 plantings1.getMonthlySquareFeet().subList(0, 4),
-                equalTo(Arrays.asList(1775, 1775, 1750, 1800)));
+                equalTo(Arrays.asList(2525, 2525, 2500, 2550)));
 
         // if we add more crops, we still get correct data
         cropDao.insertAll(
@@ -226,7 +226,7 @@ public final class PlantingsTest {
         assertThat(kaleSchedule1, notNullValue());
         assertThat(amaranthSchedule1, notNullValue());
         assertThat(arrowRootsSchedule1, notNullValue());
-        assertThat(kaleSchedule1.getFirstPlanting(), equalTo(startDate1.minus(1, ChronoUnit.WEEKS)));
+        assertThat(kaleSchedule1.getFirstPlanting(), equalTo(LocalDate.of(2020, 8, 2)));
 
         assertThat(
                 kaleSchedule1.weeklyPlantingAmounts.subList(0, 6),
@@ -240,7 +240,7 @@ public final class PlantingsTest {
 
         assertThat(
                 plantings1.getMonthlySquareFeet().subList(0, 4),
-                equalTo(Arrays.asList(1400, 1400, 1375, 1425)));
+                equalTo(Arrays.asList(1775, 1775, 1750, 1800)));
     }
 
 }
