@@ -14,10 +14,8 @@ import com.example.cs446_group8.data.CropType;
 import com.example.cs446_group8.data.HeadCounts;
 import com.example.cs446_group8.data.Project;
 import com.example.cs446_group8.data.ProjectDao;
-import com.example.cs446_group8.data.ProjectWithSows;
 import com.example.cs446_group8.data.Sow;
 import com.example.cs446_group8.data.SowDao;
-import com.example.cs446_group8.data.SowWithCrop;
 
 import org.junit.After;
 import org.junit.Before;
@@ -26,14 +24,10 @@ import org.junit.runner.RunWith;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
@@ -243,4 +237,65 @@ public final class PlantingsTest {
                 equalTo(Arrays.asList(1400, 1400, 1375, 1425)));
     }
 
+    @Test
+    public void useDifferentHeadCounts() {
+        cropDao.insertAll(
+                Crop.builder()
+                        .id(1)
+                        .name("Amaranth leaves")
+                        .type(CropType.Green)
+                        .days(13) // 2 weeks
+                        .caloriesPer100Gram(100)
+                        .yieldPer100Sqft(100 / 4.54)
+                        .build(),
+                Crop.builder()
+                        .id(2)
+                        .name("Arrow roots")
+                        .days(15) // 3 weeks
+                        .type(CropType.Colorful)
+                        .caloriesPer100Gram(200)
+                        .yieldPer100Sqft(100 / 4.54)
+                        .build()
+        );
+
+        HeadCounts headCounts10 = new HeadCounts(10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10);
+        HeadCounts headCounts0 = new HeadCounts(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        HeadCounts headCounts5 = new HeadCounts(5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5);
+
+
+        projectDao.insertAll(Project.builder()
+                .id(1)
+                .name("Project 1")
+                .beginningOfSession(LocalDate.of(2020, 8, 1))
+                .headCounts(headCounts10)
+                .caloriesPerDayPerPerson(2500)
+                .caloriesFromColorful(20)
+                .caloriesFromGreen(20)
+                .caloriesFromStarch(60)
+                .build());
+
+        sowDao.insertAll(
+                Sow.builder().projectId(1).cropId(1).build(),
+                Sow.builder().projectId(1).cropId(2).build()
+        );
+
+        Plantings plantings1 = new Plantings(db, 1);
+
+        assertThat(
+                plantings1.getMonthlySquareFeet().subList(0, 4),
+                equalTo(Arrays.asList(1325, 1325, 1300, 1325)));
+        assertThat( // supplying same headcounts gives the same value
+                plantings1.getMonthlySquareFeet(headCounts10),
+                equalTo(plantings1.getMonthlySquareFeet()));
+        assertThat( // using 1/2 headcounts gives us half the square feet
+                plantings1.getMonthlySquareFeet(headCounts5).subList(0, 4),
+                equalTo(Arrays.asList(675, 675, 650, 675)));
+        assertThat( // using 0 headcounts gives us no square feet
+                plantings1.getMonthlySquareFeet(headCounts0),
+                equalTo(Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)));
+
+        assertThat( // we still get the same values as before all this random stuff
+                plantings1.getMonthlySquareFeet().subList(0, 4),
+                equalTo(Arrays.asList(1325, 1325, 1300, 1325)));
+    }
 }
