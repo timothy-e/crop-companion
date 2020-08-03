@@ -7,11 +7,14 @@ import android.widget.TextView;
 
 import com.example.cs446_group8.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.CropViewHolder> {
-    //public List crops =
+    public List<PlantingSchedulePresenter.SingleWeekCrop> cropList = new ArrayList<>();
 
     public class CropViewHolder extends RecyclerView.ViewHolder {
         public TextView cropName, amountToPlant;
@@ -32,13 +35,12 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.CropVi
 
     @Override
     public void onBindViewHolder(@NonNull CropViewHolder holder, int position) {
-        //cropslist.get(position)
-        //todo replace with actual values from crop info
-        holder.cropName.setText("Artichoke");
-        holder.amountToPlant.setText("2.75");
+        PlantingSchedulePresenter.SingleWeekCrop crop = cropList.get(position);
+        holder.cropName.setText(crop.crop.getName());
+        holder.amountToPlant.setText(crop.plantingAmount.toString());
     }
 
     @Override
-    public int getItemCount() { return 10; }
+    public int getItemCount() { return cropList.size(); }
 
 }
