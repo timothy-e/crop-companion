@@ -3,7 +3,6 @@ package com.example.cs446_group8.ui.project_details.crop_timelapse;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -11,32 +10,24 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.telephony.emergency.EmergencyNumber;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.cs446_group8.GlobalConstants;
 import com.example.cs446_group8.R;
 import com.viewpagerindicator.LinePageIndicator;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.Date;
-import java.util.List;
 
 public class timelapseActivity extends AppCompatActivity {
 
@@ -92,9 +83,6 @@ public class timelapseActivity extends AppCompatActivity {
 
             ImageView backBtn = findViewById(R.id.back_button);
             backBtn.setOnClickListener(view -> onBackPressed());
-
-            ImageView refreshBtn = findViewById(R.id.refreshBtn);
-            refreshBtn.setOnClickListener(view -> startActivity(getIntent()));
 
             ImageView uploadBtn = findViewById(R.id.uploadBtn);
             String finalCropName = cropName;
@@ -177,7 +165,13 @@ public class timelapseActivity extends AppCompatActivity {
         return imageFile;
     }
 
-
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == IMAGE_REQUEST){
+            finish();
+            startActivity(getIntent());
+        }
+    }
 
 }
