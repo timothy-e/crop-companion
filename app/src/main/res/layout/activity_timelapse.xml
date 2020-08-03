@@ -61,26 +61,36 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageView
+            android:id="@+id/refreshBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="64dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@android:color/white"
+            android:paddingStart="8dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="8dp"
+            android:src="@drawable/autorenew_24px_outlined"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/refresh"
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/image1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent">
 
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/image1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent">
-
-            </androidx.viewpager.widget.ViewPager>
-
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        </androidx.viewpager.widget.ViewPager>
 
         <com.viewpagerindicator.LinePageIndicator
             android:id="@+id/indicator"
@@ -92,5 +102,6 @@
             app:strokeWidth="4dp"
             app:unselectedColor="#FF888888" />
     </RelativeLayout>
+
 
 </LinearLayout>
