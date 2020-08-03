@@ -51,7 +51,10 @@ public class ProjectSettingsActivity extends BaseActivity implements ProjectSett
 
             LocalDate ld = curProject.getBeginningOfSession();
             DatePicker dp = (DatePicker) findViewById(R.id.start_date_field);
-            dp.updateDate(ld.getYear(), ld.getMonthValue(), ld.getDayOfMonth());
+            dp.updateDate(
+                    ld.getYear(),
+                    ld.getMonthValue() - 1, // localdate stores 1-12, dp stores needs 0-11
+                    ld.getDayOfMonth());
 
             binding.setCalPerDayPerPerson(String.valueOf(curProject.getCaloriesPerDayPerPerson()));
             binding.setCalLeafyGreens(String.valueOf(curProject.getCaloriesFromGreen()));
@@ -84,7 +87,7 @@ public class ProjectSettingsActivity extends BaseActivity implements ProjectSett
         curProject.setName(newName);
 
         DatePicker datePickerField = (DatePicker) findViewById(R.id.start_date_field);
-        int month = datePickerField.getMonth();
+        int month = datePickerField.getMonth() + 1; // datePicker returns 0-11, we need 1-12
         int day = datePickerField.getDayOfMonth();
         int year = datePickerField.getYear();
         LocalDate newStartDate = LocalDate.of(year, month, day);
