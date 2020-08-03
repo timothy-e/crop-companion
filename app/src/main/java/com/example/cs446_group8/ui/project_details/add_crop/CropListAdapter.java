@@ -61,7 +61,6 @@ public class CropListAdapter extends BaseAdapter implements ListAdapter {
         addBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                // TODO: store crop as "added" to parent Project obj
                 sowDao.insertAll(Sow.builder().projectId(projectId).cropId(cropList.get(position).cropId).build());
                 Toast.makeText(context, cropList.get(position).cropName + " added to the project! ", Toast.LENGTH_SHORT).show();
                 cropList.remove(position);
