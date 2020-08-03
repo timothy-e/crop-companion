@@ -29,6 +29,8 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 
+import pl.pzienowicz.autoscrollviewpager.AutoScrollViewPager;
+
 public class timelapseActivity extends AppCompatActivity {
 
     String currentImagePath = null;
@@ -74,9 +76,11 @@ public class timelapseActivity extends AppCompatActivity {
             assert listOfFiles != null;
             Arrays.sort(listOfFiles, (f1, f2) -> Long.compare(f1.lastModified(), f2.lastModified()));
 
-            final ViewPager viewPager = findViewById(R.id.image1);
+            final AutoScrollViewPager viewPager = findViewById(R.id.image1);
             ImageAdapter adapter = new ImageAdapter(this, listOfFiles);
             viewPager.setAdapter(adapter);
+            viewPager.setInterval(2000);
+            viewPager.startAutoScroll();
 
             final LinePageIndicator linePageIndicator = findViewById(R.id.indicator);
             linePageIndicator.setViewPager(viewPager);
