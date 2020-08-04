@@ -59,7 +59,7 @@ public class PlantingSchedulePresenter extends BasePresenter implements Planting
         for (CropSchedule cropSchedule : schedule) {
             LocalDate firstDate = cropSchedule.firstPlanting;
             for (int i=0; i<cropSchedule.weeklyPlantingAmounts.size(); i++) {
-                addCropAmountToDate(firstDate.plusWeeks(i), cropSchedule.crop, cropSchedule.weeklyPlantingAmounts.get(i),
+                addCropAmountToDate(firstDate.plusWeeks(i), cropSchedule.crop, cropSchedule.weeklyPlantingAmounts.get(i) / 100, // convert sqft to beds
                         scheduleMap);
             }
         }
