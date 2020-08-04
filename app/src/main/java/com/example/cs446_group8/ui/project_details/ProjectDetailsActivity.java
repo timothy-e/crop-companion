@@ -103,7 +103,14 @@ public class ProjectDetailsActivity extends BaseActivity implements ProjectDetai
 
         binding.addButton.setOnClickListener(view -> mPresenter.addButtonClicked(projectId));
 
-        binding.plantingScheduleButton.setOnClickListener(view -> mPresenter.scheduleButtonClicked(projectId));
+        binding.plantingScheduleButton.setOnClickListener(view -> {
+            if (crops.size() == 0) {
+                mPresenter.showNoCropsToast();
+            }
+            else {
+                mPresenter.scheduleButtonClicked(projectId);
+            }
+        });
 
     }
 

@@ -11,6 +11,7 @@ public interface ProjectDetailsContract extends BaseContract {
         void scheduleButtonClicked(long projectId);
         void backButtonClicked();
         void cropClicked(String cropName, String projectName);
+        void showNoCropsToast();
     }
 
 }

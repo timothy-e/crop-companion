@@ -2,6 +2,7 @@ package com.example.cs446_group8.ui.project_details;
 
 import android.content.Context;
 import android.content.Intent;
+import android.widget.Toast;
 
 import com.example.cs446_group8.GlobalConstants;
 import com.example.cs446_group8.ui.BasePresenter;
@@ -78,6 +79,10 @@ public class ProjectDetailsPresenter extends BasePresenter implements ProjectDet
         intent.putExtra("cropName", cropName);
         intent.putExtra("projectName", projectName);
         mView.launchActivity(intent);
+    }
+
+    public void showNoCropsToast() {
+        Toast.makeText(context, "Please add crops before viewing the planting schedule", Toast.LENGTH_LONG).show();
     }
 
 }
