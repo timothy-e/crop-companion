@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.cs446_group8">
+    package="com.crop.companion">
 
     <!-- Camera permissions for pivot   -->
     <uses-feature android:name="android.hardware.camera"
@@ -17,27 +17,27 @@
         android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.project_details.crop_timelapse.timelapseActivity"></activity>
-        <activity android:name=".ui.home.HomeActivity">
+        <activity android:name="com.crop.companion.ui.project_details.crop_timelapse.timelapseActivity"></activity>
+        <activity android:name="com.crop.companion.ui.home.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.project_details.add_crop.head_count.MonthlyHeadCountActivity" />
+        <activity android:name="com.crop.companion.ui.project_details.add_crop.head_count.MonthlyHeadCountActivity" />
         <activity
-            android:name=".ui.project_details.ProjectDetailsActivity"
+            android:name="com.crop.companion.ui.project_details.ProjectDetailsActivity"
             android:launchMode="singleTop"/>
-        <activity android:name=".ui.project_details.add_crop.AddCropActivity" />
-        <activity android:name=".ui.project_settings.ProjectSettingsActivity" />
-        <activity android:name=".ui.project_details.add_crop.crop_summary.CropSummaryActivity" />
-        <activity android:name=".ui.project_details.planting_schedule.PlantingScheduleActivity" />
-        <activity android:name=".ui.add_project.AddProjectActivity" />
+        <activity android:name="com.crop.companion.ui.project_details.add_crop.AddCropActivity" />
+        <activity android:name="com.crop.companion.ui.project_settings.ProjectSettingsActivity" />
+        <activity android:name="com.crop.companion.ui.project_details.add_crop.crop_summary.CropSummaryActivity" />
+        <activity android:name="com.crop.companion.ui.project_details.planting_schedule.PlantingScheduleActivity" />
+        <activity android:name="com.crop.companion.ui.add_project.AddProjectActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.example.android.fileprovider"
+            android:authorities="com.crop.android.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

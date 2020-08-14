@@ -5,7 +5,7 @@
     <data>
         <variable
             name="presenter"
-            type="com.example.cs446_group8.ui.project_details.ProjectDetailsContract.Presenter" />
+            type="com.crop.companion.ui.project_details.ProjectDetailsContract.Presenter" />
 
         <variable
             name="projectName"
