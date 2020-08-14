@@ -5,7 +5,7 @@
     <data>
         <variable
             name="presenter"
-            type="com.example.cs446_group8.ui.project_details.add_crop.AddCropContract.Presenter" />
+            type="com.crop.companion.ui.project_details.add_crop.AddCropContract.Presenter" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
